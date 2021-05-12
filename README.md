@@ -2,6 +2,8 @@
 
 Enhanced Medications. All meds, kits, injectors, and balms enhanced for your pleasure.
 
+This is meant to be a replacement for SuperIFAK and SuperAFAK mods. This mod handles those two kits so there is no need to double up on them unless you want something to break. HP resource values for all items are listed below... some items have extra features added but are not listed here. To see those changes, please review the code in src folder.
+
 >Author  : jbs4bmx
 
 >Version : 1.0.0 (Supports SPT-AKI 1.2.0 | Client version 0.12.10.2.12102)
