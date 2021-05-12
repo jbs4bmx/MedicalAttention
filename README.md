@@ -7,7 +7,7 @@ Enhanced Medications. All meds, kits, injectors, and balms enhanced for your ple
 >Version : 1.0.0 (Supports SPT-AKI 1.2.0 | Client version 0.12.10.2.12102)
 
 
-### /* ============================== MEDS ============================== */
+### /* ========== MEDS ========== */
 
 * Analgin Painkillers
   * HP Resource === 10
@@ -55,7 +55,7 @@ Enhanced Medications. All meds, kits, injectors, and balms enhanced for your ple
   * HP Resource === 3
 
 
-### /* ============================== INJECTORS ============================== */
+### /* ========== INJECTORS ========== */
 
 * Morphine Injector
   * HP Resource === 4
@@ -92,8 +92,6 @@ Enhanced Medications. All meds, kits, injectors, and balms enhanced for your ple
 
 
 **WARNING** - There is one caveat to using this mod...
->When healing with medkits that repair fractures, your character cannot move.
->
->It is a side-effect of the healing process for removal of fractures and fixing blacked out body parts. Essentially, it is an AFAK with the properties of a splint or surgical kit.
+>When healing with med kits, your character cannot move. It is a side-effect of adding the surgical kit features to med kits.
 >
 >Take cover to heal!
