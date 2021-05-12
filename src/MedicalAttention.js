@@ -14,7 +14,7 @@ class healer
 {
 	constructor()
 	{
-        this.mod = "jbs4bmx-MedicalAttention";
+		this.mod = "jbs4bmx-MedicalAttention";
 		Logger.info(`Loading: ${this.mod}`);
 		ModLoader.onLoad[this.mod] = this.load.bind(this);
     }
