@@ -42,7 +42,7 @@ class healer
 
 		for (let item in products)
 		{
-        	let itemData = products[item];
+			let itemData = products[item];
 
 			/* ============================== MEDICAL SUPPLIES ============================== */
 
