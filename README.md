@@ -35,29 +35,29 @@ Example of config.json
     "IFAK": {
         "Enable": false,
         "hpResource": 900,
-        "fixFracture": true,
-        "fixDestroyedPart": true
+        "fixFracture": false,
+        "fixDestroyedPart": false
     },
 
     "SANITAR": {
         "Enable": false,
         "hpResource": 5000,
-        "fixFracture": true,
-        "fixDestroyedPart": true
+        "fixFracture": false,
+        "fixDestroyedPart": false
     },
 
     "AFAK": {
         "Enable": false,
         "hpResource": 1200,
-        "fixFracture": true,
-        "fixDestroyedPart": true
+        "fixFracture": false,
+        "fixDestroyedPart": false
     },
 
     "GRIZZLY": {
         "Enable": false,
         "hpResource": 5000,
-        "fixFracture": true,
-        "fixDestroyedPart": true
+        "fixFracture": false,
+        "fixDestroyedPart": false
     },
 
     "PILLS": {

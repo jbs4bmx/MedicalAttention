@@ -1,71 +1,71 @@
 {
     "AI2": {
-        "Enable": true,
+        "Enable": false,
         "hpResource": 250
     },
     "CAR": {
-        "Enable": true,
+        "Enable": false,
         "hpResource": 500
     },
     "SALEWA": {
-        "Enable": true,
+        "Enable": false,
         "hpResource": 1000
     },
     "IFAK": {
-        "Enable": true,
+        "Enable": false,
         "hpResource": 1000,
-        "fixFracture": true,
-        "fixDestroyedPart": true
+        "fixFracture": false,
+        "fixDestroyedPart": false
     },
     "SANITAR": {
-        "Enable": true,
+        "Enable": false,
         "hpResource": 2000,
-        "fixFracture": true,
-        "fixDestroyedPart": true
+        "fixFracture": false,
+        "fixDestroyedPart": false
     },
     "AFAK": {
-        "Enable": true,
+        "Enable": false,
         "hpResource": 1500,
-        "fixFracture": true,
-        "fixDestroyedPart": true
+        "fixFracture": false,
+        "fixDestroyedPart": false
     },
     "GRIZZLY": {
-        "Enable": true,
+        "Enable": false,
         "hpResource": 5000,
-        "fixFracture": true,
-        "fixDestroyedPart": true
+        "fixFracture": false,
+        "fixDestroyedPart": false
     },
     "PILLS": {
-        "Enable": true,
+        "Enable": false,
         "hpResource": 24,
         "Duration": 360,
         "HydrationBurn": -4
     },
     "BANDAGES": {
-        "Enable": true,
+        "Enable": false,
         "hpResource": 4
     },
     "SPLINTS": {
-        "Enable": true,
+        "Enable": false,
         "hpResource": 8
     },
     "TOPICALS": {
-        "Enable": true,
+        "Enable": false,
         "hpResource": 10,
         "Energy": 25,
         "Hydration": 25,
         "Duration": 360
     },
     "SURGICALKITS": {
-        "Enable": true,
+        "Enable": false,
         "hpResource": 10
     },
     "TOURNIQUETS": {
-        "Enable": true,
+        "Enable": false,
         "hpResource": 5
     },
     "INJECTORS": {
-        "Enable": true,
+        "Enable": false,
         "hpResource": 4,
         "Duration": 360,
         "HydrationBurn": -4,
