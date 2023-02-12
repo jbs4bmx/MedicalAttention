@@ -1,8 +1,8 @@
-/*
+/**
  *      Name: Medical Attention
- *   Version: 325.0.1
+ *   Version: 350.0.1
  * Copyright: jbs4bmx
- *    Update: 23.10.2022
+ *    Update: [DMY] 12.02.2023
 */
 
 import { DependencyContainer } from "tsyringe";
@@ -44,7 +44,7 @@ class healer implements IMod
 		{
 			let medItem = db[item];
 
-			/* ============================== AI2 ======================================= */
+			/** ============================== AI2 ======================================= */
 			if (AI2.Enable === true) {
 				//AI-2 Medkit
 				if (medItem._id === "5755356824597772cb798962")
@@ -64,7 +64,7 @@ class healer implements IMod
 				}
 			}
 
-			/* ============================== CAR ======================================= */
+			/** ============================== CAR ======================================= */
 			if (CAR.Enable === true) {
 				//Car First Aid Kit
 				if (medItem._id === "590c661e86f7741e566b646a")
@@ -111,7 +111,7 @@ class healer implements IMod
 				}
 			}
 
-			/* ============================== SALEWA ==================================== */
+			/** ============================== SALEWA ==================================== */
 			if (SALEWA.Enable === true) {
 				//Salewa
 				if (medItem._id === "544fb45d4bdc2dee738b4568")
@@ -158,7 +158,7 @@ class healer implements IMod
 				}
 			}
 
-			/* ============================== IFAK ====================================== */
+			/** ============================== IFAK ====================================== */
 			if (IFAK.Enable === true) {
 				//IFAK
 				if (medItem._id === "590c678286f77426c9660122")
@@ -225,7 +225,7 @@ class healer implements IMod
 				}
 			}
 
-			/* ============================== SANITAR =================================== */
+			/** ============================== SANITAR =================================== */
 			if (SANITAR.Enable === true) {
 				//Sanitar Medkit (IFAK)
 				if (medItem._id === "5e99711486f7744bfc4af328")
@@ -294,7 +294,7 @@ class healer implements IMod
 				}
 			}
 
-			/* ============================== AFAK ====================================== */
+			/** ============================== AFAK ====================================== */
 			if (AFAK.Enable === true) {
 				//AFAK
 				if (medItem._id === "60098ad7c2240c0fe85c570a")
@@ -361,7 +361,7 @@ class healer implements IMod
 				}
 			}
 
-			/* ============================== GRIZZLY =================================== */
+			/** ============================== GRIZZLY =================================== */
 			if (GRIZZLY.Enable === true) {
 				//Grizzly
 				if (medItem._id === "590c657e86f77412b013051d")
@@ -428,7 +428,7 @@ class healer implements IMod
 				}
 			}
 
-			/* ============================== PILLS ===================================== */
+			/** ============================== PILLS ===================================== */
 			if(PILLS.Enable === true) {
 				//Analgin Painkillers
 				if (medItem._id === "544fb37f4bdc2dee738b4567")
@@ -508,7 +508,7 @@ class healer implements IMod
 				}
 			}
 
-			/* ============================== BANDAGES ================================== */
+			/** ============================== BANDAGES ================================== */
 			if (BANDAGES.Enable === true) {
 				//Aseptic Bandage
 				if (medItem._id === "544fb25a4bdc2dfb738b4567")
@@ -581,7 +581,7 @@ class healer implements IMod
 				}
 			}
 
-			/* ============================== SPLINTS =================================== */
+			/** ============================== SPLINTS =================================== */
 			if (SPLINTS.Enable === true) {
 				//Splint
 				if (medItem._id === "544fb3364bdc2d34748b456a")
@@ -610,7 +610,7 @@ class healer implements IMod
 				}
 			}
 
-			/* ============================== TOPICALS ================================== */
+			/** ============================== TOPICALS ================================== */
 			if (TOPICALS.Enable === true) {
 							//Vaseline
 				if (medItem._id === "5755383e24597772cb798966")
@@ -666,7 +666,7 @@ class healer implements IMod
 				}
 			}
 
-			/* ============================== SURGICALKITS ============================== */
+			/** ============================== SURGICALKITS ============================== */
 			if (SURGICALKITS.Enable === true) {
 				//CMS Kit
 				if (medItem._id === "5d02778e86f774203e7dedbe")
@@ -848,7 +848,7 @@ class healer implements IMod
 				}
 			}
 
-			/* ============================== TOURNIQUETS =============================== */
+			/** ============================== TOURNIQUETS =============================== */
 			if (TOURNIQUETS.Enable === true) {
 				//Esmarch Tourniquet
 				if (medItem._id === "5e831507ea0a7c419c2f9bd9")
@@ -908,7 +908,7 @@ class healer implements IMod
 				}
 			}
 
-			/* ============================== INJECTORS ================================= */
+			/** ============================== INJECTORS ================================= */
 			if (INJECTORS.Enable === true) {
 				//Morphine Injector
 				if (medItem._id === "544fb3f34bdc2d03748b456a")
