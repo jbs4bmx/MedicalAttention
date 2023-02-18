@@ -1,8 +1,8 @@
 /**
  *      Name: Medical Attention
- *   Version: 350.0.1
+ *   Version: 350.0.2
  * Copyright: jbs4bmx
- *    Update: [DMY] 12.02.2023
+ *    Update: [DMY] 17.02.2023
 */
 
 import { DependencyContainer } from "tsyringe";
@@ -942,6 +942,12 @@ class healer implements IMod
 				{
 					medItem._props.MaxHpResource = INJECTORS.hpResource;
 					medItem._props.AllowSpawnOnLocations = locationsMax;
+					medItem._props.effects_damage.Contusion =
+					{
+						"delay": 0,
+						"duration": INJECTORS.Duration,
+						"fadeOut": 0
+					};
 				}
 
 				//Combat Stimulant Injector SJ6 TGLabs
@@ -1041,6 +1047,12 @@ class healer implements IMod
 				{
 					medItem._props.MaxHpResource = INJECTORS.hpResource;
 					medItem._props.AllowSpawnOnLocations = locationsMin;
+					medItem._props.effects_damage.Pain =
+					{
+						"delay": 0,
+						"duration": INJECTORS.Duration,
+						"fadeOut": 5
+					};
 				}
 
 				//P22
@@ -1069,6 +1081,72 @@ class healer implements IMod
 				{
 					medItem._props.MaxHpResource = INJECTORS.hpResource;
 					medItem._props.AllowSpawnOnLocations = locationsMin;
+				}
+
+				// Obdolbos 2
+				if (medItem._id === "637b60c3b7afa97bfc3d7001")
+				{
+					medItem._props.MaxHpResource = INJECTORS.hpResource;
+					medItem._props.AllowSpawnOnLocations = locationsMin;
+				}
+
+				// SJ12 TGLabs
+				if (medItem._id === "637b612fb7afa97bfc3d7005")
+				{
+					medItem._props.MaxHpResource = INJECTORS.hpResource;
+					medItem._props.AllowSpawnOnLocations = locationsMin;
+				}
+
+				// Perfotoran (Blue Blood)
+				if (medItem._id === "637b6251104668754b72f8f9")
+				{
+					medItem._props.MaxHpResource = INJECTORS.hpResource;
+					medItem._props.AllowSpawnOnLocations = locationsMin;
+					medItem._props.effects_damage.Pain =
+					{
+						"delay": 0,
+						"duration": INJECTORS.Duration,
+						"fadeOut": 5
+					};
+					medItem._props.effects_damage.Contusion =
+					{
+						"delay": 0,
+						"duration": INJECTORS.Duration,
+						"fadeOut": 0
+					};
+				}
+
+				// Trimadol
+				if (medItem._id === "637b620db7afa97bfc3d7009")
+				{
+					medItem._props.MaxHpResource = INJECTORS.hpResource;
+					medItem._props.AllowSpawnOnLocations = locationsMin;
+					medItem._props.effects_damage.Pain =
+					{
+						"delay": 0,
+						"duration": INJECTORS.Duration,
+						"fadeOut": 5
+					};
+					medItem._props.effects_damage.Contusion =
+					{
+						"delay": 0,
+						"duration": INJECTORS.Duration,
+						"fadeOut": 0
+					};
+				}
+
+				//PNB
+				if (medItem._id === "637b6179104668754b72f8f5")
+				{
+					medItem._props.MaxHpResource = INJECTORS.hpResource;
+					medItem._props.AllowSpawnOnLocations = locationsMin;
+					medItem._props.effects_damage.Pain =
+					medItem._props.effects_damage.Contusion =
+					{
+						"delay": 0,
+						"duration": INJECTORS.Duration,
+						"fadeOut": 0
+					};
 				}
 
 			}
