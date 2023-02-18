@@ -113,5 +113,4 @@ Example of config.json
 >Take cover to heal if you have these features enabled!
 #
 
-### End
-#
+#### End
