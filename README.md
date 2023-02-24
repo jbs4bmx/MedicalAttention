@@ -19,22 +19,26 @@ Example of config.json
 
     "AI2": {
         "Enable": false,
-        "hpResource": 250
+        "hpResource": 250,
+        "hpResourceRate": 50
     },
 
     "CAR": {
         "Enable": false,
-        "hpResource": 500
+        "hpResource": 500,
+        "hpResourceRate": 70
     },
 
     "SALEWA": {
         "Enable": false,
-        "hpResource": 1000
+        "hpResource": 1000,
+        "hpResourceRate": 85
     },
 
     "IFAK": {
         "Enable": false,
         "hpResource": 900,
+        "hpResourceRate": 50,
         "fixFracture": false,
         "fixDestroyedPart": false
     },
@@ -42,6 +46,7 @@ Example of config.json
     "SANITAR": {
         "Enable": false,
         "hpResource": 5000,
+        "hpResourceRate": 1,
         "fixFracture": false,
         "fixDestroyedPart": false
     },
@@ -49,6 +54,7 @@ Example of config.json
     "AFAK": {
         "Enable": false,
         "hpResource": 1200,
+        "hpResourceRate": 60,
         "fixFracture": false,
         "fixDestroyedPart": false
     },
@@ -56,6 +62,7 @@ Example of config.json
     "GRIZZLY": {
         "Enable": false,
         "hpResource": 5000,
+        "hpResourceRate": 175,
         "fixFracture": false,
         "fixDestroyedPart": false
     },
@@ -113,4 +120,5 @@ Example of config.json
 >Take cover to heal if you have these features enabled!
 #
 
-#### End
+### End
+#

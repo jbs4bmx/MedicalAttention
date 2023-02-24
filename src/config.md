@@ -5,22 +5,26 @@
 
     "AI2": {
         "Enable": false,            // Enable or Disable modification of this item. ('true' to enable : 'false' to disable)
-        "hpResource": 250           // This is the amount of HP this item has. (Whole number only.)
+        "hpResource": 250,          // This is the amount of HP this item has. (Whole number only.)
+        "hpResourceRate": 50        // This is the rate of healing that will occur during a single use. This is not the actual amount that will be healed although a higher number will provide more healing during each use. (Whole number only.)
     },
 
     "CAR": {
         "Enable": false,            // Enable or Disable modification of this item. ('true' to enable : 'false' to disable)
-        "hpResource": 500           // This is the amount of HP this item has. (Whole number only.)
+        "hpResource": 500,          // This is the amount of HP this item has. (Whole number only.)
+        "hpResourceRate": 70        // This is the rate of healing that will occur during a single use. This is not the actual amount that will be healed although a higher number will provide more healing during each use. (Whole number only.)
     },
 
     "SALEWA": {
         "Enable": false,            // Enable or Disable modification of this item. ('true' to enable : 'false' to disable)
-        "hpResource": 1000          // This is the amount of HP this item has. (Whole number only.)
+        "hpResource": 1000,         // This is the amount of HP this item has. (Whole number only.)
+        "hpResourceRate": 85        // This is the rate of healing that will occur during a single use. This is not the actual amount that will be healed although a higher number will provide more healing during each use. (Whole number only.)
     },
 
     "IFAK": {
         "Enable": false,            // Enable or Disable modification of this item. ('true' to enable : 'false' to disable)
         "hpResource": 900,          // This is the amount of HP this item has. (Whole number only.)
+        "hpResourceRate": 50,       // This is the rate of healing that will occur during a single use. This is not the actual amount that will be healed although a higher number will provide more healing during each use. (Whole number only.)
         "fixFracture": true,        // Fix a broken limb. ('true' to enable : 'false' to disable)
         "fixDestroyedPart": true    // Fix a blacked out body part. ('true' to enable : 'false' to disable)
     },
@@ -28,6 +32,7 @@
     "SANITAR": {
         "Enable": false,            // Enable or Disable modification of this item. ('true' to enable : 'false' to disable)
         "hpResource": 5000,         // This is the amount of HP this item has. (Whole number only.)
+        "hpResourceRate": 1         // This is the rate of healing that will occur during a single use. This is not the actual amount that will be healed although a higher number will provide more healing during each use. (Whole number only.)
         "fixFracture": true,        // Fix a broken limb. ('true' to enable : 'false' to disable)
         "fixDestroyedPart": true    // Fix a blacked out body part. ('true' to enable : 'false' to disable)
     },
@@ -35,6 +40,7 @@
     "AFAK": {
         "Enable": false,            // Enable or Disable modification of this item. ('true' to enable : 'false' to disable)
         "hpResource": 1200,         // This is the amount of HP this item has. (Whole number only.)
+        "hpResourceRate": 60,       // This is the rate of healing that will occur during a single use. This is not the actual amount that will be healed although a higher number will provide more healing during each use. (Whole number only.)
         "fixFracture": true,        // Fix a broken limb. ('true' to enable : 'false' to disable)
         "fixDestroyedPart": true    // Fix a blacked out body part. ('true' to enable : 'false' to disable)
     },
@@ -42,6 +48,7 @@
     "GRIZZLY": {
         "Enable": false,            // Enable or Disable modification of this item. ('true' to enable : 'false' to disable)
         "hpResource": 5000,         // This is the amount of HP this item has. (Whole number only.)
+        "hpResourceRate": 175,      // This is the rate of healing that will occur during a single use. This is not the actual amount that will be healed although a higher number will provide more healing during each use. (Whole number only.)
         "fixFracture": true,        // Fix a broken limb. ('true' to enable : 'false' to disable)
         "fixDestroyedPart": true    // Fix a blacked out body part. ('true' to enable : 'false' to disable)
     },

@@ -1,8 +1,8 @@
 /**
  *      Name: Medical Attention
- *   Version: 350.0.2
+ *   Version: 350.0.3
  * Copyright: jbs4bmx
- *    Update: [DMY] 17.02.2023
+ *    Update: [DMY] 23.02.2023
 */
 
 import { DependencyContainer } from "tsyringe";
@@ -51,7 +51,7 @@ class healer implements IMod
 				{
 					medItem._props.MaxHpResource = AI2.hpResource
 					medItem._props.medUseTime = 1;
-					medItem._props.hpResourceRate = 20;
+					medItem._props.hpResourceRate = AI2.hpResourceRate;
 					medItem._props.effects_damage.LightBleeding =
 					{
 						"delay": 0,
@@ -71,7 +71,7 @@ class healer implements IMod
 				{
 					medItem._props.MaxHpResource = CAR.hpResource;
 					medItem._props.medUseTime = 3;
-					medItem._props.hpResourceRate = 50;
+					medItem._props.hpResourceRate = CAR.hpResourceRate;
 					medItem._props.effects_damage.LightBleeding =
 					{
 						"delay": 0,
@@ -118,7 +118,7 @@ class healer implements IMod
 				{
 					medItem._props.MaxHpResource = SALEWA.hpResource;
 					medItem._props.medUseTime = 3;
-					medItem._props.hpResourceRate = 100;
+					medItem._props.hpResourceRate = SALEWA.hpResourceRate;
 					medItem._props.effects_damage.LightBleeding =
 					{
 						"delay": 0,
@@ -165,7 +165,7 @@ class healer implements IMod
 				{
 					medItem._props.MaxHpResource = IFAK.hpResource;
 					medItem._props.medUseTime = 1;
-					medItem._props.hpResourceRate = 100;
+					medItem._props.hpResourceRate = IFAK.hpResourceRate;
 					medItem._props.effects_damage.LightBleeding =
 					{
 						"delay": 0,
@@ -234,7 +234,7 @@ class healer implements IMod
 					medItem._props.Height = 1;
 					medItem._props.MaxHpResource = SANITAR.hpResource;
 					medItem._props.medUseTime = 1;
-					medItem._props.hpResourceRate = 100;
+					medItem._props.hpResourceRate = SANITAR.hpResourceRate;
 					medItem._props.effects_damage.LightBleeding =
 					{
 						"delay": 0,
@@ -301,7 +301,7 @@ class healer implements IMod
 				{
 					medItem._props.MaxHpResource = AFAK.hpResource;
 					medItem._props.medUseTime = 1;
-					medItem._props.hpResourceRate = 100;
+					medItem._props.hpResourceRate = AFAK.hpResourceRate;
 					medItem._props.effects_damage.LightBleeding =
 					{
 						"delay": 0,
@@ -368,7 +368,7 @@ class healer implements IMod
 				{
 					medItem._props.MaxHpResource = GRIZZLY.hpResource;
 					medItem._props.medUseTime = 5;
-					medItem._props.hpResourceRate = 100;
+					medItem._props.hpResourceRate = GRIZZLY.hpResourceRate;
 					medItem._props.effects_damage.LightBleeding =
 					{
 						"delay": 0,

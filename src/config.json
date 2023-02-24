@@ -1,37 +1,44 @@
 {
     "AI2": {
         "Enable": false,
-        "hpResource": 250
+        "hpResource": 250,
+        "hpResourceRate": 50
     },
     "CAR": {
         "Enable": false,
-        "hpResource": 500
+        "hpResource": 500,
+        "hpResourceRate": 70
     },
     "SALEWA": {
         "Enable": false,
-        "hpResource": 1000
+        "hpResource": 1000,
+        "hpResourceRate": 85
     },
     "IFAK": {
         "Enable": false,
         "hpResource": 1000,
+        "hpResourceRate": 50,
         "fixFracture": false,
         "fixDestroyedPart": false
     },
     "SANITAR": {
         "Enable": false,
         "hpResource": 2000,
+        "hpResourceRate": 1,
         "fixFracture": false,
         "fixDestroyedPart": false
     },
     "AFAK": {
         "Enable": false,
         "hpResource": 1500,
+        "hpResourceRate": 60,
         "fixFracture": false,
         "fixDestroyedPart": false
     },
     "GRIZZLY": {
         "Enable": false,
         "hpResource": 5000,
+        "hpResourceRate": 175,
         "fixFracture": false,
         "fixDestroyedPart": false
     },
