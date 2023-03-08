@@ -1,8 +1,8 @@
 /**
  *      Name: Medical Attention
- *   Version: 350.0.3
+ *   Version: 351.0.1
  * Copyright: jbs4bmx
- *    Update: [DMY] 23.02.2023
+ *    Update: [DMY] 07.03.2023
 */
 
 import { DependencyContainer } from "tsyringe";
