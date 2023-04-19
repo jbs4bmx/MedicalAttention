@@ -82,28 +82,20 @@ class healer implements IMod
 					{
 						"delay": 0,
 						"duration": 0,
-						"fadeOut": 0,
-						"cost": 50,
-						"healthPenaltyMin": 100,
-						"healthPenaltyMax": 100
+						"fadeOut": 0
 					};
 					medItem._props.effects_damage.RadExposure =
 					{
 						"delay": 0,
 						"duration": 0,
 						"fadeOut": 0,
-						"cost": 75,
-						"healthPenaltyMin": 100,
-						"healthPenaltyMax": 100
+						"cost": 75
 					};
 					medItem._props.effects_damage.Contusion =
 					{
 						"delay": 0,
 						"duration": 0,
-						"fadeOut": 0,
-						"cost": 1,
-						"healthPenaltyMin": 100,
-						"healthPenaltyMax": 100
+						"fadeOut": 0
 					};
 				}
 			}
@@ -129,28 +121,20 @@ class healer implements IMod
 					{
 						"delay": 0,
 						"duration": 0,
-						"fadeOut": 0,
-						"cost": 50,
-						"healthPenaltyMin": 100,
-						"healthPenaltyMax": 100
+						"fadeOut": 0
 					};
 					medItem._props.effects_damage.RadExposure =
 					{
 						"delay": 0,
 						"duration": 0,
 						"fadeOut": 0,
-						"cost": 75,
-						"healthPenaltyMin": 100,
-						"healthPenaltyMax": 100
+						"cost": 75
 					};
 					medItem._props.effects_damage.Contusion =
 					{
 						"delay": 0,
 						"duration": 0,
-						"fadeOut": 0,
-						"cost": 0,
-						"healthPenaltyMin": 100,
-						"healthPenaltyMax": 100
+						"fadeOut": 0
 					};
 				}
 			}
@@ -176,10 +160,7 @@ class healer implements IMod
 					{
 						"delay": 0,
 						"duration": 0,
-						"fadeOut": 0,
-						"cost": 50,
-						"healthPenaltyMin": 100,
-						"healthPenaltyMax": 100
+						"fadeOut": 0
 					};
 					if (IFAK.fixFracture === true) {
 						medItem._props.effects_damage.Fracture =
@@ -206,18 +187,13 @@ class healer implements IMod
 						"delay": 0,
 						"duration": 0,
 						"fadeOut": 0,
-						"cost": 75,
-						"healthPenaltyMin": 100,
-						"healthPenaltyMax": 100
+						"cost": 75
 					};
 					medItem._props.effects_damage.Contusion =
 					{
 						"delay": 0,
 						"duration": 0,
-						"fadeOut": 0,
-						"cost": 0,
-						"healthPenaltyMin": 100,
-						"healthPenaltyMax": 100
+						"fadeOut": 0
 					};
 				}
 			}
@@ -245,10 +221,7 @@ class healer implements IMod
 					{
 						"delay": 0,
 						"duration": 0,
-						"fadeOut": 0,
-						"cost": 50,
-						"healthPenaltyMin": 100,
-						"healthPenaltyMax": 100
+						"fadeOut": 0
 					};
 					if (SANITAR.fixFracture === true) {
 						medItem._props.effects_damage.Fracture =
@@ -275,18 +248,13 @@ class healer implements IMod
 						"delay": 0,
 						"duration": 0,
 						"fadeOut": 0,
-						"cost": 75,
-						"healthPenaltyMin": 100,
-						"healthPenaltyMax": 100
+						"cost": 75
 					};
 					medItem._props.effects_damage.Contusion =
 					{
 						"delay": 0,
 						"duration": 0,
-						"fadeOut": 0,
-						"cost": 0,
-						"healthPenaltyMin": 100,
-						"healthPenaltyMax": 100
+						"fadeOut": 0
 					};
 				}
 			}
@@ -312,10 +280,7 @@ class healer implements IMod
 					{
 						"delay": 0,
 						"duration": 0,
-						"fadeOut": 0,
-						"cost": 50,
-						"healthPenaltyMin": 100,
-						"healthPenaltyMax": 100
+						"fadeOut": 0
 					};
 					if (AFAK.fixFracture === true) {
 						medItem._props.effects_damage.Fracture =
@@ -342,18 +307,13 @@ class healer implements IMod
 						"delay": 0,
 						"duration": 0,
 						"fadeOut": 0,
-						"cost": 25,
-						"healthPenaltyMin": 100,
-						"healthPenaltyMax": 100
+						"cost": 25
 					};
 					medItem._props.effects_damage.Contusion =
 					{
 						"delay": 0,
 						"duration": 0,
-						"fadeOut": 0,
-						"cost": 0,
-						"healthPenaltyMin": 100,
-						"healthPenaltyMax": 100
+						"fadeOut": 0
 					};
 				}
 			}
@@ -379,10 +339,7 @@ class healer implements IMod
 					{
 						"delay": 0,
 						"duration": 0,
-						"fadeOut": 0,
-						"cost": 50,
-						"healthPenaltyMin": 100,
-						"healthPenaltyMax": 100
+						"fadeOut": 0
 					};
 					if (GRIZZLY.fixFracture === true) {
 						medItem._props.effects_damage.Fracture =
@@ -409,18 +366,13 @@ class healer implements IMod
 						"delay": 0,
 						"duration": 0,
 						"fadeOut": 0,
-						"cost": 75,
-						"healthPenaltyMin": 100,
-						"healthPenaltyMax": 100
+						"cost": 75
 					};
 					medItem._props.effects_damage.Contusion =
 					{
 						"delay": 0,
 						"duration": 0,
-						"fadeOut": 0,
-						"cost": 0,
-						"healthPenaltyMin": 100,
-						"healthPenaltyMax": 100
+						"fadeOut": 0
 					};
 				}
 			}
@@ -512,33 +464,24 @@ class healer implements IMod
 				{
 					medItem._props.MaxHpResource = BANDAGES.hpResource;
 					medItem._props.medUseTime = 2;
-					medItem._props.hpResourceRate = 1;
+					medItem._props.hpResourceRate = 0;
 					medItem._props.effects_damage.LightBleeding =
 					{
 						"delay": 0,
 						"duration": 0,
-						"fadeOut": 0,
-						"cost": 1,
-						"healthPenaltyMin": 100,
-						"healthPenaltyMax": 100
+						"fadeOut": 0
 					};
 					medItem._props.effects_damage.HeavyBleeding =
 					{
 						"delay": 0,
 						"duration": 0,
-						"fadeOut": 0,
-						"cost": 1,
-						"healthPenaltyMin": 100,
-						"healthPenaltyMax": 100
+						"fadeOut": 0
 					};
 					medItem._props.effects_damage.Contusion =
 					{
 						"delay": 0,
 						"duration": 0,
-						"fadeOut": 0,
-						"cost": 1,
-						"healthPenaltyMin": 100,
-						"healthPenaltyMax": 100
+						"fadeOut": 0
 					};
 				}
 
@@ -547,33 +490,24 @@ class healer implements IMod
 				{
 					medItem._props.MaxHpResource = BANDAGES.hpResource;
 					medItem._props.medUseTime = 3;
-					medItem._props.hpResourceRate = 1;
+					medItem._props.hpResourceRate = 0;
 					medItem._props.effects_damage.LightBleeding =
 					{
 						"delay": 0,
 						"duration": 0,
-						"fadeOut": 0,
-						"cost": 1,
-						"healthPenaltyMin": 100,
-						"healthPenaltyMax": 100
+						"fadeOut": 0
 					};
 					medItem._props.effects_damage.HeavyBleeding =
 					{
 						"delay": 0,
 						"duration": 0,
-						"fadeOut": 0,
-						"cost": 1,
-						"healthPenaltyMin": 100,
-						"healthPenaltyMax": 100
+						"fadeOut": 0
 					};
 					medItem._props.effects_damage.Contusion =
 					{
 						"delay": 0,
 						"duration": 0,
-						"fadeOut": 0,
-						"cost": 1,
-						"healthPenaltyMin": 100,
-						"healthPenaltyMax": 100
+						"fadeOut": 0
 					};
 				}
 			}
@@ -589,7 +523,9 @@ class healer implements IMod
 					{
 						"delay": 0,
 						"duration": 0,
-						"fadeOut": 0
+						"fadeOut": 0,
+						"healthPenaltyMin": 100,
+						"healthPenaltyMax": 100
 					};
 				}
 
@@ -602,7 +538,9 @@ class healer implements IMod
 					{
 						"delay": 0,
 						"duration": 0,
-						"fadeOut": 0
+						"fadeOut": 0,
+						"healthPenaltyMin": 100,
+						"healthPenaltyMax": 100
 					};
 				}
 			}
@@ -674,19 +612,13 @@ class healer implements IMod
 					{
 						"delay": 0,
 						"duration": 0,
-						"fadeOut": 0,
-						"cost": 1,
-						"healthPenaltyMin": 100,
-						"healthPenaltyMax": 100
+						"fadeOut": 0
 					};
 					medItem._props.effects_damage.HeavyBleeding =
 					{
 						"delay": 0,
 						"duration": 0,
-						"fadeOut": 0,
-						"cost": 1,
-						"healthPenaltyMin": 100,
-						"healthPenaltyMax": 100
+						"fadeOut": 0
 					};
 					medItem._props.effects_damage.Fracture =
 					{
@@ -709,18 +641,13 @@ class healer implements IMod
 						"delay": 0,
 						"duration": 0,
 						"fadeOut": 0,
-						"cost": 1,
-						"healthPenaltyMin": 100,
-						"healthPenaltyMax": 100
+						"cost": 1
 					};
 					medItem._props.effects_damage.Contusion =
 					{
 						"delay": 0,
 						"duration": 0,
-						"fadeOut": 0,
-						"cost": 1,
-						"healthPenaltyMin": 100,
-						"healthPenaltyMax": 100
+						"fadeOut": 0
 					};
 				}
 
@@ -735,19 +662,13 @@ class healer implements IMod
 					{
 						"delay": 0,
 						"duration": 0,
-						"fadeOut": 0,
-						"cost": 1,
-						"healthPenaltyMin": 100,
-						"healthPenaltyMax": 100
+						"fadeOut": 0
 					};
 					medItem._props.effects_damage.HeavyBleeding =
 					{
 						"delay": 0,
 						"duration": 0,
-						"fadeOut": 0,
-						"cost": 1,
-						"healthPenaltyMin": 100,
-						"healthPenaltyMax": 100
+						"fadeOut": 0
 					};
 					medItem._props.effects_damage.Fracture =
 					{
@@ -770,18 +691,13 @@ class healer implements IMod
 						"delay": 0,
 						"duration": 0,
 						"fadeOut": 0,
-						"cost": 1,
-						"healthPenaltyMin": 100,
-						"healthPenaltyMax": 100
+						"cost": 1
 					};
 					medItem._props.effects_damage.Contusion =
 					{
 						"delay": 0,
 						"duration": 0,
-						"fadeOut": 0,
-						"cost": 1,
-						"healthPenaltyMin": 100,
-						"healthPenaltyMax": 100
+						"fadeOut": 0
 					};
 				}
 
@@ -803,10 +719,7 @@ class healer implements IMod
 					{
 						"delay": 0,
 						"duration": 0,
-						"fadeOut": 0,
-						"cost": 1,
-						"healthPenaltyMin": 100,
-						"healthPenaltyMax": 100
+						"fadeOut": 0
 					};
 					medItem._props.effects_damage.Fracture =
 					{
@@ -829,18 +742,13 @@ class healer implements IMod
 						"delay": 0,
 						"duration": 0,
 						"fadeOut": 0,
-						"cost": 1,
-						"healthPenaltyMin": 100,
-						"healthPenaltyMax": 100
+						"cost": 1
 					};
 					medItem._props.effects_damage.Contusion =
 					{
 						"delay": 0,
 						"duration": 0,
-						"fadeOut": 0,
-						"cost": 1,
-						"healthPenaltyMin": 100,
-						"healthPenaltyMax": 100
+						"fadeOut": 0
 					};
 				}
 			}

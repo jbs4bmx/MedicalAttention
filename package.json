@@ -1,6 +1,6 @@
 {
     "name": "MedicalAttention",
-    "version": "353.0.1",
+    "version": "355.0.1",
     "main": "src/MedAttention.js",
     "license": "MIT",
     "author": "jbs4bmx",
