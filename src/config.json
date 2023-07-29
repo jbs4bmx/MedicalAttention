@@ -76,6 +76,8 @@
         "hpResource": 4,
         "Duration": 360,
         "HydrationBurn": -4,
-        "EnergyBurn": -4
+        "EnergyBurn": -4,
+        "SkillRateDuration": 500,
+        "SkillRateOverride": 5
     }
 }
