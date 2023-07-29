@@ -19,6 +19,7 @@ class healer implements IMod
         const {AI2,CAR,SALEWA,IFAK,SANITAR,AFAK,GRIZZLY,PILLS,BANDAGES,SPLINTS,TOPICALS,SURGICALKITS,TOURNIQUETS,INJECTORS} = require('./config.json');
 		const logger = container.resolve<ILogger>("WinstonLogger");
         const db = container.resolve<DatabaseServer>("DatabaseServer").getTables().templates.items;
+        const buffs = container.resolve<DatabaseServer>("DatabaseServer").getTables().globals.config.Health.Effects.Stimulator.Buffs;
 		this.pkg = require("../package.json");
 
 		let locationsMin = [
@@ -886,6 +887,44 @@ class healer implements IMod
 						"duration": INJECTORS.Duration,
 						"fadeOut": 0
 					};
+					buffs["BuffsPropital"] = [
+                        // {
+                        //     BuffType: "HealthRate",
+                        //     Chance: 1,
+                        //     Delay: 1,
+                        //     Duration: INJECTORS.SkillRateDuration,
+                        //     Value: 10,
+                        //     AbsoluteValue: true,
+                        //     SkillName: "",
+                        // },
+                        {
+                            BuffType: "SkillRate",
+                            Chance: 1,
+                            Delay: 1,
+                            Duration: INJECTORS.SkillRateDuration,
+                            Value: INJECTORS.SkillRateOverride,
+                            AbsoluteValue: true,
+                            SkillName: "Metabolism",
+                        },
+                        {
+                            BuffType: "SkillRate",
+                            Chance: 1,
+                            Delay: 1,
+                            Duration: INJECTORS.SkillRateDuration,
+                            Value: INJECTORS.SkillRateOverride,
+                            AbsoluteValue: true,
+                            SkillName: "Health",
+                        },
+                        {
+                            BuffType: "SkillRate",
+                            Chance: 1,
+                            Delay: 1,
+                            Duration: INJECTORS.SkillRateDuration,
+                            Value: INJECTORS.SkillRateOverride,
+                            AbsoluteValue: true,
+                            SkillName: "Vitality",
+                        },
+                    ];
 				}
 
 				//Hemostatic Drug Zagustin
@@ -945,6 +984,35 @@ class healer implements IMod
 				{
 					medItem._props.MaxHpResource = INJECTORS.hpResource;
 					medItem._props.AllowSpawnOnLocations = locationsMax;
+					buffs["Buffs_3bTG"] = [
+                        {
+                            BuffType: "SkillRate",
+                            Chance: 1,
+                            Delay: 1,
+                            Duration: INJECTORS.SkillRateDuration,
+                            Value: INJECTORS.SkillRateOverride,
+                            AbsoluteValue: true,
+                            SkillName: "Attention",
+                        },
+                        {
+                            BuffType: "SkillRate",
+                            Chance: 1,
+                            Delay: 1,
+                            Duration: INJECTORS.SkillRateDuration,
+                            Value: INJECTORS.SkillRateOverride,
+                            AbsoluteValue: true,
+                            SkillName: "Perception",
+                        },
+                        {
+                            BuffType: "SkillRate",
+                            Chance: 1,
+                            Delay: 1,
+                            Duration: INJECTORS.SkillRateDuration,
+                            Value: INJECTORS.SkillRateOverride,
+                            AbsoluteValue: true,
+                            SkillName: "Strength",
+                        },
+                    ];
 				}
 
 				//L1 (Norepinephrine)
