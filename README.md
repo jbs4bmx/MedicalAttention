@@ -16,98 +16,97 @@ Edit .\src\config.json to change the HP Resource or functionality of Medical Sup
 Example of config.json
 ```jsonc
 {
-
     "AI2": {
-        "Enable": false,
-        "hpResource": 250,
-        "hpResourceRate": 50
+        "Enable": false,            // Enable or Disable modification of this item. ('true' to enable : 'false' to disable)
+        "hpResource": 250,          // This is the amount of HP this item has. (Whole number only.)
+        "hpResourceRate": 50        // This is the rate of healing that will occur during a single use. This is not the actual amount that will be healed although a higher number will provide more healing during each use. (Whole number only.)
     },
 
     "CAR": {
-        "Enable": false,
-        "hpResource": 500,
-        "hpResourceRate": 70
+        "Enable": false,            // Enable or Disable modification of this item. ('true' to enable : 'false' to disable)
+        "hpResource": 500,          // This is the amount of HP this item has. (Whole number only.)
+        "hpResourceRate": 70        // This is the rate of healing that will occur during a single use. This is not the actual amount that will be healed although a higher number will provide more healing during each use. (Whole number only.)
     },
 
     "SALEWA": {
-        "Enable": false,
-        "hpResource": 1000,
-        "hpResourceRate": 85
+        "Enable": false,            // Enable or Disable modification of this item. ('true' to enable : 'false' to disable)
+        "hpResource": 1000,         // This is the amount of HP this item has. (Whole number only.)
+        "hpResourceRate": 85        // This is the rate of healing that will occur during a single use. This is not the actual amount that will be healed although a higher number will provide more healing during each use. (Whole number only.)
     },
 
     "IFAK": {
-        "Enable": false,
-        "hpResource": 900,
-        "hpResourceRate": 50,
-        "fixFracture": false,
-        "fixDestroyedPart": false
+        "Enable": false,            // Enable or Disable modification of this item. ('true' to enable : 'false' to disable)
+        "hpResource": 900,          // This is the amount of HP this item has. (Whole number only.)
+        "hpResourceRate": 50,       // This is the rate of healing that will occur during a single use. This is not the actual amount that will be healed although a higher number will provide more healing during each use. (Whole number only.)
+        "fixFracture": true,        // Fix a broken limb. ('true' to enable : 'false' to disable)
+        "fixDestroyedPart": true    // Fix a blacked out body part. ('true' to enable : 'false' to disable)
     },
 
     "SANITAR": {
-        "Enable": false,
-        "hpResource": 5000,
-        "hpResourceRate": 1,
-        "fixFracture": false,
-        "fixDestroyedPart": false
+        "Enable": false,            // Enable or Disable modification of this item. ('true' to enable : 'false' to disable)
+        "hpResource": 5000,         // This is the amount of HP this item has. (Whole number only.)
+        "hpResourceRate": 1         // This is the rate of healing that will occur during a single use. This is not the actual amount that will be healed although a higher number will provide more healing during each use. (Whole number only.)
+        "fixFracture": true,        // Fix a broken limb. ('true' to enable : 'false' to disable)
+        "fixDestroyedPart": true    // Fix a blacked out body part. ('true' to enable : 'false' to disable)
     },
 
     "AFAK": {
-        "Enable": false,
-        "hpResource": 1200,
-        "hpResourceRate": 60,
-        "fixFracture": false,
-        "fixDestroyedPart": false
+        "Enable": false,            // Enable or Disable modification of this item. ('true' to enable : 'false' to disable)
+        "hpResource": 1200,         // This is the amount of HP this item has. (Whole number only.)
+        "hpResourceRate": 60,       // This is the rate of healing that will occur during a single use. This is not the actual amount that will be healed although a higher number will provide more healing during each use. (Whole number only.)
+        "fixFracture": true,        // Fix a broken limb. ('true' to enable : 'false' to disable)
+        "fixDestroyedPart": true    // Fix a blacked out body part. ('true' to enable : 'false' to disable)
     },
 
     "GRIZZLY": {
-        "Enable": false,
-        "hpResource": 5000,
-        "hpResourceRate": 175,
-        "fixFracture": false,
-        "fixDestroyedPart": false
+        "Enable": false,            // Enable or Disable modification of this item. ('true' to enable : 'false' to disable)
+        "hpResource": 5000,         // This is the amount of HP this item has. (Whole number only.)
+        "hpResourceRate": 175,      // This is the rate of healing that will occur during a single use. This is not the actual amount that will be healed although a higher number will provide more healing during each use. (Whole number only.)
+        "fixFracture": true,        // Fix a broken limb. ('true' to enable : 'false' to disable)
+        "fixDestroyedPart": true    // Fix a blacked out body part. ('true' to enable : 'false' to disable)
     },
 
     "PILLS": {
-        "Enable": false,
-        "hpResource": 24,
-        "Duration": 360,
-        "HydrationBurn": -4
+        "Enable": false,            // Enable or Disable modification of this item. ('true' to enable : 'false' to disable)
+        "hpResource": 24,           // This is the amount of HP this item has. (Whole number only.)
+        "Duration": 360,            // This changes the duration of the buff measured in seconds.
+        "HydrationBurn": -4         // This is the amount of hydration lost per cycle by using this item.
     },
 
     "BANDAGES": {
-        "Enable": false,
-        "hpResource": 4
+        "Enable": false,            // Enable or Disable modification of this item. ('true' to enable : 'false' to disable)
+        "hpResource": 4             // This is the amount of HP this item has. (Whole number only.)
     },
 
     "SPLINTS": {
-        "Enable": false,
-        "hpResource": 8
+        "Enable": false,            // Enable or Disable modification of this item. ('true' to enable : 'false' to disable)
+        "hpResource": 8             // This is the amount of HP this item has. (Whole number only.)
     },
 
     "TOPICALS": {
-        "Enable": false,
-        "hpResource": 10,
-        "Energy": 25,
-        "Hydration": 25,
-        "Duration": 360
+        "Enable": false,            // Enable or Disable modification of this item. ('true' to enable : 'false' to disable)
+        "hpResource": 10,           // This is the amount of HP this item has. (Whole number only.)
+        "Energy": 25,               // This is the amount of energy gained per cycle by using this item.
+        "Hydration": 25,            // This is the amount of hydration gained per cycle by using this item.
+        "Duration": 360             // This changes the duration of the buff. Measured in seconds.
     },
 
     "SURGICALKITS": {
-        "Enable": false,
-        "hpResource": 10
+        "Enable": false,            // Enable or Disable modification of this item. ('true' to enable : 'false' to disable)
+        "hpResource": 10            // This is the amount of HP this item has. (Whole number only.)
     },
 
     "TOURNIQUETS": {
-        "Enable": false,
-        "hpResource": 5
+        "Enable": false,            // Enable or Disable modification of this item. ('true' to enable : 'false' to disable)
+        "hpResource": 5             // This is the amount of HP this item has. (Whole number only.)
     },
 
     "INJECTORS": {
-        "Enable": false,
-        "hpResource": 4,
-        "Duration": 360,
-        "HydrationBurn": -4,
-        "EnergyBurn": -4
+        "Enable": false,            // Enable or Disable modification of this item. ('true' to enable : 'false' to disable)
+        "hpResource": 4,            // This is the amount of HP this item has. (Whole number only.)
+        "Duration": 360,            // This changes the duration of the buff. Measured in seconds.
+        "HydrationBurn": -4,        // This is the amount of hydration lost per cycle by using this item.
+        "EnergyBurn": -4            // This is the amount of energy lost per cycle by using this item.
     }
 }
 ```
