@@ -154,7 +154,7 @@ class healer implements IMod
 							"duration": MedKits.Salewa.Duration,
 							"fadeOut": 0,
 							"cost": 50,
-							"healthPenaltyMin": 100,
+							"healthPenaltyMin": 70,
 							"healthPenaltyMax": 100
 						};
 					}
@@ -188,8 +188,8 @@ class healer implements IMod
 							"duration": MedKits.Ifak.Duration,
 							"fadeOut": 0,
 							"cost": 50,
-							"healthPenaltyMin": 80,
-							"healthPenaltyMax": 100
+							"healthPenaltyMin": 25,
+							"healthPenaltyMax": 75
 						};
 					}
 				}
@@ -232,7 +232,7 @@ class healer implements IMod
 							"duration": 0,
 							"fadeOut": 0,
 							"cost": 30,
-							"healthPenaltyMin": 10,
+							"healthPenaltyMin": 40,
 							"healthPenaltyMax": 100
 						};
 					}
@@ -256,8 +256,8 @@ class healer implements IMod
 							"duration": 0,
 							"fadeOut": 0,
 							"cost": 30,
-							"healthPenaltyMin": 100,
-							"healthPenaltyMax": 100
+							"healthPenaltyMin": 0,
+							"healthPenaltyMax": 0
 						};
 					}
 					if (MedKits.Afak.AddFixDestroyedPart === true) {
@@ -499,8 +499,8 @@ class healer implements IMod
 						medItem._props.Height = 1;
 					}
 					medItem._props.MaxHpResource = SurgicalKits.SanitarSurgicalKit.hpResource;
-					medItem._props.effects_damage.DestroyedPart.healthPenaltyMin = 25;
-					medItem._props.effects_damage.DestroyedPart.healthPenaltyMax = 75;
+					medItem._props.effects_damage.DestroyedPart.healthPenaltyMin = 30;
+					medItem._props.effects_damage.DestroyedPart.healthPenaltyMax = 90;
 					if (SurgicalKits.SanitarSurgicalKit.AddStopLightBleeding === true) {
 						medItem._props.effects_damage.LightBleeding =
 						{
@@ -745,6 +745,7 @@ class healer implements IMod
 				}
 			}
 			if (Injectors.ModInjectors.Enable === true) {
+				// Untested... Do not use!
 				if (!injectorList.includes(medItem._id)) {
 					if (parentList.includes(medItem._parent)) {
 						medItem._props.MaxHpResource = Injectors.ModInjectors.hpResource;
