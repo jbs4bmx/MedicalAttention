@@ -3,10 +3,10 @@
 */
 
 import { DependencyContainer } from "tsyringe";
-import { IMod } from "@spt-aki/models/external/mod";
-import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
-import { DatabaseServer } from "@spt-aki/servers/DatabaseServer"
-import { VFS } from "@spt-aki/utils/VFS";
+import { IMod } from "@spt/models/external/mod";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { DatabaseServer } from "@spt/servers/DatabaseServer"
+import { VFS } from "@spt/utils/VFS";
 import { jsonc } from "jsonc";
 import path from "path";
 
@@ -64,7 +64,9 @@ class healer implements IMod
 			"637b612fb7afa97bfc3d7005",
 			"637b6179104668754b72f8f5",
 			"637b620db7afa97bfc3d7009",
-			"637b6251104668754b72f8f9"
+			"637b6251104668754b72f8f9",
+			"66507eabf5ddb0818b085b68",
+			"648c1a965043c4052a4f8505"
 		]
 		const parentList = [
 			"5448f3a14bdc2d27728b4569",
@@ -742,6 +744,20 @@ class healer implements IMod
 				if (medItem._id === "637b6179104668754b72f8f5") {
 					medItem._props.MaxHpResource = Injectors.Pnb.hpResource;
 					medItem._props.effects_damage.Contusion.duration = Injectors.Pnb.Duration;
+				}
+			}
+			if (Injectors.a2bTG.Enable === true){
+				// 2A2-(b-TG)
+				if (medItem._id === "66507eabf5ddb0818b085b68") {
+					medItem._props.MaxHpResource = Injectors.a2bTG.hpResource;
+				}
+			}
+			if (Injectors.Ebudal.Enable === true){
+				// Ebudal
+				if (medItem._id === "648c1a965043c4052a4f8505") {
+					medItem._props.MaxHpResource = Injectors.Ebudal.hpResource;
+					medItem._props.effects_damage.Pain.duration = Injectors.Ebudal.Duration;
+					medItem._props.effects_damage.Contusion.duration = Injectors.Ebudal.Duration;
 				}
 			}
 			if (Injectors.ModInjectors.Enable === true) {
