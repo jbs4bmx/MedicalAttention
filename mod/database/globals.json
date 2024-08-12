@@ -1,0 +1,88 @@
+{
+    "buffs": {
+        "Ai2Buff": [
+            {
+                "AbsoluteValue": true,
+                "BuffType": "HealthRate",
+                "Chance": 1,
+                "Delay": 3,
+                "Duration": 60,
+                "Cost": 30,
+                "SkillName": "",
+                "Value": 0.5
+            }
+        ],
+        "CarBuff": [
+            {
+                "AbsoluteValue": true,
+                "BuffType": "HealthRate",
+                "Chance": 1,
+                "Delay": 3,
+                "Duration": 60,
+                "Cost": 30,
+                "SkillName": "",
+                "Value": 0.5
+            }
+        ],
+        "SalewaBuff": [
+            {
+                "AbsoluteValue": true,
+                "BuffType": "HealthRate",
+                "Chance": 1,
+                "Delay": 3,
+                "Duration": 60,
+                "Cost": 30,
+                "SkillName": "",
+                "Value": 0.5
+            }
+        ],
+        "IfakBuff": [
+            {
+                "AbsoluteValue": true,
+                "BuffType": "HealthRate",
+                "Chance": 1,
+                "Delay": 3,
+                "Duration": 60,
+                "Cost": 30,
+                "SkillName": "",
+                "Value": 0.5
+            }
+        ],
+        "SanitarBuff": [
+            {
+                "AbsoluteValue": true,
+                "BuffType": "HealthRate",
+                "Chance": 1,
+                "Delay": 3,
+                "Duration": 60,
+                "Cost": 30,
+                "SkillName": "",
+                "Value": 0.5
+            }
+        ],
+        "AfakBuff": [
+            {
+                "AbsoluteValue": true,
+                "BuffType": "HealthRate",
+                "Chance": 1,
+                "Delay": 3,
+                "Duration": 60,
+                "Cost": 30,
+                "SkillName": "",
+                "Value": 0.5
+            }
+        ],
+        "GrizzlyBuff": [
+            {
+                "AbsoluteValue": true,
+                "BuffType": "HealthRate",
+                "Chance": 1,
+                "Delay": 3,
+                "Duration": 60,
+                "Cost": 30,
+                "SkillName": "",
+                "Value": 0.5
+            }
+        ]
+    }
+}

@@ -3,26 +3,36 @@
 */
 
 import { DependencyContainer } from "tsyringe";
-import { IMod } from "@spt/models/external/mod";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
+
 import { DatabaseServer } from "@spt/servers/DatabaseServer"
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { IMod } from "@spt/models/external/mod";
+import { ImporterUtil } from "@spt/utils/ImporterUtil";
+import { PreSptModLoader } from "@spt/loaders/PreSptModLoader";
 import { VFS } from "@spt/utils/VFS";
+
 import { jsonc } from "jsonc";
 import path from "path";
 
-"use strict";
+let medicaldb;
 
 class healer implements IMod
 {
 	private pkg;
+	private path = require('path');
+    private modName = this.path.basename(this.path.dirname(__dirname.split('/').pop()));
 
-	public postDBLoad(container: DependencyContainer): void
-	{
-        const vfs = container.resolve<VFS>("VFS");
-        const {MedKits,Pills,Bandages,Splints,Topicals,SurgicalKits,Tourniquets,Injectors} = jsonc.parse(vfs.readFile(path.resolve(__dirname, "../config.jsonc")));
+	public postDBLoad(container: DependencyContainer): void {
 		const logger = container.resolve<ILogger>("WinstonLogger");
         const db = container.resolve<DatabaseServer>("DatabaseServer").getTables().templates.items;
-		this.pkg = require("../package.json");
+        const preSptModLoader = container.resolve<PreSptModLoader>("PreSptModLoader");
+        const databaseImporter = container.resolve<ImporterUtil>("ImporterUtil");
+        this.pkg = require("../package.json");
+        const vfs = container.resolve<VFS>("VFS");
+        const {MedKits,Pills,Bandages,Splints,Topicals,SurgicalKits,Tourniquets,Injectors} = jsonc.parse(vfs.readFile(path.resolve(__dirname, "../config.jsonc")));
+
+		//const db = tables.templates.items;
+		medicaldb = databaseImporter.loadRecursive(`${preSptModLoader.getModPath(this.modName)}database/`);
 
 		let locationsMin = [
 			"laboratory",
@@ -73,8 +83,7 @@ class healer implements IMod
 			"5448f3a64bdc2d60728b456a"
 		]
 
-		for (let item in db)
-		{
+		for (let item in db) {
 			let medItem = db[item];
 
 
@@ -107,6 +116,10 @@ class healer implements IMod
 							"healthPenaltyMax": 0
 						};
 					}
+					if (MedKits.Ai2.HealOverTime === true) {
+						this.pushBuff("Ai2Buff", container);
+						medItem._props.StimulatorBuffs = "Ai2Buff";
+					}
 				}
 			}
 			if (MedKits.Car.Enable === true) {
@@ -127,6 +140,10 @@ class healer implements IMod
 							"healthPenaltyMin": 0,
 							"healthPenaltyMax": 0
 						};
+					}
+					if (MedKits.Car.HealOverTime === true) {
+						this.pushBuff("CarBuff", container);
+						medItem._props.StimulatorBuffs = "CarBuff";
 					}
 				}
 			}
@@ -159,6 +176,10 @@ class healer implements IMod
 							"healthPenaltyMin": 70,
 							"healthPenaltyMax": 100
 						};
+					}
+					if (MedKits.Salewa.HealOverTime === true) {
+						this.pushBuff("SalewaBuff", container);
+						medItem._props.StimulatorBuffs = "SalewaBuff";
 					}
 				}
 			}
@@ -193,6 +214,10 @@ class healer implements IMod
 							"healthPenaltyMin": 25,
 							"healthPenaltyMax": 75
 						};
+					}
+					if (MedKits.Ifak.HealOverTime === true) {
+						this.pushBuff("IfakBuff", container);
+						medItem._props.StimulatorBuffs = "IfakBuff";
 					}
 				}
 			}
@@ -238,6 +263,10 @@ class healer implements IMod
 							"healthPenaltyMax": 100
 						};
 					}
+					if (MedKits.Sanitar.HealOverTime === true) {
+						this.pushBuff("SanitarBuff", container);
+						medItem._props.StimulatorBuffs = "SanitarBuff";
+					}
 				}
 			}
 			if (MedKits.Afak.Enable === true) {
@@ -272,6 +301,10 @@ class healer implements IMod
 							"healthPenaltyMax": 100
 						};
 					}
+					if (MedKits.Afak.HealOverTime === true) {
+						this.pushBuff("AfakBuff", container);
+						medItem._props.StimulatorBuffs = "AfakBuff";
+					}
 				}
 			}
 			if (MedKits.Grizzly.Enable === true) {
@@ -296,6 +329,10 @@ class healer implements IMod
 							"healthPenaltyMin": 100,
 							"healthPenaltyMax": 100
 						};
+					}
+					if (MedKits.Grizzly.HealOverTime === true) {
+						this.pushBuff("GrizzlyBuff", container);
+						medItem._props.StimulatorBuffs = "GrizzlyBuff";
 					}
 				}
 			}
@@ -771,7 +808,59 @@ class healer implements IMod
 
 		}
 
-		logger.info(`${this.pkg.author}-${this.pkg.name} v${this.pkg.version}: Cached Successfully`);
+		logger.log(`${this.pkg.author}-${this.pkg.name} v${this.pkg.version}: Cached Successfully`, "green");
+
+	}
+
+	public pushBuff(stringBuff: string, container: DependencyContainer) {
+		const logger = container.resolve<ILogger>("WinstonLogger");
+		const gameGlobals = container.resolve<DatabaseServer>("DatabaseServer").getTables().globals.config;
+        const gameBuffs = gameGlobals.Health.Effects.Stimulator.Buffs;
+        const additions = medicaldb.globals.buffs;
+		const vfs = container.resolve<VFS>("VFS");
+		const { MedKits } = jsonc.parse(vfs.readFile(path.resolve(__dirname, "../config.jsonc")));
+
+		if (stringBuff === "Ai2Buff") {
+			gameBuffs[stringBuff] = additions[stringBuff];
+			gameBuffs[stringBuff][0].Duration = MedKits.Ai2.HealOverTimeDuration;
+			gameBuffs[stringBuff][0].Cost = Math.round(MedKits.Ai2.HealOverTimeDuration / 2);
+		}
+
+		if (stringBuff === "CarBuff") {
+			gameBuffs[stringBuff] = additions[stringBuff];
+			gameBuffs[stringBuff][0].Duration = MedKits.Car.HealOverTimeDuration;
+			gameBuffs[stringBuff][0].Cost = Math.round(MedKits.Car.HealOverTimeDuration / 2);
+		}
+
+		if (stringBuff === "SalewaBuff") {
+			gameBuffs[stringBuff] = additions[stringBuff];
+			gameBuffs[stringBuff][0].Duration = MedKits.Salewa.HealOverTimeDuration;
+			gameBuffs[stringBuff][0].Cost = Math.round(MedKits.Salewa.HealOverTimeDuration / 2);
+		}
+
+		if (stringBuff === "IfakBuff") {
+			gameBuffs[stringBuff] = additions[stringBuff];
+			gameBuffs[stringBuff][0].Duration = MedKits.Ifak.HealOverTimeDuration;
+			gameBuffs[stringBuff][0].Cost = Math.round(MedKits.Ifak.HealOverTimeDuration / 2);
+		}
+
+		if (stringBuff === "SanitarBuff") {
+			gameBuffs[stringBuff] = additions[stringBuff];
+			gameBuffs[stringBuff][0].Duration = MedKits.Sanitar.HealOverTimeDuration;
+			gameBuffs[stringBuff][0].Cost = Math.round(MedKits.Sanitar.HealOverTimeDuration / 2);
+		}
+
+		if (stringBuff === "AfakBuff") {
+			gameBuffs[stringBuff] = additions[stringBuff];
+			gameBuffs[stringBuff][0].Duration = MedKits.Afak.HealOverTimeDuration;
+			gameBuffs[stringBuff][0].Cost = Math.round(MedKits.Afak.HealOverTimeDuration / 2);
+		}
+
+		if (stringBuff === "GrizzlyBuff") {
+			gameBuffs[stringBuff] = additions[stringBuff];
+			gameBuffs[stringBuff][0].Duration = MedKits.Grizzly.HealOverTimeDuration;
+			gameBuffs[stringBuff][0].Cost = Math.round(MedKits.Grizzly.HealOverTimeDuration / 2);
+		}
 	}
 
 }

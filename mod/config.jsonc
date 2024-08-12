@@ -7,7 +7,9 @@
             "hpResourceRate": 20,
             "Duration": 180,
             "AddStopLightBleeding": true,
-            "AddStopHeavyBleeding": true
+            "AddStopHeavyBleeding": true,
+            "HealOverTime": false,
+            "HealOverTimeDuration": 120
         },
         "Car": {
             // Swiss Safe 2-in-1 First Aid Kit (Car Medkit)
@@ -15,7 +17,9 @@
             "hpResource": 500,
             "hpResourceRate": 40,
             "Duration": 180,
-            "AddStopHeavyBleeding": true
+            "AddStopHeavyBleeding": true,
+            "HealOverTime": false,
+            "HealOverTimeDuration": 120
         },
         "Salewa": {
             // SALEWA - First Aid Kit Waterproof
@@ -24,7 +28,9 @@
             "hpResourceRate": 50,
             "Duration": 180,
             "AddFixFracture": true,
-            "AddFixDestroyedPart": true
+            "AddFixDestroyedPart": true,
+            "HealOverTime": false,
+            "HealOverTimeDuration": 120
         },
         "Ifak": {
             // Individual First Aid Kit (IFAK)
@@ -33,7 +39,9 @@
             "hpResourceRate": 100,
             "Duration": 180,
             "AddFixFracture": true,
-            "AddFixDestroyedPart": true
+            "AddFixDestroyedPart": true,
+            "HealOverTime": false,
+            "HealOverTimeDuration": 120
         },
         "Sanitar": {
             // Sanitar's AFAK
@@ -44,7 +52,9 @@
             "Duration": 15,
             "AddStopLightBleeding": true,
             "AddStopHeavyBleeding": true,
-            "AddFixFracture": true
+            "AddFixFracture": true,
+            "HealOverTime": false,
+            "HealOverTimeDuration": 120
         },
         "Afak": {
             // Advanced Individual First Aid Kit (AFAK)
@@ -53,7 +63,9 @@
             "hpResourceRate": 100,
             "Duration": 180,
             "AddFixFracture": true,
-            "AddFixDestroyedPart": true
+            "AddFixDestroyedPart": true,
+            "HealOverTime": false,
+            "HealOverTimeDuration": 120
         },
         "Grizzly": {
             // Sportsman Series Grizzly Medical Kit
@@ -61,7 +73,9 @@
             "hpResource": 5000,
             "hpResourceRate": 125,
             "Duration": 180,
-            "AddFixDestroyedPart": true
+            "AddFixDestroyedPart": true,
+            "HealOverTime": false,
+            "HealOverTimeDuration": 120
         }
     },
     "Pills": {
