@@ -129,83 +129,347 @@ Follow these steps to install and configure the mod:
 Medical Supplies are customizable by editing the included config.json file. The customizable options have been greatly increased to allow for more targeted amplification of medical items. You can enable modification on one or more items and further modify those items affects to your liking.</br>
 ```jsonc
 {
-    "ArmorCoverage": {
-        // Customize Holtzman Shield armor protection areas.
-        // This value must be true or false.
-        "Head": true,
-        "Neck": true,
-        "Eyes": true,
-        "Ears": true,
-        "Jaw": true,
-        "Arms": true,
-        "Front": true,
-        "Back": true,
-        "Sides": true,
-        "Pelvis": true,
-        "Buttocks": true,
-        "Legs": true
+    "MedKits":{
+        "Ai2": {
+            // Soviet AI-2 Medkit
+            "Enable": true,
+            "hpResource": 250,
+            "hpResourceRate": 20,
+            "Duration": 180,
+            "AddStopLightBleeding": true,
+            "AddStopHeavyBleeding": true,
+            "HealOverTime": false,
+            "HealOverTimeDuration": 120
+        },
+        "Car": {
+            // Swiss Safe 2-in-1 First Aid Kit (Car Medkit)
+            "Enable": true,
+            "hpResource": 500,
+            "hpResourceRate": 40,
+            "Duration": 180,
+            "AddStopHeavyBleeding": true,
+            "HealOverTime": false,
+            "HealOverTimeDuration": 120
+        },
+        "Salewa": {
+            // SALEWA - First Aid Kit Waterproof
+            "Enable": true,
+            "hpResource": 1000,
+            "hpResourceRate": 50,
+            "Duration": 180,
+            "AddFixFracture": true,
+            "AddFixDestroyedPart": true,
+            "HealOverTime": false,
+            "HealOverTimeDuration": 120
+        },
+        "Ifak": {
+            // Individual First Aid Kit (IFAK)
+            "Enable": true,
+            "hpResource": 1000,
+            "hpResourceRate": 100,
+            "Duration": 180,
+            "AddFixFracture": true,
+            "AddFixDestroyedPart": true,
+            "HealOverTime": false,
+            "HealOverTimeDuration": 120
+        },
+        "Sanitar": {
+            // Sanitar's AFAK
+            "Enable": true,
+            "ResizeTo1x1": true,
+            "hpResource": 2000,
+            "hpResourceRate": 5,
+            "Duration": 15,
+            "AddStopLightBleeding": true,
+            "AddStopHeavyBleeding": true,
+            "AddFixFracture": true,
+            "HealOverTime": false,
+            "HealOverTimeDuration": 120
+        },
+        "Afak": {
+            // Advanced Individual First Aid Kit (AFAK)
+            "Enable": true,
+            "hpResource": 1500,
+            "hpResourceRate": 100,
+            "Duration": 180,
+            "AddFixFracture": true,
+            "AddFixDestroyedPart": true,
+            "HealOverTime": false,
+            "HealOverTimeDuration": 120
+        },
+        "Grizzly": {
+            // Sportsman Series Grizzly Medical Kit
+            "Enable": true,
+            "hpResource": 5000,
+            "hpResourceRate": 125,
+            "Duration": 180,
+            "AddFixDestroyedPart": true,
+            "HealOverTime": false,
+            "HealOverTimeDuration": 120
+        }
     },
-    "ArmorAmount": {
-        // Customize Holtzman Shield armor durability level.
-        // This must be a whole number ranging from 1-9999999.
-        "Durability": 100000
+    "Pills": {
+        "Analgin": {
+            // Analgin (Actually illegal to purchase in real life!)
+            "Enable": true,
+            "hpResource": 24,
+            "Duration": 360,
+            "AddEnergyIncrease": true,
+            "EnergyIncrease": 15,
+            "HydrationBurn": -2,
+            "AddRadExposureFix": true
+        },
+        "Augmentin": {
+            // Augmentin Anti-Biotics
+            "Enable": true,
+            "hpResource": 45,
+            "Duration": 360,
+            "EnergyIncrease": 15,
+            "HydrationBurn": -2,
+            "AddRadExposureFix": true
+        },
+        "Ibuprofen": {
+            // Ibuprofen
+            "Enable": true,
+            "hpResource": 90,
+            "Duration": 360,
+            "AddEnergyIncrease": true,
+            "EnergyIncrease": 15,
+            "HydrationBurn": -2,
+            "AddRadExposureFix": true
+        }
     },
-    "Resources": {
-        // Customize Holtzman Shield item properties.
-        "ArmorClass": "10",
-        "ArmorMaterial": "Ceramic",
-        "ArmorType": "Heavy",
-        "ItemWeight": 0.01,
-
-        // This is the amount of protection from bright lights.
-        // This must be any number value between 0 and 1 (e.g., 0, 0.25, 0.5, 0.8, 1, etc.)
-        "BlindnessProtection": 1,
-
-        // I recommend keeping this at or below 100
-        // This must be a whole number ranging from 1-2000.
-        "RepairCost": 100,
-
-        // Customize trader (Ragman) properties
-        "traderPrice": 1000,
-        "traderLoyaltyLevel": 1
+    "Bandages": {
+        "Aseptic": {
+            // Medpride Conforming Stretch Gauze
+            "Enable": true,
+            "hpResource": 8,
+            "AddStopHeavyBleeding": true
+        },
+        "Army": {
+            // Russian Individual dressing bag PPI AB-3
+            "Enable": true,
+            "hpResource": 4,
+            "AddStopHeavyBleeding": true
+        }
     },
-    "PreFab": {
-        // If more than one is set to 'true', then PreFab will revert to default (Evasion).
-        "Evasion": true,
-        "Alpha": false,
-        "DeadSkul": false,
-        "TrainHard": false,
-        "TwitchRivals": false,
-        "Bear": false,
-        "Kiba": false,
-        "Labs": false,
-        "RFArmy": false,
-        "TerraGroup": false,
-        "Untar": false,
-        "USEC": false,
-        "Blue": false,
-        "Green": false,
-        "Red": false,
-        "White": false,
-        "Yellow": false,
-        "Unheard": false,
-        "Arena": false,
-        // The following item(s) is(are) not yet part of the game. (WIP - Ignore for now.)
-        "BlackDivision": false
+    "Splints": {
+        "Splint": {
+            // EVERLIT Survival 36 Inch Splint
+            "Enable": true,
+            "hpResource": 8
+        },
+        "AluminumSplint": {
+            // Archer Medtech Universal First Aid Splint - Moldable Aluminum
+            "Enable": true,
+            "hpResource": 8
+        }
     },
-    "GodMode": {
-        // Disable damage dealt by blunt force trauma.
-        "BluntForce": true,
-
-        // (WIP) Disable damage from projectile penetration of armor.
-        // This value is a work in progress and is not currently implemented in this mod. - Please ignore for now.
-        "Penetration": false
+    "Topicals": {
+        "Vaseline": {
+            // Norka Vaseline cosmetic "Mink"
+            "Enable": true,
+            "hpResource": 10,
+            "Duration": 360,
+            "EnergyBurn": -2,
+            "HydrationBurn": -2,
+            "AddRadExposureFix": true
+        },
+        "GoldenStarBalm": {
+            // Golden Star Balm
+            "Enable": true,
+            "hpResource": 10,
+            "Duration": 360,
+            "EnergyBurn": -2,
+            "EnableHydrationBurn": true,
+            "HydrationBurn": -2,
+            "AddRadExposureFix": true
+        }
     },
-    "Blacklist": {
-        // Set to 'true' to disable item spawning on PMC or Scav bots, or to remove from global loot pools.
-        "pmc": false,
-        "scav": false,
-        "globalLoot": false
+    "SurgicalKits": {
+        "CMSSurgicalKit": {
+            // Tactical Surgical and Suture Kit
+            "Enable": true,
+            "hpResource": 10,
+            "AddStopLightBleeding": true,
+            "AddStopHeavyBleeding": true,
+            "AddFixFracture": true
+        },
+        "SanitarSurgicalKit": {
+            // Also based on the Tactical Surgical and Suture Kit
+            "Enable": true,
+            "ResizeTo2x1": true,
+            "hpResource": 8,
+            "AddStopLightBleeding": true,
+            "AddStopHeavyBleeding": true,
+            "AddFixFracture": true
+        },
+        "Surv12FieldSurgicalKit": {
+            // 12 Survivors First Aid Rollup Kit
+            "Enable": true,
+            "hpResource": 12,
+            "AddStopLightBleeding": true,
+            "AddStopHeavyBleeding": true
+        }
+    },
+    "Tourniquets": {
+        "Esmarch": {
+            // Blood Loss Arterial Bleeding Rubber Band (aka Soviet Pink Tourniquet Esmarch)
+            "Enable": true,
+            "hpResource": 5,
+            "AddStopLightBleeding": true
+        },
+        "CalokB": {
+            // Celox V12090 Blood Clotting Granule Applicator and Plunger
+            "Enable": true,
+            "hpResource": 5,
+            "AddStopLightBleeding": true
+        },
+        "Cat": {
+            // North American Rescue NAR CAT Tourniquet
+            "Enable": true,
+            "hpResource": 5,
+            "AddStopLightBleeding": true
+        }
+    },
+    "Injectors": {
+        "All": {
+            // This setting is a WIP. It has not yet been tested.
+            "AllInjectorsSpawnEverywhere": false
+        },
+        "Morphine": {
+            // Morphine Injector
+            "Enable": true,
+            "hpResource": 4,
+            "Duration": 360,
+            "HydrationBurn": -2,
+            "EnergyBurn": -2
+        },
+        "Sj1": {
+            // Combat Stimulant Injector SJ1 TGLabs
+            "Enable": true,
+            "hpResource": 4
+        },
+        "eTGchange": {
+            // Regenerative Stimulant Injector eTG-change
+            "Enable": true,
+            "hpResource": 4,
+            "Duration": 360
+        },
+        "Sj6": {
+            // Combat Stimulant Injector SJ6 TGLabs
+            "Enable": true,
+            "hpResource": 4
+        },
+        "Sj9": {
+            // Combat Stimulant Injector SJ9 TGLabs
+            "Enable": true,
+            "hpResource": 4
+        },
+        "Propital": {
+            // Propital
+            "Enable": true,
+            "hpResource": 4,
+            "Duration": 360
+        },
+        "Zagustin": {
+            // Hemostatic Drug Zagustin
+            "Enable": true,
+            "hpResource": 4,
+            "Duration": 360
+        },
+        "Adrenaline": {
+            // Adrenaline Injector
+            "Enable": true,
+            "hpResource": 4,
+            "Duration": 360
+        },
+        "Meldonin": {
+            // Meldonin
+            "Enable": true,
+            "hpResource": 4
+        },
+        "Ahf1m": {
+            // AHF1-M
+            "Enable": true,
+            "hpResource": 4
+        },
+        "bTG": {
+            // 3-(b-TG)
+            "Enable": true,
+            "hpResource": 4
+        },
+        "Norepinephrine": {
+            // L1 (Norepinephrine)
+            "Enable": true,
+            "hpResource": 4,
+            "Duration": 360
+        },
+        "p22": {
+            // P22
+            "Enable": true,
+            "hpResource": 4
+        },
+        "Obdolbos": {
+            // Cocktail "Oldolbos"
+            "Enable": true,
+            "hpResource": 4
+        },
+        "Mule": {
+            // M.U.L.E. stimulator
+            "Enable": true,
+            "hpResource": 4
+        },
+        "xTG12": {
+            // Antidote xTG-12
+            "Enable": true,
+            "hpResource": 4
+        },
+        "Obdolbos2": {
+            // Obdolbos 2
+            "Enable": true,
+            "hpResource": 4
+        },
+        "Sj12": {
+            // SJ12 TGLabs
+            "Enable": true,
+            "hpResource": 4
+        },
+        "Perfotoran": {
+            // Perfotoran (Blue Blood)
+            "Enable": true,
+            "hpResource": 4,
+            "Duration": 360
+        },
+        "Trimadol": {
+            // Trimadol
+            "Enable": true,
+            "hpResource": 4,
+            "Duration": 360
+        },
+        "Pnb": {
+            // PNB
+            "Enable": true,
+            "hpResource": 4,
+            "Duration": 360
+        },
+        "a2bTG": {
+            // 2A2-(b-TG)
+            "Enable": true,
+            "hpResource": 4
+        },
+        "Ebudal": {
+            // Ebudal
+            "Enable": true,
+            "hpResource": 4,
+            "Duration": 360
+        },
+        "ModInjectors": {
+            // All custom injectors from mods.
+            // This setting is a WIP. It has not yet been tested.
+            "Enable": false,
+            "hpResource": 4
+        }
     }
 }
 ```
