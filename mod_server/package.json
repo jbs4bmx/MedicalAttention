@@ -1,10 +1,12 @@
 {
     "name": "MedicalAttention",
-    "version": "395.0.2",
+    "version": "310.0.1",
+    "sptVersion": "3.10.*",
+    "loadBefore": [],
+    "loadAfter": [],
+    "incompatibilities": [],
+    "isBundleMod": false,
     "main": "src/MedAttention.js",
-    "license": "MIT",
-    "author": "jbs4bmx",
-    "sptVersion": "3.9.*",
     "scripts": {
         "setup": "npm i",
         "build": "node ./build.mjs",
@@ -18,9 +20,11 @@
         "eslint": "8.57",
         "fs-extra": "11.2",
         "ignore": "^5.2",
-        "os": "^0.1",
         "tsyringe": "4.8.0",
         "typescript": "5.4",
         "winston": "3.12"
-    }
+    },
+    "author": "jbs4bmx",
+    "contributors": [],
+    "license": "MIT"
 }
