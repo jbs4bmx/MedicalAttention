@@ -20,7 +20,7 @@ class healer implements IMod
 {
 	private pkg;
 	private path = require('path');
-    private modName = this.path.basename(this.path.dirname(__dirname.split('/').pop()));
+	private modName = this.path.basename(this.path.dirname(this.path.resolve(__dirname)));
 
 	public postDBLoad(container: DependencyContainer): void {
 		const logger = container.resolve<ILogger>("WinstonLogger");
