@@ -13,9 +13,9 @@ namespace MedicalAttention.Utilities
         }
 
         [PatchPrefix]
-        static bool Prefix(EPhysicalCondition surgCheck, ref bool __result)
+        static bool Prefix(EPhysicalCondition c, ref bool __result)
         {
-            if (surgCheck == EPhysicalCondition.HealingLegs && MedsPlugin.dontStopForSurgery.Value)
+            if (c == EPhysicalCondition.HealingLegs && MedsPlugin.dontStopForSurgery.Value)
             {
                 __result = false;
                 return false;
