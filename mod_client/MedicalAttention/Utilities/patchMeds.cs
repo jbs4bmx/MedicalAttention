@@ -13,9 +13,9 @@ namespace MedicalAttention.Utilities
         }
 
         [PatchPrefix]
-        static bool Prefix(EPhysicalCondition medCheck, ref bool __result)
+        static bool Prefix(EPhysicalCondition c, ref bool __result)
         {
-            if (medCheck == EPhysicalCondition.UsingMeds && MedsPlugin.sprintWithMeds.Value)
+            if (c == EPhysicalCondition.UsingMeds && MedsPlugin.sprintWithMeds.Value)
             {
                 __result = false;
                 return false;
