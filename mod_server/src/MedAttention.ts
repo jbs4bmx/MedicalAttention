@@ -1,38 +1,52 @@
+/* eslint-disable no-var */
 /**
  * Copyright: jbs4bmx
 */
 
-import { DependencyContainer } from "tsyringe";
-
-import { DatabaseServer } from "@spt/servers/DatabaseServer"
+import { ConfigServer } from "@spt/servers/ConfigServer";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
+import { DatabaseServer } from "@spt/servers/DatabaseServer";
+import { container, DependencyContainer } from "tsyringe";
+import { ICoreConfig } from "@spt/models/spt/config/ICoreConfig";
+import { IDatabaseTables } from "@spt/models/spt/server/IDatabaseTables";
 import { ILogger } from "@spt/models/spt/utils/ILogger";
 import { IMod } from "@spt/models/external/mod";
 import { ImporterUtil } from "@spt/utils/ImporterUtil";
+import { IPreSptLoadMod } from "@spt/models/external/IPreSptLoadMod";
 import { PreSptModLoader } from "@spt/loaders/PreSptModLoader";
-import { VFS } from "@spt/utils/VFS";
-
+import { FileSystemSync } from "@spt/utils/FileSystemSync";
+import { satisfies } from "semver";
 import { jsonc } from "jsonc";
-import path from "path";
+import path from "node:path";
 
 let medicaldb;
+const preSptModLoader = container.resolve<PreSptModLoader>("PreSptModLoader");
+const databaseImporter = container.resolve<ImporterUtil>("ImporterUtil");
+const logger = container.resolve<ILogger>("WinstonLogger");
+const configServer = container.resolve<ConfigServer>("ConfigServer");
+const sptConfig = configServer.getConfig<ICoreConfig>(ConfigTypes.CORE);
+const fileSystem = container.resolve<FileSystemSync>("FileSystemSync");
 
-class healer implements IMod
+class healer implements IPreSptLoadMod, IMod
 {
-	private pkg;
-	private path = require('path');
-    private modName = this.path.basename(this.path.dirname(__dirname.split('/').pop()));
+    private privatePath = require('path');
+    public modName: string = this.privatePath.basename(this.privatePath.dirname(__dirname.split('/').pop()));
+
+	public preSptLoad(container: DependencyContainer): void
+    {
+        if (!this.validSptVersion(container)) {
+            logger.error("This version of MedicalAttention was not made for your version of SPT. Disabling");
+            return;
+        }
+    }
 
 	public postDBLoad(container: DependencyContainer): void {
-		const logger = container.resolve<ILogger>("WinstonLogger");
-        const db = container.resolve<DatabaseServer>("DatabaseServer").getTables().templates.items;
-        const preSptModLoader = container.resolve<PreSptModLoader>("PreSptModLoader");
-        const databaseImporter = container.resolve<ImporterUtil>("ImporterUtil");
-        this.pkg = require("../package.json");
-        const vfs = container.resolve<VFS>("VFS");
-        const {MedKits,Pills,Bandages,Splints,Topicals,SurgicalKits,Tourniquets,Injectors} = jsonc.parse(vfs.readFile(path.resolve(__dirname, "../config.jsonc")));
+        const {MedKits,Pills,Bandages,Splints,Topicals,SurgicalKits,Tourniquets,Injectors} = jsonc.parse(fileSystem.read(path.resolve(__dirname, "../config.jsonc")));
 
-		//const db = tables.templates.items;
-		medicaldb = databaseImporter.loadRecursive(`${preSptModLoader.getModPath(this.modName)}database/`);
+		const dbServer = container.resolve<DatabaseServer>("DatabaseServer");
+		const tables: IDatabaseTables = dbServer.getTables();
+		const db = tables.templates.items;
+		medicaldb = databaseImporter.loadAsync(`${preSptModLoader.getModPath(this.modName)}/database/`);
 
 		let locationsMin = [
 			"laboratory",
@@ -805,57 +819,47 @@ class healer implements IMod
 					}
 				}
 			}
-
 		}
-
-		logger.log(`${this.pkg.author}-${this.pkg.name} v${this.pkg.version}: Cached Successfully`, "green");
-
 	}
 
-	public pushBuff(stringBuff: string, container: DependencyContainer) {
-		const logger = container.resolve<ILogger>("WinstonLogger");
-		const gameGlobals = container.resolve<DatabaseServer>("DatabaseServer").getTables().globals.config;
-        const gameBuffs = gameGlobals.Health.Effects.Stimulator.Buffs;
+	public pushBuff(stringBuff: string, container: DependencyContainer)
+	{
+		const dbServer = container.resolve<DatabaseServer>("DatabaseServer");
+		const tables: IDatabaseTables = dbServer.getTables();
+        const gameBuffs = tables.globals.config.Health.Effects.Stimulator.Buffs;
         const additions = medicaldb.globals.buffs;
-		const vfs = container.resolve<VFS>("VFS");
-		const { MedKits } = jsonc.parse(vfs.readFile(path.resolve(__dirname, "../config.jsonc")));
+		const { MedKits } = jsonc.parse(fileSystem.read(path.resolve(this.modName, "config.jsonc")));
 
 		if (stringBuff === "Ai2Buff") {
 			gameBuffs[stringBuff] = additions[stringBuff];
 			gameBuffs[stringBuff][0].Duration = MedKits.Ai2.HealOverTimeDuration;
 			gameBuffs[stringBuff][0].Cost = Math.round(MedKits.Ai2.HealOverTimeDuration / 2);
 		}
-
 		if (stringBuff === "CarBuff") {
 			gameBuffs[stringBuff] = additions[stringBuff];
 			gameBuffs[stringBuff][0].Duration = MedKits.Car.HealOverTimeDuration;
 			gameBuffs[stringBuff][0].Cost = Math.round(MedKits.Car.HealOverTimeDuration / 2);
 		}
-
 		if (stringBuff === "SalewaBuff") {
 			gameBuffs[stringBuff] = additions[stringBuff];
 			gameBuffs[stringBuff][0].Duration = MedKits.Salewa.HealOverTimeDuration;
 			gameBuffs[stringBuff][0].Cost = Math.round(MedKits.Salewa.HealOverTimeDuration / 2);
 		}
-
 		if (stringBuff === "IfakBuff") {
 			gameBuffs[stringBuff] = additions[stringBuff];
 			gameBuffs[stringBuff][0].Duration = MedKits.Ifak.HealOverTimeDuration;
 			gameBuffs[stringBuff][0].Cost = Math.round(MedKits.Ifak.HealOverTimeDuration / 2);
 		}
-
 		if (stringBuff === "SanitarBuff") {
 			gameBuffs[stringBuff] = additions[stringBuff];
 			gameBuffs[stringBuff][0].Duration = MedKits.Sanitar.HealOverTimeDuration;
 			gameBuffs[stringBuff][0].Cost = Math.round(MedKits.Sanitar.HealOverTimeDuration / 2);
 		}
-
 		if (stringBuff === "AfakBuff") {
 			gameBuffs[stringBuff] = additions[stringBuff];
 			gameBuffs[stringBuff][0].Duration = MedKits.Afak.HealOverTimeDuration;
 			gameBuffs[stringBuff][0].Cost = Math.round(MedKits.Afak.HealOverTimeDuration / 2);
 		}
-
 		if (stringBuff === "GrizzlyBuff") {
 			gameBuffs[stringBuff] = additions[stringBuff];
 			gameBuffs[stringBuff][0].Duration = MedKits.Grizzly.HealOverTimeDuration;
@@ -863,6 +867,13 @@ class healer implements IMod
 		}
 	}
 
+	private validSptVersion(container: DependencyContainer): boolean
+    {
+        const sptVersion = globalThis.G_SPTVERSION || sptConfig.sptVersion;
+        const packageJsonPath: string = path.join(__dirname, "../package.json");
+        const modSptVersion = JSON.parse(fileSystem.read(packageJsonPath)).sptVersion;
+        return satisfies(sptVersion, modSptVersion);
+    }
 }
 
 module.exports = { mod: new healer() }

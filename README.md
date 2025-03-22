@@ -94,7 +94,7 @@ There is one caveat to using this mod after enabling "fix fractures" and/or "fix
 
 |                         IDEs                                |      Name       | Link                                      |
 | :---------------------------------------------------------: | :-------------: | :---------------------------------------: |
-| <img src="./images/icons/VSCodium-Dark.svg" width="48">     | `VSCodium`      | [VSCodium Website][Vscodium-url]          |
+| <img src="./images/icons/VSCode-Dark.svg" width="48">       | `VSCode`        | [VSCode Website][Vscode-url]              |
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -550,4 +550,4 @@ None yet.
 
 <!-- Framwork/Library URLs -->
 [TypeScript-url]: https://www.typescriptlang.org/
-[Vscodium-url]: https://vscodium.com/
+[Vscode-url]: https://code.visualstudio.com/
