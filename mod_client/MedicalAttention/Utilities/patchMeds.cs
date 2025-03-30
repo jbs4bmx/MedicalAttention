@@ -1,29 +1,24 @@
-﻿using EFT;
+﻿using Comfort.Common;
+using EFT;
 using HarmonyLib;
 using SPT.Reflection.Patching;
 using System.Reflection;
 
 namespace MedicalAttention.Utilities
 {
-    internal class patchMeds : ModulePatch
+    [HarmonyPatch(typeof(MovementContext), "CanSprint", MethodType.Getter)]
+    public static class patchMeds
     {
-        protected override MethodBase GetTargetMethod()
+        
+        static bool Prefix(ref bool __result, MovementContext __instance)
         {
-            return AccessTools.Method(typeof(MovementContext), nameof(MovementContext.SetPhysicalCondition));
-        }
-
-        [PatchPrefix]
-        static bool Prefix(EPhysicalCondition medCheck, ref bool __result)
-        {
-            if (medCheck == EPhysicalCondition.UsingMeds && MedsPlugin.sprintWithMeds.Value)
+            if (MedsPlugin.sprintWithMeds.Value)
             {
-                __result = false;
-                return false;
+                // Allow sprinting while using meds or healing
+                __result = !__instance.PhysicalConditionIs(EPhysicalCondition.SprintDisabled) && (__instance.PhysicalConditionIs(EPhysicalCondition.UsingMeds) || __instance.PhysicalConditionIs(EPhysicalCondition.HealingLegs) || __instance.PhysicalConditionIs(EPhysicalCondition.OnPainkillers) || (!__instance.PhysicalConditionIs(EPhysicalCondition.RightLegDamaged) && !__instance.PhysicalConditionIs(EPhysicalCondition.LeftLegDamaged)));
+                return false; // Skip the original method execution
             }
-            else
-            {
-                return true;
-            }
+            return true;   
         }
     }
 }

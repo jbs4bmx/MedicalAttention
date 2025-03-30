@@ -1,29 +1,25 @@
-﻿using EFT;
+﻿using Comfort.Common;
+using EFT;
 using HarmonyLib;
 using SPT.Reflection.Patching;
 using System.Reflection;
 
 namespace MedicalAttention.Utilities
 {
-    internal class patchSurgeries : ModulePatch
-    {
-        protected override MethodBase GetTargetMethod()
-        {
-            return AccessTools.Method(typeof(MovementContext), nameof(MovementContext.SetPhysicalCondition));
-        }
 
-        [PatchPrefix]
-        static bool Prefix(EPhysicalCondition surgCheck, ref bool __result)
+    [HarmonyPatch(typeof(MovementContext), "CanWalk", MethodType.Getter)]
+    public static class patchSurgeries
+    {
+
+        static bool Prefix(ref bool __result, MovementContext __instance)
         {
-            if (surgCheck == EPhysicalCondition.HealingLegs && MedsPlugin.dontStopForSurgery.Value)
+            if (MedsPlugin.dontStopForSurgery.Value)
             {
-                __result = false;
-                return false;
+                // Allow walking while using meds or healing
+                __result = true;
+                return false; // Skip the original method execution
             }
-            else
-            {
-                return true;
-            }
+            return true;
         }
     }
 }
