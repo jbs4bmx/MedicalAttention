@@ -30,6 +30,6 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("311.1.1.0")]
-[assembly: AssemblyFileVersion("311.1.1.0")]
+[assembly: AssemblyVersion("311.2.1.0")]
+[assembly: AssemblyFileVersion("311.2.1.0")]
 [assembly: NeutralResourcesLanguage("en-US")]

@@ -7,8 +7,8 @@ using static MedicalAttention.Utilities.VersionChecker;
 
 namespace MedicalAttention
 {
-    [BepInPlugin("com.jbs4bmx.MedicalAttention", "MedicalAttention", "311.1.1")]
-    [BepInDependency("com.SPT.core", "3.11.1")]
+    [BepInPlugin("com.jbs4bmx.MedicalAttention", "MedicalAttention", "311.2.1")]
+    [BepInDependency("com.SPT.core", "3.11.2")]
     public class MedsPlugin : BaseUnityPlugin
     {
         public const int TarkovVersion = 35392;
