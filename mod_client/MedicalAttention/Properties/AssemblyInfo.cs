@@ -9,9 +9,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("MedicalAttention")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("jbs4bmx")]
 [assembly: AssemblyProduct("MedicalAttention")]
-[assembly: AssemblyCopyright("Copyright © jbs4bmx 2024")]
+[assembly: AssemblyCopyright("Copyright © 2025")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -30,6 +30,6 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("311.2.1.0")]
-[assembly: AssemblyFileVersion("311.2.1.0")]
+[assembly: AssemblyVersion("311.3.1.0")]
+[assembly: AssemblyFileVersion("311.3.1.0")]
 [assembly: NeutralResourcesLanguage("en-US")]
