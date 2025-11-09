@@ -2,7 +2,7 @@
 
 
 ### 09 November, 2025 - 4.0.0 (For SPT 4.0.0+)
-Update - Support SPT 4.0.0+
+Update - Add support for SPT 4.0.0+ and EFT 0.16.9.0.40087
 Update - Convert mod code base to C# for new C# server.
 
 ### 27 November, 2024 - 310.0.1 (For SPT 3.10.0+)
