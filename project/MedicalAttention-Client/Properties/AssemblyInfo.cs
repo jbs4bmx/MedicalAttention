@@ -1,17 +1,16 @@
-﻿using System.Resources;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("MedicalAttention")]
+[assembly: AssemblyTitle("MedicalAttention-Client")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("jbs4bmx")]
-[assembly: AssemblyProduct("MedicalAttention")]
-[assembly: AssemblyCopyright("Copyright © 2025")]
+[assembly: AssemblyProduct("Medical Attention")]
+[assembly: AssemblyCopyright("Copyright © jbs4bmx 2025")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -21,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("7752c3f9-2b58-4b00-9264-28a38492f4d1")]
+[assembly: Guid("e6876666-9b79-464d-9268-8835c720db4d")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -30,6 +29,5 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("311.3.1.0")]
-[assembly: AssemblyFileVersion("311.3.1.0")]
-[assembly: NeutralResourcesLanguage("en-US")]
+[assembly: AssemblyVersion("4.0.0.0")]
+[assembly: AssemblyFileVersion("4.0.0.0")]

@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Title>MedicalAttention-Server</Title>
+    <Authors>jbs4bmx</Authors>
+    <Version>4.0.0</Version>
+    <Copyright>Copyright © jbs4bmx 2025</Copyright>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="SemanticVersioning">
+      <HintPath>D:\SPT\SPT\SemanticVersioning.dll</HintPath>
+    </Reference>
+    <Reference Include="SPTarkov.Common">
+      <HintPath>D:\SPT\SPT\SPTarkov.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="SPTarkov.DI">
+      <HintPath>D:\SPT\SPT\SPTarkov.DI.dll</HintPath>
+    </Reference>
+    <Reference Include="SPTarkov.Server.Core">
+      <HintPath>D:\SPT\SPT\SPTarkov.Server.Core.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

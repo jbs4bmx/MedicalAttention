@@ -1,17 +1,17 @@
 ﻿using BepInEx;
 using BepInEx.Configuration;
 using HarmonyLib;
-using MedicalAttention.Utilities;
+using MedicalAttention_Client.Utilities;
 using System;
-using static MedicalAttention.Utilities.VersionChecker;
+using static MedicalAttention_Client.Utilities.VersionChecker;
 
-namespace MedicalAttention
+namespace MedicalAttention_Client
 {
-    [BepInPlugin("com.jbs4bmx.MedicalAttention", "MedicalAttention", "311.3.1")]
-    [BepInDependency("com.SPT.core", "3.11.0")]
+    [BepInPlugin("com.jbs4bmx.MedicalAttention", "MedicalAttention", "4.0.0")]
+    [BepInDependency("com.SPT.core", "4.0.0")]
     public class MedsPlugin : BaseUnityPlugin
     {
-        public const int TarkovVersion = 35392;
+        public const int TarkovVersion = 40087;
         public static ConfigEntry<bool> dontStopForSurgery;
         public static ConfigEntry<bool> sprintWithMeds;
 
@@ -37,7 +37,7 @@ namespace MedicalAttention
                         Order = 2,
                     }
                 )
-                
+
             );
 
             sprintWithMeds = Config.Bind<bool>(

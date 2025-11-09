@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36603.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedicalAttention-Client", "MedicalAttention-Client\MedicalAttention-Client.csproj", "{E6876666-9B79-464D-9268-8835C720DB4D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedicalAttention-Server", "MedicalAttention-Server\MedicalAttention-Server.csproj", "{BC19DFAF-104F-3E1F-4AEB-FA19A15DFBBF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E6876666-9B79-464D-9268-8835C720DB4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6876666-9B79-464D-9268-8835C720DB4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6876666-9B79-464D-9268-8835C720DB4D}.Debug|x64.ActiveCfg = Release|x64
+		{E6876666-9B79-464D-9268-8835C720DB4D}.Debug|x64.Build.0 = Release|x64
+		{E6876666-9B79-464D-9268-8835C720DB4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6876666-9B79-464D-9268-8835C720DB4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6876666-9B79-464D-9268-8835C720DB4D}.Release|x64.ActiveCfg = Release|x64
+		{E6876666-9B79-464D-9268-8835C720DB4D}.Release|x64.Build.0 = Release|x64
+		{BC19DFAF-104F-3E1F-4AEB-FA19A15DFBBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC19DFAF-104F-3E1F-4AEB-FA19A15DFBBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC19DFAF-104F-3E1F-4AEB-FA19A15DFBBF}.Debug|x64.ActiveCfg = Release|x64
+		{BC19DFAF-104F-3E1F-4AEB-FA19A15DFBBF}.Debug|x64.Build.0 = Release|x64
+		{BC19DFAF-104F-3E1F-4AEB-FA19A15DFBBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC19DFAF-104F-3E1F-4AEB-FA19A15DFBBF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC19DFAF-104F-3E1F-4AEB-FA19A15DFBBF}.Release|x64.ActiveCfg = Release|x64
+		{BC19DFAF-104F-3E1F-4AEB-FA19A15DFBBF}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6ECDA740-A360-40EE-BA1F-596C2B08DC84}
+	EndGlobalSection
+EndGlobal

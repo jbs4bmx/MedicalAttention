@@ -6,7 +6,7 @@ using System;
 using System.Diagnostics;
 using UnityEngine;
 
-namespace MedicalAttention.Utilities
+namespace MedicalAttention_Client.Utilities
 {
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = false)]
     public class VersionChecker : Attribute
@@ -24,7 +24,7 @@ namespace MedicalAttention.Utilities
         public static bool CheckEftVersion(ManualLogSource Logger, PluginInfo Info, ConfigFile Config = null)
         {
             int currentVersion = FileVersionInfo.GetVersionInfo(BepInEx.Paths.ExecutablePath).FilePrivatePart;
-            int buildVersion = MedicalAttention.MedsPlugin.TarkovVersion;
+            int buildVersion = MedicalAttention_Client.MedsPlugin.TarkovVersion;
             if (currentVersion != buildVersion)
             {
                 string errorMessage = $"ERROR: This version of MedicalAttention Client mod was built for Tarkov {buildVersion}, but you are running {currentVersion}. Please download the correct plugin version.";

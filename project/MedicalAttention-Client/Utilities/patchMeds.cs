@@ -4,7 +4,7 @@ using HarmonyLib;
 using SPT.Reflection.Patching;
 using System.Reflection;
 
-namespace MedicalAttention.Utilities
+namespace MedicalAttention_Client.Utilities
 {
     [HarmonyPatch(typeof(MovementContext), "CanSprint", MethodType.Getter)]
     public static class patchMeds

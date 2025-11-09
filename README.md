@@ -54,7 +54,7 @@
 
 
 <!-- ABOUT THE PROJECT -->
-## About The Project
+## 📋 About The Project
 Type: Server Mod</br>
 Disclaimer: **This mod is provided _as-is_ with _no guarantee_ of support.**
 
@@ -85,23 +85,21 @@ There is one caveat to using this mod after enabling "fix fractures" and/or "fix
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
-### Built With
+### 🔨 Built With
 | Frameworks/Libraries                                      | Name         | Link                                       |
 | :-------------------------------------------------------: | :----------: | :----------------------------------------: |
-| <img src="./images/icons/TypeScript.svg" width="48">      | `TypeScript` | [TypeScript Website][TypeScript-url]       |
+| <img src="./images/icons/CS.svg" width="48">              | `C Sharp`    | [C# Documentation][CSharp-url]             |
 
 |                         IDEs                                |      Name       | Link                                      |
 | :---------------------------------------------------------: | :-------------: | :---------------------------------------: |
-| <img src="./images/icons/VSCode-Dark.svg" width="48">       | `VSCode`        | [VSCode Website][Vscode-url]              |
+| <img src="./images/icons/VisualStudio-Dark.svg" width="48"> | `Visual Studio` | [Visual Studio Website][VisualStudio-url] |
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 
 <!-- GETTING STARTED -->
-## Getting Started
+## 🎮 Getting Started
 This section will explain how to install and use this mod.
 
 ### Prerequisites
@@ -125,7 +123,7 @@ Follow these steps to install and configure the mod:
 
 
 <!-- CONFIGURATION EXAMPLES -->
-## Configuration
+## ⚙ Configuration
 Medical Supplies are customizable by editing the included config.json file. The customizable options have been greatly increased to allow for more targeted amplification of medical items. You can enable modification on one or more items and further modify those items affects to your liking.</br>
 ```jsonc
 {
@@ -138,8 +136,7 @@ Medical Supplies are customizable by editing the included config.json file. The 
             "Duration": 180,
             "AddStopLightBleeding": true,
             "AddStopHeavyBleeding": true,
-            "HealOverTime": false,
-            "HealOverTimeDuration": 120
+            "HealOverTime": false
         },
         "Car": {
             // Swiss Safe 2-in-1 First Aid Kit (Car Medkit)
@@ -148,8 +145,7 @@ Medical Supplies are customizable by editing the included config.json file. The 
             "hpResourceRate": 40,
             "Duration": 180,
             "AddStopHeavyBleeding": true,
-            "HealOverTime": false,
-            "HealOverTimeDuration": 120
+            "HealOverTime": false
         },
         "Salewa": {
             // SALEWA - First Aid Kit Waterproof
@@ -159,8 +155,7 @@ Medical Supplies are customizable by editing the included config.json file. The 
             "Duration": 180,
             "AddFixFracture": true,
             "AddFixDestroyedPart": true,
-            "HealOverTime": false,
-            "HealOverTimeDuration": 120
+            "HealOverTime": false
         },
         "Ifak": {
             // Individual First Aid Kit (IFAK)
@@ -170,8 +165,7 @@ Medical Supplies are customizable by editing the included config.json file. The 
             "Duration": 180,
             "AddFixFracture": true,
             "AddFixDestroyedPart": true,
-            "HealOverTime": false,
-            "HealOverTimeDuration": 120
+            "HealOverTime": false
         },
         "Sanitar": {
             // Sanitar's AFAK
@@ -183,8 +177,7 @@ Medical Supplies are customizable by editing the included config.json file. The 
             "AddStopLightBleeding": true,
             "AddStopHeavyBleeding": true,
             "AddFixFracture": true,
-            "HealOverTime": false,
-            "HealOverTimeDuration": 120
+            "HealOverTime": false
         },
         "Afak": {
             // Advanced Individual First Aid Kit (AFAK)
@@ -194,8 +187,7 @@ Medical Supplies are customizable by editing the included config.json file. The 
             "Duration": 180,
             "AddFixFracture": true,
             "AddFixDestroyedPart": true,
-            "HealOverTime": false,
-            "HealOverTimeDuration": 120
+            "HealOverTime": false
         },
         "Grizzly": {
             // Sportsman Series Grizzly Medical Kit
@@ -204,8 +196,7 @@ Medical Supplies are customizable by editing the included config.json file. The 
             "hpResourceRate": 125,
             "Duration": 180,
             "AddFixDestroyedPart": true,
-            "HealOverTime": false,
-            "HealOverTimeDuration": 120
+            "HealOverTime": false
         }
     },
     "Pills": {
@@ -476,7 +467,7 @@ Medical Supplies are customizable by editing the included config.json file. The 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-### Mod FAQ
+### ⚠ Mod FAQ
 **Q: Where do I report bugs found with the current version of the mod?** <br>
 A: You can report bugs for the current version of this mod on the [MA Mod Page](https://hub.sp-tarkov.com/files/file/255-medical-attention/).
 
@@ -485,11 +476,12 @@ A: You can report bugs for the current version of this mod on the [MA Mod Page](
 
 
 <!-- ROADMAP -->
-## Roadmap
-- [X] Add Changelog
-- [ ] Add function to CMS and Surv12 to heal blacked thorax/head.
-- [X] Add Heal-Over-Time option to medkits.
-- [ ] Update/balance values of topicals and pills.
+## 🚗 Roadmap
+- ✅ Add Changelog
+- ❌ Add function to CMS and Surv12 to heal blacked thorax/head.
+- ✅ Add Heal-Over-Time option to medkits.
+- ❌ Update/balance values of topicals and pills.
+- ✅ Update to support SPT 4.0.0+
 
 Suggest changes or view/report issues [here](https://github.com/jbs4bmx/MedicalAttention/issues).
 
@@ -498,7 +490,7 @@ Suggest changes or view/report issues [here](https://github.com/jbs4bmx/MedicalA
 
 
 <!-- CONTRIBUTING -->
-## Contributing
+## 🚧 Contributing
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
 If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
@@ -518,7 +510,7 @@ You can also buy me a coffee! (This is not required, but I greatly appreciate an
 
 
 <!-- LICENSE -->
-## License
+## 🪧 License
 Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -526,7 +518,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 
 <!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
+## 👍 Acknowledgments
 Contributors:
 None yet.
 
@@ -546,8 +538,6 @@ None yet.
 [license-shield]: https://img.shields.io/github/license/jbs4bmx/MedicalAttention.svg?style=for-the-badge
 [license-url]: https://github.com/jbs4bmx/MedicalAttention/blob/master/LICENSE.txt
 
-
-
 <!-- Framwork/Library URLs -->
-[TypeScript-url]: https://www.typescriptlang.org/
-[Vscode-url]: https://code.visualstudio.com/
+[CSharp-url]: https://learn.microsoft.com/en-us/dotnet/csharp/
+[VisualStudio-url]: https://visualstudio.microsoft.com/
