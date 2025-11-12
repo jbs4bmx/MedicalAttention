@@ -109,32 +109,26 @@ public class MedServer(
             aiItem.Properties!.HpResourceRate = medConfig.Ai2!.hpResourceRate;
             if (medConfig.Ai2!.AddStopLightBleeding == true)
             {
-                aiItem.Properties!.EffectsDamage = new Dictionary<DamageEffectType, EffectsDamageProperties>
+                aiItem.Properties!.EffectsDamage![DamageEffectType.LightBleeding] = new EffectsDamageProperties
                 {
-                    [DamageEffectType.LightBleeding] = new EffectsDamageProperties
-                    {
-                        Delay = 0,
-                        Duration = medConfig.Ai2!.Duration,
-                        FadeOut = 0,
-                        Cost = 10,
-                        HealthPenaltyMin = 0,
-                        HealthPenaltyMax = 0
-                    }
+                    Delay = 0,
+                    Duration = medConfig.Ai2!.Duration,
+                    FadeOut = 0,
+                    Cost = 30,
+                    HealthPenaltyMin = 0,
+                    HealthPenaltyMax = 0
                 };
             }
             if (medConfig.Ai2!.AddStopHeavyBleeding == true)
             {
-                aiItem.Properties!.EffectsDamage = new Dictionary<DamageEffectType, EffectsDamageProperties>
+                aiItem.Properties!.EffectsDamage![DamageEffectType.HeavyBleeding] = new EffectsDamageProperties
                 {
-                    [DamageEffectType.HeavyBleeding] = new EffectsDamageProperties
-                    {
-                        Delay = 0,
-                        Duration = medConfig.Ai2!.Duration,
-                        FadeOut = 0,
-                        Cost = 10,
-                        HealthPenaltyMin = 0,
-                        HealthPenaltyMax = 0
-                    }
+                    Delay = 0,
+                    Duration = medConfig.Ai2!.Duration,
+                    FadeOut = 0,
+                    Cost = 30,
+                    HealthPenaltyMin = 0,
+                    HealthPenaltyMax = 0
                 };
             }
             if (medConfig.Ai2!.HealOverTime == true)
@@ -142,7 +136,6 @@ public class MedServer(
                 this.PushBuff("Ai2Buff");
                 aiItem.Properties!.StimulatorBuffs = "Ai2Buff";
             }
-
         }
 
 
@@ -154,17 +147,14 @@ public class MedServer(
             carItem.Properties!.HpResourceRate = medConfig.Car!.hpResourceRate;
             if (medConfig.Car!.AddStopHeavyBleeding == true)
             {
-                carItem.Properties!.EffectsDamage = new Dictionary<DamageEffectType, EffectsDamageProperties>
+                carItem.Properties!.EffectsDamage![DamageEffectType.HeavyBleeding] = new EffectsDamageProperties
                 {
-                    [DamageEffectType.HeavyBleeding] = new EffectsDamageProperties
-                    {
-                        Delay = 0,
-                        Duration = medConfig.Car!.Duration,
-                        FadeOut = 0,
-                        Cost = 10,
-                        HealthPenaltyMin = 0,
-                        HealthPenaltyMax = 0
-                    }
+                    Delay = 0,
+                    Duration = medConfig.Car!.Duration,
+                    FadeOut = 0,
+                    Cost = 30,
+                    HealthPenaltyMin = 0,
+                    HealthPenaltyMax = 0
                 };
             }
             if (medConfig.Car!.HealOverTime == true)
@@ -182,32 +172,26 @@ public class MedServer(
             salewaItem.Properties!.HpResourceRate = medConfig.Salewa!.hpResourceRate;
             if (medConfig.Salewa!.AddFixFracture == true)
             {
-                salewaItem.Properties!.EffectsDamage = new Dictionary<DamageEffectType, EffectsDamageProperties>
+                salewaItem.Properties!.EffectsDamage![DamageEffectType.Fracture] = new EffectsDamageProperties
                 {
-                    [DamageEffectType.Fracture] = new EffectsDamageProperties
-                    {
-                        Delay = 0,
-                        Duration = medConfig.Salewa?.Duration,
-                        FadeOut = 0,
-                        Cost = 10,
-                        HealthPenaltyMin = 0,
-                        HealthPenaltyMax = 0
-                    }
+                    Delay = 0,
+                    Duration = medConfig.Salewa?.Duration,
+                    FadeOut = 0,
+                    Cost = 30,
+                    HealthPenaltyMin = 0,
+                    HealthPenaltyMax = 0
                 };
             }
             if (medConfig.Salewa!.AddFixBlackedLimb == true)
             {
-                salewaItem.Properties!.EffectsDamage = new Dictionary<DamageEffectType, EffectsDamageProperties>
+                salewaItem.Properties!.EffectsDamage![DamageEffectType.DestroyedPart] = new EffectsDamageProperties
                 {
-                    [DamageEffectType.DestroyedPart] = new EffectsDamageProperties
-                    {
-                        Delay = 0,
-                        Duration = medConfig.Salewa?.Duration,
-                        FadeOut = 0,
-                        Cost = 10,
-                        HealthPenaltyMin = 0,
-                        HealthPenaltyMax = 0
-                    }
+                    Delay = 0,
+                    Duration = medConfig.Salewa?.Duration,
+                    FadeOut = 0,
+                    Cost = 30,
+                    HealthPenaltyMin = 0,
+                    HealthPenaltyMax = 0
                 };
             }
             if (medConfig.Salewa!.HealOverTime == true)
@@ -225,32 +209,26 @@ public class MedServer(
             ifakItem.Properties!.HpResourceRate = medConfig.Ifak!.hpResourceRate;
             if (medConfig.Ifak!.AddFixFracture == true)
             {
-                ifakItem.Properties!.EffectsDamage = new Dictionary<DamageEffectType, EffectsDamageProperties>
+                ifakItem.Properties!.EffectsDamage![DamageEffectType.Fracture] = new EffectsDamageProperties
                 {
-                    [DamageEffectType.Fracture] = new EffectsDamageProperties
-                    {
-                        Delay = 0,
-                        Duration = medConfig.Ifak?.Duration,
-                        FadeOut = 0,
-                        Cost = 10,
-                        HealthPenaltyMin = 0,
-                        HealthPenaltyMax = 0
-                    }
+                    Delay = 0,
+                    Duration = medConfig.Ifak?.Duration,
+                    FadeOut = 0,
+                    Cost = 30,
+                    HealthPenaltyMin = 0,
+                    HealthPenaltyMax = 0
                 };
             }
             if (medConfig.Ifak!.AddFixBlackedLimb == true)
             {
-                ifakItem.Properties!.EffectsDamage = new Dictionary<DamageEffectType, EffectsDamageProperties>
+                ifakItem.Properties!.EffectsDamage![DamageEffectType.DestroyedPart] = new EffectsDamageProperties
                 {
-                    [DamageEffectType.DestroyedPart] = new EffectsDamageProperties
-                    {
-                        Delay = 0,
-                        Duration = medConfig.Ifak?.Duration,
-                        FadeOut = 0,
-                        Cost = 10,
-                        HealthPenaltyMin = 0,
-                        HealthPenaltyMax = 0
-                    }
+                    Delay = 0,
+                    Duration = medConfig.Ifak?.Duration,
+                    FadeOut = 0,
+                    Cost = 30,
+                    HealthPenaltyMin = 0,
+                    HealthPenaltyMax = 0
                 };
             }
             if (medConfig.Ifak!.HealOverTime == true)
@@ -269,47 +247,38 @@ public class MedServer(
             helper.ResizeItem(sanitarItem, itemConfig, "1x1");
             if (medConfig.Sanitar!.AddStopLightBleeding == true)
             {
-                sanitarItem.Properties!.EffectsDamage = new Dictionary<DamageEffectType, EffectsDamageProperties>
+                sanitarItem.Properties!.EffectsDamage![DamageEffectType.LightBleeding] = new EffectsDamageProperties
                 {
-                    [DamageEffectType.LightBleeding] = new EffectsDamageProperties
-                    {
-                        Delay = 0,
-                        Duration = medConfig.Sanitar!.Duration,
-                        FadeOut = 0,
-                        Cost = 10,
-                        HealthPenaltyMin = 0,
-                        HealthPenaltyMax = 0
-                    }
+                    Delay = 0,
+                    Duration = medConfig.Sanitar!.Duration,
+                    FadeOut = 0,
+                    Cost = 30,
+                    HealthPenaltyMin = 0,
+                    HealthPenaltyMax = 0
                 };
             }
             if (medConfig.Sanitar!.AddStopHeavyBleeding == true)
             {
-                sanitarItem.Properties!.EffectsDamage = new Dictionary<DamageEffectType, EffectsDamageProperties>
+                sanitarItem.Properties!.EffectsDamage![DamageEffectType.HeavyBleeding] = new EffectsDamageProperties
                 {
-                    [DamageEffectType.HeavyBleeding] = new EffectsDamageProperties
-                    {
-                        Delay = 0,
-                        Duration = medConfig.Sanitar?.Duration,
-                        FadeOut = 0,
-                        Cost = 10,
-                        HealthPenaltyMin = 0,
-                        HealthPenaltyMax = 0
-                    }
+                    Delay = 0,
+                    Duration = medConfig.Sanitar?.Duration,
+                    FadeOut = 0,
+                    Cost = 30,
+                    HealthPenaltyMin = 0,
+                    HealthPenaltyMax = 0
                 };
             }
             if (medConfig.Sanitar!.AddFixFracture == true)
             {
-                sanitarItem.Properties!.EffectsDamage = new Dictionary<DamageEffectType, EffectsDamageProperties>
+                sanitarItem.Properties!.EffectsDamage![DamageEffectType.Fracture] = new EffectsDamageProperties
                 {
-                    [DamageEffectType.Fracture] = new EffectsDamageProperties
-                    {
-                        Delay = 0,
-                        Duration = medConfig.Sanitar?.Duration,
-                        FadeOut = 0,
-                        Cost = 10,
-                        HealthPenaltyMin = 0,
-                        HealthPenaltyMax = 0
-                    }
+                    Delay = 0,
+                    Duration = medConfig.Sanitar?.Duration,
+                    FadeOut = 0,
+                    Cost = 30,
+                    HealthPenaltyMin = 0,
+                    HealthPenaltyMax = 0
                 };
             }
             if (medConfig.Sanitar!.HealOverTime == true)
@@ -327,32 +296,26 @@ public class MedServer(
             afakItem.Properties!.HpResourceRate = medConfig.Afak!.hpResourceRate;
             if (medConfig.Afak!.AddFixFracture == true)
             {
-                afakItem.Properties!.EffectsDamage = new Dictionary<DamageEffectType, EffectsDamageProperties>
+                afakItem.Properties!.EffectsDamage![DamageEffectType.Fracture] = new EffectsDamageProperties
                 {
-                    [DamageEffectType.Fracture] = new EffectsDamageProperties
-                    {
-                        Delay = 0,
-                        Duration = medConfig.Afak?.Duration,
-                        FadeOut = 0,
-                        Cost = 10,
-                        HealthPenaltyMin = 0,
-                        HealthPenaltyMax = 0
-                    }
+                    Delay = 0,
+                    Duration = medConfig.Afak?.Duration,
+                    FadeOut = 0,
+                    Cost = 30,
+                    HealthPenaltyMin = 0,
+                    HealthPenaltyMax = 0
                 };
             }
             if (medConfig.Afak!.AddFixBlackedLimb == true)
             {
-                afakItem.Properties!.EffectsDamage = new Dictionary<DamageEffectType, EffectsDamageProperties>
+                afakItem.Properties!.EffectsDamage![DamageEffectType.DestroyedPart] = new EffectsDamageProperties
                 {
-                    [DamageEffectType.DestroyedPart] = new EffectsDamageProperties
-                    {
-                        Delay = 0,
-                        Duration = medConfig.Afak?.Duration,
-                        FadeOut = 0,
-                        Cost = 10,
-                        HealthPenaltyMin = 0,
-                        HealthPenaltyMax = 0
-                    }
+                    Delay = 0,
+                    Duration = medConfig.Afak?.Duration,
+                    FadeOut = 0,
+                    Cost = 30,
+                    HealthPenaltyMin = 0,
+                    HealthPenaltyMax = 0
                 };
             }
             if (medConfig.Afak!.HealOverTime == true)
@@ -370,17 +333,14 @@ public class MedServer(
             grizzlyItem.Properties!.HpResourceRate = medConfig.Grizzly!.hpResourceRate;
             if (medConfig.Grizzly!.AddFixBlackedLimb == true)
             {
-                grizzlyItem.Properties!.EffectsDamage = new Dictionary<DamageEffectType, EffectsDamageProperties>
+                grizzlyItem.Properties!.EffectsDamage![DamageEffectType.DestroyedPart] = new EffectsDamageProperties
                 {
-                    [DamageEffectType.DestroyedPart] = new EffectsDamageProperties
-                    {
-                        Delay = 0,
-                        Duration = medConfig.Grizzly?.Duration,
-                        FadeOut = 0,
-                        Cost = 10,
-                        HealthPenaltyMin = 0,
-                        HealthPenaltyMax = 0
-                    }
+                    Delay = 0,
+                    Duration = medConfig.Grizzly?.Duration,
+                    FadeOut = 0,
+                    Cost = 30,
+                    HealthPenaltyMin = 0,
+                    HealthPenaltyMax = 0
                 };
             }
             if (medConfig.Grizzly!.HealOverTime == true)
@@ -398,34 +358,25 @@ public class MedServer(
             analginItem.Properties!.MedUseTime = 1;
             if (medConfig.Analgin!.AddEnergyIncrease == true)
             {
-                analginItem.Properties!.EffectsHealth = new Dictionary<HealthFactor, EffectsHealthProperties>
+                analginItem.Properties!.EffectsHealth![HealthFactor.Energy] = new EffectsHealthProperties
                 {
-                    [HealthFactor.Energy] = new EffectsHealthProperties
-                    {
-                        Value = 15
-                    }
+                    Value = 15
                 };
             }
-            analginItem.Properties!.EffectsHealth = new Dictionary<HealthFactor, EffectsHealthProperties>
+            analginItem.Properties!.EffectsHealth![HealthFactor.Hydration] = new EffectsHealthProperties
             {
-                [HealthFactor.Hydration] = new EffectsHealthProperties
-                {
-                    Value = -2
-                }
+                Value = -2
             };
             if (medConfig.Analgin!.AddRadExposureFix == true)
             {
-                analginItem.Properties!.EffectsDamage = new Dictionary<DamageEffectType, EffectsDamageProperties>
+                analginItem.Properties!.EffectsDamage![DamageEffectType.RadExposure] = new EffectsDamageProperties
                 {
-                    [DamageEffectType.RadExposure] = new EffectsDamageProperties
-                    {
-                        Cost = 10,
-                        Delay = 0,
-                        Duration = 0,
-                        FadeOut = 0,
-                        HealthPenaltyMin = 0,
-                        HealthPenaltyMax = 0
-                    }
+                    Cost = 30,
+                    Delay = 0,
+                    Duration = 0,
+                    FadeOut = 0,
+                    HealthPenaltyMin = 0,
+                    HealthPenaltyMax = 0
                 };
             }
         }
@@ -435,33 +386,24 @@ public class MedServer(
             logger.Info("Updating Augmentin Pill properties...");
             augmentinItem.Properties!.MaxHpResource = medConfig.Augmentin!.hpResource;
             augmentinItem.Properties!.MedUseTime = 1;
-            augmentinItem.Properties!.EffectsHealth = new Dictionary<HealthFactor, EffectsHealthProperties>
+            augmentinItem.Properties!.EffectsHealth![HealthFactor.Energy] = new EffectsHealthProperties
             {
-                [HealthFactor.Energy] = new EffectsHealthProperties
-                {
-                    Value = 15
-                }
+                Value = 15
             };
-            augmentinItem.Properties!.EffectsHealth = new Dictionary<HealthFactor, EffectsHealthProperties>
+            augmentinItem.Properties!.EffectsHealth![HealthFactor.Hydration] = new EffectsHealthProperties
             {
-                [HealthFactor.Hydration] = new EffectsHealthProperties
-                {
-                    Value = -2
-                }
+                Value = -2
             };
             if (medConfig.Augmentin!.AddRadExposureFix == true)
             {
-                augmentinItem.Properties!.EffectsDamage = new Dictionary<DamageEffectType, EffectsDamageProperties>
+                augmentinItem.Properties!.EffectsDamage![DamageEffectType.RadExposure] = new EffectsDamageProperties
                 {
-                    [DamageEffectType.RadExposure] = new EffectsDamageProperties
-                    {
-                        Cost = 10,
-                        Delay = 0,
-                        Duration = 0,
-                        FadeOut = 0,
-                        HealthPenaltyMin = 0,
-                        HealthPenaltyMax = 0
-                    }
+                    Cost = 30,
+                    Delay = 0,
+                    Duration = 0,
+                    FadeOut = 0,
+                    HealthPenaltyMin = 0,
+                    HealthPenaltyMax = 0
                 };
             }
         }
@@ -471,33 +413,24 @@ public class MedServer(
             logger.Info("Updating Ibuprofen Pill properties...");
             ibuprofenItem.Properties!.MaxHpResource = medConfig.Ibuprofen!.hpResource;
             ibuprofenItem.Properties!.MedUseTime = 1;
-            ibuprofenItem.Properties!.EffectsHealth = new Dictionary<HealthFactor, EffectsHealthProperties>
+            ibuprofenItem.Properties!.EffectsHealth![HealthFactor.Energy] = new EffectsHealthProperties
             {
-                [HealthFactor.Energy] = new EffectsHealthProperties
-                {
-                    Value = 15
-                }
+                Value = 15
             };
-            ibuprofenItem.Properties!.EffectsHealth = new Dictionary<HealthFactor, EffectsHealthProperties>
+            ibuprofenItem.Properties!.EffectsHealth![HealthFactor.Hydration] = new EffectsHealthProperties
             {
-                [HealthFactor.Hydration] = new EffectsHealthProperties
-                {
-                    Value = -2
-                }
+                Value = -2
             };
             if (medConfig.Ibuprofen!.AddRadExposureFix == true)
             {
-                ibuprofenItem.Properties!.EffectsDamage = new Dictionary<DamageEffectType, EffectsDamageProperties>
+                ibuprofenItem.Properties!.EffectsDamage![DamageEffectType.RadExposure] = new EffectsDamageProperties
                 {
-                    [DamageEffectType.RadExposure] = new EffectsDamageProperties
-                    {
-                        Cost = 10,
-                        Delay = 0,
-                        Duration = 0,
-                        FadeOut = 0,
-                        HealthPenaltyMin = 0,
-                        HealthPenaltyMax = 0
-                    }
+                    Cost = 30,
+                    Delay = 0,
+                    Duration = 0,
+                    FadeOut = 0,
+                    HealthPenaltyMin = 0,
+                    HealthPenaltyMax = 0
                 };
             }
         }
@@ -510,17 +443,14 @@ public class MedServer(
             asepticItem.Properties!.MedUseTime = 1;
             if (medConfig.Aseptic!.AddStopHeavyBleeding == true)
             {
-                asepticItem.Properties!.EffectsDamage = new Dictionary<DamageEffectType, EffectsDamageProperties>
+                asepticItem.Properties!.EffectsDamage![DamageEffectType.HeavyBleeding] = new EffectsDamageProperties
                 {
-                    [DamageEffectType.HeavyBleeding] = new EffectsDamageProperties
-                    {
-                        Delay = 0,
-                        Duration = 60,
-                        FadeOut = 0,
-                        Cost = 10,
-                        HealthPenaltyMin = 0,
-                        HealthPenaltyMax = 0
-                    }
+                    Delay = 0,
+                    Duration = 60,
+                    FadeOut = 0,
+                    Cost = 30,
+                    HealthPenaltyMin = 0,
+                    HealthPenaltyMax = 0
                 };
             }
         }
@@ -532,17 +462,14 @@ public class MedServer(
             armyItem.Properties!.MedUseTime = 1;
             if (medConfig.Army!.AddStopHeavyBleeding == true)
             {
-                armyItem.Properties!.EffectsDamage = new Dictionary<DamageEffectType, EffectsDamageProperties>
+                armyItem.Properties!.EffectsDamage![DamageEffectType.HeavyBleeding] = new EffectsDamageProperties
                 {
-                    [DamageEffectType.HeavyBleeding] = new EffectsDamageProperties
-                    {
-                        Delay = 0,
-                        Duration = 60,
-                        FadeOut = 0,
-                        Cost = 10,
-                        HealthPenaltyMin = 0,
-                        HealthPenaltyMax = 0
-                    }
+                    Delay = 0,
+                    Duration = 60,
+                    FadeOut = 0,
+                    Cost = 30,
+                    HealthPenaltyMin = 0,
+                    HealthPenaltyMax = 0
                 };
             }
         }
@@ -568,42 +495,30 @@ public class MedServer(
             logger.Info("Updating Vaseline properties...");
             vaselineItem.Properties!.MaxHpResource = medConfig.Vaseline!.hpResource;
             vaselineItem.Properties!.MedUseTime = 1;
-            vaselineItem.Properties!.EffectsDamage = new Dictionary<DamageEffectType, EffectsDamageProperties>
+            vaselineItem.Properties!.EffectsDamage![DamageEffectType.Pain] = new EffectsDamageProperties
             {
-                [DamageEffectType.Pain] = new EffectsDamageProperties
-                {
-                    Delay = 0,
-                    Duration = 600,
-                    FadeOut = 0
-                }
+                Delay = 0,
+                Duration = 600,
+                FadeOut = 0
             };
-            vaselineItem.Properties!.EffectsHealth = new Dictionary<HealthFactor, EffectsHealthProperties>
+            vaselineItem.Properties!.EffectsHealth![HealthFactor.Energy] = new EffectsHealthProperties
             {
-                [HealthFactor.Energy] = new EffectsHealthProperties
-                {
-                    Value = -2
-                }
+                Value = -2
             };
-            vaselineItem.Properties!.EffectsHealth = new Dictionary<HealthFactor, EffectsHealthProperties>
+            vaselineItem.Properties!.EffectsHealth![HealthFactor.Hydration] = new EffectsHealthProperties
             {
-                [HealthFactor.Hydration] = new EffectsHealthProperties
-                {
-                    Value = -2
-                }
+                Value = -2
             };
             if (medConfig.Vaseline!.AddRadExposureFix == true)
             {
-                vaselineItem.Properties!.EffectsDamage = new Dictionary<DamageEffectType, EffectsDamageProperties>
+                vaselineItem.Properties!.EffectsDamage![DamageEffectType.RadExposure] = new EffectsDamageProperties
                 {
-                    [DamageEffectType.RadExposure] = new EffectsDamageProperties
-                    {
-                        Cost = 10,
-                        Delay = 0,
-                        Duration = 0,
-                        FadeOut = 0,
-                        HealthPenaltyMin = 0,
-                        HealthPenaltyMax = 0
-                    }
+                    Cost = 30,
+                    Delay = 0,
+                    Duration = 0,
+                    FadeOut = 0,
+                    HealthPenaltyMin = 0,
+                    HealthPenaltyMax = 0
                 };
             }
         }
@@ -613,42 +528,30 @@ public class MedServer(
             logger.Info("Updating Golden Star Balm properties...");
             goldenStarBalmItem.Properties!.MaxHpResource = medConfig.GoldenStarBalm!.hpResource;
             goldenStarBalmItem.Properties!.MedUseTime = 1;
-            goldenStarBalmItem.Properties!.EffectsDamage = new Dictionary<DamageEffectType, EffectsDamageProperties>
+            goldenStarBalmItem.Properties!.EffectsDamage![DamageEffectType.Pain] = new EffectsDamageProperties
             {
-                [DamageEffectType.Pain] = new EffectsDamageProperties
-                {
-                    Delay = 0,
-                    Duration = 600,
-                    FadeOut = 0
-                }
+                Delay = 0,
+                Duration = 600,
+                FadeOut = 0
             };
-            goldenStarBalmItem.Properties!.EffectsHealth = new Dictionary<HealthFactor, EffectsHealthProperties>
+            goldenStarBalmItem.Properties!.EffectsHealth![HealthFactor.Energy] = new EffectsHealthProperties
             {
-                [HealthFactor.Energy] = new EffectsHealthProperties
-                {
-                    Value = -2
-                }
+                Value = -2
             };
-            goldenStarBalmItem.Properties!.EffectsHealth = new Dictionary<HealthFactor, EffectsHealthProperties>
+            goldenStarBalmItem.Properties!.EffectsHealth![HealthFactor.Hydration] = new EffectsHealthProperties
             {
-                [HealthFactor.Hydration] = new EffectsHealthProperties
-                {
-                    Value = -2
-                }
+                Value = -2
             };
             if (medConfig.GoldenStarBalm!.AddRadExposureFix == true)
             {
-                goldenStarBalmItem.Properties!.EffectsDamage = new Dictionary<DamageEffectType, EffectsDamageProperties>
+                goldenStarBalmItem.Properties!.EffectsDamage![DamageEffectType.RadExposure] = new EffectsDamageProperties
                 {
-                    [DamageEffectType.RadExposure] = new EffectsDamageProperties
-                    {
-                        Cost = 10,
-                        Delay = 0,
-                        Duration = 0,
-                        FadeOut = 0,
-                        HealthPenaltyMin = 0,
-                        HealthPenaltyMax = 0
-                    }
+                    Cost = 30,
+                    Delay = 0,
+                    Duration = 0,
+                    FadeOut = 0,
+                    HealthPenaltyMin = 0,
+                    HealthPenaltyMax = 0
                 };
             }
         }
@@ -661,51 +564,42 @@ public class MedServer(
             cmsSurgicalKitItem.Properties!.MedUseTime = 1;
             if (medConfig.CMSSurgicalKit!.AddStopLightBleeding == true)
             {
-                cmsSurgicalKitItem.Properties!.EffectsDamage = new Dictionary<DamageEffectType, EffectsDamageProperties>
+                cmsSurgicalKitItem.Properties!.EffectsDamage![DamageEffectType.LightBleeding] = new EffectsDamageProperties
                 {
-                    [DamageEffectType.LightBleeding] = new EffectsDamageProperties
-                    {
-                        Delay = 0,
-                        Duration = 60,
-                        FadeOut = 0,
-                        Cost = 10,
-                        HealthPenaltyMin = 0,
-                        HealthPenaltyMax = 0
-                    }
+                    Delay = 0,
+                    Duration = 60,
+                    FadeOut = 0,
+                    Cost = 30,
+                    HealthPenaltyMin = 0,
+                    HealthPenaltyMax = 0
                 };
             }
             if (medConfig.CMSSurgicalKit!.AddStopHeavyBleeding == true)
             {
-                cmsSurgicalKitItem.Properties!.EffectsDamage = new Dictionary<DamageEffectType, EffectsDamageProperties>
+                cmsSurgicalKitItem.Properties!.EffectsDamage![DamageEffectType.HeavyBleeding] = new EffectsDamageProperties
                 {
-                    [DamageEffectType.HeavyBleeding] = new EffectsDamageProperties
-                    {
-                        Delay = 0,
-                        Duration = 60,
-                        FadeOut = 0,
-                        Cost = 10,
-                        HealthPenaltyMin = 0,
-                        HealthPenaltyMax = 0
-                    }
+                    Delay = 0,
+                    Duration = 60,
+                    FadeOut = 0,
+                    Cost = 30,
+                    HealthPenaltyMin = 0,
+                    HealthPenaltyMax = 0
                 };
             }
             if (medConfig.CMSSurgicalKit!.AddFixFracture == true)
             {
-                cmsSurgicalKitItem.Properties!.EffectsDamage = new Dictionary<DamageEffectType, EffectsDamageProperties>
+                cmsSurgicalKitItem.Properties!.EffectsDamage![DamageEffectType.Fracture] = new EffectsDamageProperties
                 {
-                    [DamageEffectType.Fracture] = new EffectsDamageProperties
-                    {
-                        Delay = 0,
-                        Duration = 60,
-                        FadeOut = 0,
-                        Cost = 10,
-                        HealthPenaltyMin = 0,
-                        HealthPenaltyMax = 0
-                    }
+                    Delay = 0,
+                    Duration = 60,
+                    FadeOut = 0,
+                    Cost = 30,
+                    HealthPenaltyMin = 0,
+                    HealthPenaltyMax = 0
                 };
             }
         }
-        
+
         if (medConfig.SanitarSurgicalKit!.Enable == true && items.GetValueOrDefault(ItemTpl.MEDICAL_SANITAR_KIT) is TemplateItem sanitarSurgicalKitItem)
         {
             logger.Info("Updating Sanitar Surgical Kit properties...");
@@ -714,47 +608,38 @@ public class MedServer(
             helper.ResizeItem(sanitarSurgicalKitItem, itemConfig, "2x1");
             if (medConfig.SanitarSurgicalKit!.AddStopLightBleeding == true)
             {
-                sanitarSurgicalKitItem.Properties!.EffectsDamage = new Dictionary<DamageEffectType, EffectsDamageProperties>
+                sanitarSurgicalKitItem.Properties!.EffectsDamage![DamageEffectType.LightBleeding] = new EffectsDamageProperties
                 {
-                    [DamageEffectType.LightBleeding] = new EffectsDamageProperties
-                    {
-                        Delay = 0,
-                        Duration = 60,
-                        FadeOut = 0,
-                        Cost = 10,
-                        HealthPenaltyMin = 0,
-                        HealthPenaltyMax = 0
-                    }
+                    Delay = 0,
+                    Duration = 60,
+                    FadeOut = 0,
+                    Cost = 30,
+                    HealthPenaltyMin = 0,
+                    HealthPenaltyMax = 0
                 };
             }
             if (medConfig.SanitarSurgicalKit!.AddStopHeavyBleeding == true)
             {
-                sanitarSurgicalKitItem.Properties!.EffectsDamage = new Dictionary<DamageEffectType, EffectsDamageProperties>
+                sanitarSurgicalKitItem.Properties!.EffectsDamage![DamageEffectType.HeavyBleeding] = new EffectsDamageProperties
                 {
-                    [DamageEffectType.HeavyBleeding] = new EffectsDamageProperties
-                    {
-                        Delay = 0,
-                        Duration = 60,
-                        FadeOut = 0,
-                        Cost = 10,
-                        HealthPenaltyMin = 0,
-                        HealthPenaltyMax = 0
-                    }
+                    Delay = 0,
+                    Duration = 60,
+                    FadeOut = 0,
+                    Cost = 30,
+                    HealthPenaltyMin = 0,
+                    HealthPenaltyMax = 0
                 };
             }
             if (medConfig.SanitarSurgicalKit!.AddFixFracture == true)
             {
-                sanitarSurgicalKitItem.Properties!.EffectsDamage = new Dictionary<DamageEffectType, EffectsDamageProperties>
+                sanitarSurgicalKitItem.Properties!.EffectsDamage![DamageEffectType.Fracture] = new EffectsDamageProperties
                 {
-                    [DamageEffectType.Fracture] = new EffectsDamageProperties
-                    {
-                        Delay = 0,
-                        Duration = 60,
-                        FadeOut = 0,
-                        Cost = 10,
-                        HealthPenaltyMin = 0,
-                        HealthPenaltyMax = 0
-                    }
+                    Delay = 0,
+                    Duration = 60,
+                    FadeOut = 0,
+                    Cost = 30,
+                    HealthPenaltyMin = 0,
+                    HealthPenaltyMax = 0
                 };
             }
         }
@@ -766,32 +651,26 @@ public class MedServer(
             surv12FieldSurgicalKitItem.Properties!.MedUseTime = 1;
             if (medConfig.Surv12FieldSurgicalKit!.AddStopLightBleeding == true)
             {
-                surv12FieldSurgicalKitItem.Properties!.EffectsDamage = new Dictionary<DamageEffectType, EffectsDamageProperties>
+                surv12FieldSurgicalKitItem.Properties!.EffectsDamage![DamageEffectType.LightBleeding] = new EffectsDamageProperties
                 {
-                    [DamageEffectType.LightBleeding] = new EffectsDamageProperties
-                    {
-                        Delay = 0,
-                        Duration = 60,
-                        FadeOut = 0,
-                        Cost = 10,
-                        HealthPenaltyMin = 0,
-                        HealthPenaltyMax = 0
-                    }
+                    Delay = 0,
+                    Duration = 60,
+                    FadeOut = 0,
+                    Cost = 30,
+                    HealthPenaltyMin = 0,
+                    HealthPenaltyMax = 0
                 };
             }
             if (medConfig.Surv12FieldSurgicalKit!.AddStopHeavyBleeding == true)
             {
-                surv12FieldSurgicalKitItem.Properties!.EffectsDamage = new Dictionary<DamageEffectType, EffectsDamageProperties>
+                surv12FieldSurgicalKitItem.Properties!.EffectsDamage![DamageEffectType.HeavyBleeding] = new EffectsDamageProperties
                 {
-                    [DamageEffectType.HeavyBleeding] = new EffectsDamageProperties
-                    {
-                        Delay = 0,
-                        Duration = 60,
-                        FadeOut = 0,
-                        Cost = 10,
-                        HealthPenaltyMin = 0,
-                        HealthPenaltyMax = 0
-                    }
+                    Delay = 0,
+                    Duration = 60,
+                    FadeOut = 0,
+                    Cost = 30,
+                    HealthPenaltyMin = 0,
+                    HealthPenaltyMax = 0
                 };
             }
         }
@@ -959,7 +838,7 @@ public class ModCar
     public int HealOverTimeDuration { get; set; }
 }
 
-public class  ModSalewa
+public class ModSalewa
 {
     public bool Enable { get; set; }
     public int hpResource { get; set; }
