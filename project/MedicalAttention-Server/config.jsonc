@@ -186,137 +186,91 @@
     },
 
     // __Injectors_______________________________________________________________________
+    "AllInjectors": {
+        "Enable": true,
+        "Uses": 4
+    },
     "Morphine": {
         // Morphine Injector
-        "Enable": true,
-        "hpResource": 4,
         "Duration": 360,
         "HydrationBurn": -2,
         "EnergyBurn": -2
     },
     "Sj1": {
         // Combat Stimulant Injector SJ1 TGLabs
-        "Enable": true,
-        "hpResource": 4
     },
     "eTGchange": {
         // Regenerative Stimulant Injector eTG-change
-        "Enable": true,
-        "hpResource": 4,
         "Duration": 360
     },
     "Sj6": {
         // Combat Stimulant Injector SJ6 TGLabs
-        "Enable": true,
-        "hpResource": 4
     },
     "Sj9": {
         // Combat Stimulant Injector SJ9 TGLabs
-        "Enable": true,
-        "hpResource": 4
     },
     "Propital": {
         // Propital
-        "Enable": true,
-        "hpResource": 4,
         "Duration": 360
     },
     "Zagustin": {
         // Hemostatic Drug Zagustin
-        "Enable": true,
-        "hpResource": 4,
         "Duration": 360
     },
     "Adrenaline": {
         // Adrenaline Injector
-        "Enable": true,
-        "hpResource": 4,
         "Duration": 360
     },
     "Meldonin": {
         // Meldonin
-        "Enable": true,
-        "hpResource": 4
     },
     "Ahf1m": {
         // AHF1-M
-        "Enable": true,
-        "hpResource": 4
     },
     "bTG": {
         // 3-(b-TG)
-        "Enable": true,
-        "hpResource": 4
     },
     "Norepinephrine": {
         // L1 (Norepinephrine)
-        "Enable": true,
-        "hpResource": 4,
         "Duration": 360
     },
     "p22": {
         // P22
-        "Enable": true,
-        "hpResource": 4
     },
     "Obdolbos": {
         // Cocktail "Oldolbos"
-        "Enable": true,
-        "hpResource": 4
     },
     "Mule": {
         // M.U.L.E. stimulator
-        "Enable": true,
-        "hpResource": 4
     },
     "xTG12": {
         // Antidote xTG-12
-        "Enable": true,
-        "hpResource": 4
     },
     "Obdolbos2": {
         // Obdolbos 2
-        "Enable": true,
-        "hpResource": 4
     },
     "Sj12": {
         // SJ12 TGLabs
-        "Enable": true,
-        "hpResource": 4
     },
     "Perfotoran": {
         // Perfotoran (Blue Blood)
-        "Enable": true,
-        "hpResource": 4,
         "Duration": 360
     },
     "Trimadol": {
         // Trimadol
-        "Enable": true,
-        "hpResource": 4,
         "Duration": 360
     },
     "Pnb": {
         // PNB
-        "Enable": true,
-        "hpResource": 4,
         "Duration": 360
     },
     "a2bTG": {
         // 2A2-(b-TG)
-        "Enable": true,
-        "hpResource": 4
-    },
-    "Ebudal": {
-        // Ebudal
-        "Enable": true,
-        "hpResource": 4,
-        "Duration": 360
     },
     "ModInjectors": {
         // All custom injectors from mods.
         // This setting is a WIP. It has not yet been tested.
         "Enable": false,
-        "hpResource": 4
+        "Uses": 4
     }
 }

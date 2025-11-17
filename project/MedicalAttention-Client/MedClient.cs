@@ -7,7 +7,7 @@ using static MedicalAttention_Client.Utilities.VersionChecker;
 
 namespace MedicalAttention_Client
 {
-    [BepInPlugin("com.jbs4bmx.MedicalAttention", "MedicalAttention", "4.0.0")]
+    [BepInPlugin("com.jbs4bmx.MedicalAttention", "MedicalAttention", "4.0.2")]
     [BepInDependency("com.SPT.core", "4.0.0")]
     public class MedsPlugin : BaseUnityPlugin
     {
