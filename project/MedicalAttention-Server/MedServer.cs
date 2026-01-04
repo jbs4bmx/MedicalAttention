@@ -1,4 +1,5 @@
-﻿using SPTarkov.Common.Extensions;
+﻿using MedicalAttentionServer.Helpers;
+using SPTarkov.Common.Extensions;
 using SPTarkov.DI.Annotations;
 using SPTarkov.Server.Core.DI;
 using SPTarkov.Server.Core.Helpers;
@@ -11,11 +12,9 @@ using SPTarkov.Server.Core.Models.Utils;
 using SPTarkov.Server.Core.Servers;
 using SPTarkov.Server.Core.Services;
 using System.Reflection;
-using System.Text.Json;
-using System.Text.Json.Nodes;
 using Path = System.IO.Path;
 
-namespace MedicalAttention_Server;
+namespace MedicalAttentionServer;
 
 public record ModMetadata : AbstractModMetadata
 {
@@ -23,7 +22,7 @@ public record ModMetadata : AbstractModMetadata
     public override string Name { get; init; } = "MedicalAttention";
     public override string Author { get; init; } = "jbs4bmx";
     public override List<string>? Contributors { get; init; }
-    public override SemanticVersioning.Version Version { get; init; } = new("4.0.2");
+    public override SemanticVersioning.Version Version { get; init; } = new("4.0.3");
     public override SemanticVersioning.Range SptVersion { get; init; } = new("~4.0.0");
     public override List<string>? Incompatibilities { get; init; }
     public override Dictionary<string, SemanticVersioning.Range>? ModDependencies { get; init; }
@@ -49,7 +48,8 @@ public class MedServer(
         var tables = databaseService.GetTables();
         var items = databaseService.GetItems();
 
-        List<string> locationsMin = new List<string> {
+        List<string> locationsMin = new()
+        {
             "bigmap",
             "develop",
             "factory4_day",
@@ -63,7 +63,8 @@ public class MedServer(
             "woods"
         };
 
-        List<string> locationsMax = new List<string> {
+        List<string> locationsMax = new()
+        {
             "bigmap",
             "develop",
             "factory4_day",
@@ -84,7 +85,8 @@ public class MedServer(
             "woods"
         };
 
-        List<string> injectorList = new List<string> {
+        List<string> injectorList = new()
+        {
             "544fb3f34bdc2d03748b456a", // Morphine
             "5c0e530286f7747fa1419862", // Propital
             "5c0e531286f7747fa54205c2", // SJ1_TGLabs
@@ -109,819 +111,677 @@ public class MedServer(
             "66507eabf5ddb0818b085b68"  // 2A2-(b-TG)
         };
 
-        List<string> parentList = new List<string> {
+        List<string> parentList = new()
+        {
             "5448f3a14bdc2d27728b4569", // Drugs
             "5448f3a64bdc2d60728b456a"  // Stimulator
         };
 
-        List<string> moddedInjectors = new List<string>
+        List<string> moddedInjectors = new()
         {
             "69141913b89af444ac438110"
         };
 
         // ~~ MEDKITS ~~
-        if (medConfig.Ai2!.Enable == true && items.GetValueOrDefault(ItemTpl.MEDKIT_AI2) is TemplateItem aiItem)
+        if (medConfig.Ai2!.Enable == true &&
+            items.GetValueOrDefault(ItemTpl.MEDKIT_AI2) is TemplateItem aiItem)
         {
             logger.Info("Updating AI-2 Medkit properties...");
-            aiItem.Properties!.MaxHpResource = medConfig.Ai2!.hpResource;
-            aiItem.Properties!.MedUseTime = 1;
-            aiItem.Properties!.HpResourceRate = medConfig.Ai2!.hpResourceRate;
-            if (medConfig.Ai2!.AddStopLightBleeding == true)
+            MedkitHelper.ApplyBaseMedkitSettings(aiItem, medConfig.Ai2);
+
+            if (medConfig.Ai2.AddStopLightBleeding == true)
             {
-                aiItem.Properties!.EffectsDamage![DamageEffectType.LightBleeding] = new EffectsDamageProperties
-                {
-                    Delay = 0,
-                    Duration = medConfig.Ai2!.Duration,
-                    FadeOut = 0,
-                    Cost = 30,
-                    HealthPenaltyMin = 100,
-                    HealthPenaltyMax = 100
-                };
+                MedkitHelper.ApplyBleedFix(
+                    aiItem,
+                    DamageEffectType.LightBleeding,
+                    medConfig.Ai2.Duration,
+                    30,
+                    100,
+                    100);
             }
-            if (medConfig.Ai2!.AddStopHeavyBleeding == true)
+
+            if (medConfig.Ai2.AddStopHeavyBleeding == true)
             {
-                aiItem.Properties!.EffectsDamage![DamageEffectType.HeavyBleeding] = new EffectsDamageProperties
-                {
-                    Delay = 0,
-                    Duration = medConfig.Ai2!.Duration,
-                    FadeOut = 0,
-                    Cost = 30,
-                    HealthPenaltyMin = 100,
-                    HealthPenaltyMax = 100
-                };
+                MedkitHelper.ApplyBleedFix(
+                    aiItem,
+                    DamageEffectType.HeavyBleeding,
+                    medConfig.Ai2.Duration,
+                    30,
+                    100,
+                    100);
             }
-            if (medConfig.Ai2!.HealOverTime == true)
+
+            if (medConfig.Ai2.HealOverTime == true)
             {
-                this.PushBuff("Ai2Buff");
-                aiItem.Properties!.StimulatorBuffs = "Ai2Buff";
+                BuffHelper.ApplyBuff(aiItem, "Ai2Buff", databaseService, modHelper);
             }
         }
-        if (medConfig.Car!.Enable == true && items.GetValueOrDefault(ItemTpl.MEDKIT_CAR_FIRST_AID_KIT) is TemplateItem carItem)
+
+        if (medConfig.Car!.Enable == true &&
+            items.GetValueOrDefault(ItemTpl.MEDKIT_CAR_FIRST_AID_KIT) is TemplateItem carItem)
         {
             logger.Info("Updating CAR Medkit properties...");
-            carItem.Properties!.MaxHpResource = medConfig.Car!.hpResource;
-            carItem.Properties!.MedUseTime = 1;
-            carItem.Properties!.HpResourceRate = medConfig.Car!.hpResourceRate;
-            if (medConfig.Car!.AddStopHeavyBleeding == true)
+            MedkitHelper.ApplyBaseMedkitSettings(carItem, medConfig.Car);
+
+            if (medConfig.Car.AddStopHeavyBleeding == true)
             {
-                carItem.Properties!.EffectsDamage![DamageEffectType.HeavyBleeding] = new EffectsDamageProperties
-                {
-                    Delay = 0,
-                    Duration = medConfig.Car!.Duration,
-                    FadeOut = 0,
-                    Cost = 30,
-                    HealthPenaltyMin = 100,
-                    HealthPenaltyMax = 100
-                };
+                MedkitHelper.ApplyBleedFix(
+                    carItem,
+                    DamageEffectType.HeavyBleeding,
+                    medConfig.Car.Duration,
+                    30,
+                    100,
+                    100);
             }
-            if (medConfig.Car!.HealOverTime == true)
+
+            if (medConfig.Car.HealOverTime == true)
             {
-                this.PushBuff("CarBuff");
-                carItem.Properties!.StimulatorBuffs = "CarBuff";
+                BuffHelper.ApplyBuff(carItem, "CarBuff", databaseService, modHelper);
             }
         }
-        if (medConfig.Salewa!.Enable == true && items.GetValueOrDefault(ItemTpl.MEDKIT_SALEWA_FIRST_AID_KIT) is TemplateItem salewaItem)
+
+        if (medConfig.Salewa!.Enable == true &&
+            items.GetValueOrDefault(ItemTpl.MEDKIT_SALEWA_FIRST_AID_KIT) is TemplateItem salewaItem)
         {
             logger.Info("Updating Salewa Medkit properties...");
-            salewaItem.Properties!.MaxHpResource = medConfig.Salewa!.hpResource;
-            salewaItem.Properties!.MedUseTime = 1;
-            salewaItem.Properties!.HpResourceRate = medConfig.Salewa!.hpResourceRate;
-            if (medConfig.Salewa!.AddFixFracture == true)
+            MedkitHelper.ApplyBaseMedkitSettings(salewaItem, medConfig.Salewa);
+
+            if (medConfig.Salewa.AddFixFracture == true)
             {
-                salewaItem.Properties!.EffectsDamage![DamageEffectType.Fracture] = new EffectsDamageProperties
-                {
-                    Delay = 0,
-                    Duration = medConfig.Salewa?.Duration,
-                    FadeOut = 0,
-                    Cost = 50,
-                    HealthPenaltyMin = 100,
-                    HealthPenaltyMax = 100
-                };
+                MedkitHelper.ApplyFractureFix(
+                    salewaItem,
+                    medConfig.Salewa.Duration,
+                    50,
+                    100,
+                    100);
             }
-            if (medConfig.Salewa!.AddFixBlackedLimb == true)
+
+            if (medConfig.Salewa.AddFixBlackedLimb == true)
             {
-                salewaItem.Properties!.EffectsDamage![DamageEffectType.DestroyedPart] = new EffectsDamageProperties
-                {
-                    Delay = 0,
-                    Duration = medConfig.Salewa?.Duration,
-                    FadeOut = 0,
-                    Cost = 50,
-                    HealthPenaltyMin = 50,
-                    HealthPenaltyMax = 75
-                };
+                MedkitHelper.ApplyDestroyedPartFix(
+                    salewaItem,
+                    medConfig.Salewa.Duration,
+                    50,
+                    50,
+                    75);
             }
-            if (medConfig.Salewa!.HealOverTime == true)
+
+            if (medConfig.Salewa.HealOverTime == true)
             {
-                this.PushBuff("SalewaBuff");
-                salewaItem.Properties!.StimulatorBuffs = "SalewaBuff";
+                BuffHelper.ApplyBuff(salewaItem, "SalewaBuff", databaseService, modHelper);
             }
         }
-        if (medConfig.Ifak!.Enable == true && items.GetValueOrDefault(ItemTpl.MEDKIT_IFAK_INDIVIDUAL_FIRST_AID_KIT) is TemplateItem ifakItem)
+
+        if (medConfig.Ifak!.Enable == true &&
+            items.GetValueOrDefault(ItemTpl.MEDKIT_IFAK_INDIVIDUAL_FIRST_AID_KIT) is TemplateItem ifakItem)
         {
             logger.Info("Updating IFAK Medkit properties...");
-            ifakItem.Properties!.MaxHpResource = medConfig.Ifak!.hpResource;
-            ifakItem.Properties!.MedUseTime = 1;
-            ifakItem.Properties!.HpResourceRate = medConfig.Ifak!.hpResourceRate;
-            if (medConfig.Ifak!.AddFixFracture == true)
+            MedkitHelper.ApplyBaseMedkitSettings(ifakItem, medConfig.Ifak);
+
+            if (medConfig.Ifak.AddFixFracture == true)
             {
-                ifakItem.Properties!.EffectsDamage![DamageEffectType.Fracture] = new EffectsDamageProperties
-                {
-                    Delay = 0,
-                    Duration = medConfig.Ifak?.Duration,
-                    FadeOut = 0,
-                    Cost = 50,
-                    HealthPenaltyMin = 100,
-                    HealthPenaltyMax = 100
-                };
+                MedkitHelper.ApplyFractureFix(
+                    ifakItem,
+                    medConfig.Ifak.Duration,
+                    50,
+                    100,
+                    100);
             }
-            if (medConfig.Ifak!.AddFixBlackedLimb == true)
+
+            if (medConfig.Ifak.AddFixBlackedLimb == true)
             {
-                ifakItem.Properties!.EffectsDamage![DamageEffectType.DestroyedPart] = new EffectsDamageProperties
-                {
-                    Delay = 0,
-                    Duration = medConfig.Ifak?.Duration,
-                    FadeOut = 0,
-                    Cost = 50,
-                    HealthPenaltyMin = 75,
-                    HealthPenaltyMax = 100
-                };
+                MedkitHelper.ApplyDestroyedPartFix(
+                    ifakItem,
+                    medConfig.Ifak.Duration,
+                    50,
+                    75,
+                    100);
             }
-            if (medConfig.Ifak!.HealOverTime == true)
+
+            if (medConfig.Ifak.HealOverTime == true)
             {
-                this.PushBuff("IfakBuff");
-                ifakItem.Properties!.StimulatorBuffs = "IfakBuff";
+                BuffHelper.ApplyBuff(ifakItem, "IfakBuff", databaseService, modHelper);
             }
         }
-        if (medConfig.Sanitar!.Enable == true && items.GetValueOrDefault(ItemTpl.MEDKIT_SANITARS_FIRST_AID_KIT) is TemplateItem sanitarItem)
+
+        if (medConfig.Sanitar!.Enable == true &&
+            items.GetValueOrDefault(ItemTpl.MEDKIT_SANITARS_FIRST_AID_KIT) is TemplateItem sanitarItem)
         {
             logger.Info("Updating Sanitar Medkit properties...");
-            sanitarItem.Properties!.MaxHpResource = medConfig.Sanitar!.hpResource;
-            sanitarItem.Properties!.MedUseTime = 1;
-            sanitarItem.Properties!.HpResourceRate = medConfig.Sanitar!.hpResourceRate;
-            helper.ResizeItem(sanitarItem, itemConfig, "1x1");
-            if (medConfig.Sanitar!.AddStopLightBleeding == true)
+            MedkitHelper.ApplyBaseMedkitSettings(sanitarItem, medConfig.Sanitar);
+            ItemResizeHelper.ResizeItem(sanitarItem, itemConfig, "1x1");
+
+            if (medConfig.Sanitar.AddStopLightBleeding == true)
             {
-                sanitarItem.Properties!.EffectsDamage![DamageEffectType.LightBleeding] = new EffectsDamageProperties
-                {
-                    Delay = 0,
-                    Duration = medConfig.Sanitar!.Duration,
-                    FadeOut = 0,
-                    Cost = 30,
-                    HealthPenaltyMin = 10,
-                    HealthPenaltyMax = 50
-                };
+                MedkitHelper.ApplyBleedFix(
+                    sanitarItem,
+                    DamageEffectType.LightBleeding,
+                    medConfig.Sanitar.Duration,
+                    30,
+                    10,
+                    50);
             }
-            if (medConfig.Sanitar!.AddStopHeavyBleeding == true)
+
+            if (medConfig.Sanitar.AddStopHeavyBleeding == true)
             {
-                sanitarItem.Properties!.EffectsDamage![DamageEffectType.HeavyBleeding] = new EffectsDamageProperties
-                {
-                    Delay = 0,
-                    Duration = medConfig.Sanitar?.Duration,
-                    FadeOut = 0,
-                    Cost = 30,
-                    HealthPenaltyMin = 10,
-                    HealthPenaltyMax = 50
-                };
+                MedkitHelper.ApplyBleedFix(
+                    sanitarItem,
+                    DamageEffectType.HeavyBleeding,
+                    medConfig.Sanitar.Duration,
+                    30,
+                    10,
+                    50);
             }
-            if (medConfig.Sanitar!.AddFixFracture == true)
+
+            if (medConfig.Sanitar.AddFixFracture == true)
             {
-                sanitarItem.Properties!.EffectsDamage![DamageEffectType.Fracture] = new EffectsDamageProperties
-                {
-                    Delay = 0,
-                    Duration = medConfig.Sanitar?.Duration,
-                    FadeOut = 0,
-                    Cost = 50,
-                    HealthPenaltyMin = 20,
-                    HealthPenaltyMax = 60
-                };
+                MedkitHelper.ApplyFractureFix(
+                    sanitarItem,
+                    medConfig.Sanitar.Duration,
+                    50,
+                    20,
+                    60);
             }
-            if (medConfig.Sanitar!.HealOverTime == true)
+
+            if (medConfig.Sanitar.HealOverTime == true)
             {
-                this.PushBuff("SanitarBuff");
-                sanitarItem.Properties!.StimulatorBuffs = "SanitarBuff";
+                BuffHelper.ApplyBuff(sanitarItem, "SanitarBuff", databaseService, modHelper);
             }
         }
-        if (medConfig.Afak!.Enable == true && items.GetValueOrDefault(ItemTpl.MEDKIT_AFAK_TACTICAL_INDIVIDUAL_FIRST_AID_KIT) is TemplateItem afakItem)
+
+        if (medConfig.Afak!.Enable == true &&
+            items.GetValueOrDefault(ItemTpl.MEDKIT_AFAK_TACTICAL_INDIVIDUAL_FIRST_AID_KIT) is TemplateItem afakItem)
         {
             logger.Info("Updating AFAK Medkit properties...");
-            afakItem.Properties!.MaxHpResource = medConfig.Afak!.hpResource;
-            afakItem.Properties!.MedUseTime = 1;
-            afakItem.Properties!.HpResourceRate = medConfig.Afak!.hpResourceRate;
-            if (medConfig.Afak!.AddFixFracture == true)
+            MedkitHelper.ApplyBaseMedkitSettings(afakItem, medConfig.Afak);
+
+            if (medConfig.Afak.AddFixFracture == true)
             {
-                afakItem.Properties!.EffectsDamage![DamageEffectType.Fracture] = new EffectsDamageProperties
-                {
-                    Delay = 0,
-                    Duration = medConfig.Afak?.Duration,
-                    FadeOut = 0,
-                    Cost = 50,
-                    HealthPenaltyMin = 100,
-                    HealthPenaltyMax = 100
-                };
+                MedkitHelper.ApplyFractureFix(
+                    afakItem,
+                    medConfig.Afak.Duration,
+                    50,
+                    100,
+                    100);
             }
-            if (medConfig.Afak!.AddFixBlackedLimb == true)
+
+            if (medConfig.Afak.AddFixBlackedLimb == true)
             {
-                afakItem.Properties!.EffectsDamage![DamageEffectType.DestroyedPart] = new EffectsDamageProperties
-                {
-                    Delay = 0,
-                    Duration = medConfig.Afak?.Duration,
-                    FadeOut = 0,
-                    Cost = 50,
-                    HealthPenaltyMin = 100,
-                    HealthPenaltyMax = 100
-                };
+                MedkitHelper.ApplyDestroyedPartFix(
+                    afakItem,
+                    medConfig.Afak.Duration,
+                    50,
+                    100,
+                    100);
             }
-            if (medConfig.Afak!.HealOverTime == true)
+
+            if (medConfig.Afak.HealOverTime == true)
             {
-                this.PushBuff("AfakBuff");
-                afakItem.Properties!.StimulatorBuffs = "AfakBuff";
+                BuffHelper.ApplyBuff(afakItem, "AfakBuff", databaseService, modHelper);
             }
         }
-        if (medConfig.Grizzly!.Enable == true && items.GetValueOrDefault(ItemTpl.MEDKIT_GRIZZLY_MEDICAL_KIT) is TemplateItem grizzlyItem)
+
+        if (medConfig.Grizzly!.Enable == true &&
+            items.GetValueOrDefault(ItemTpl.MEDKIT_GRIZZLY_MEDICAL_KIT) is TemplateItem grizzlyItem)
         {
             logger.Info("Updating Grizzly Medkit properties...");
-            grizzlyItem.Properties!.MaxHpResource = medConfig.Grizzly!.hpResource;
-            grizzlyItem.Properties!.MedUseTime = 1;
-            grizzlyItem.Properties!.HpResourceRate = medConfig.Grizzly!.hpResourceRate;
-            if (medConfig.Grizzly!.AddFixBlackedLimb == true)
+            MedkitHelper.ApplyBaseMedkitSettings(grizzlyItem, medConfig.Grizzly);
+
+            if (medConfig.Grizzly.AddFixBlackedLimb == true)
             {
-                grizzlyItem.Properties!.EffectsDamage![DamageEffectType.DestroyedPart] = new EffectsDamageProperties
-                {
-                    Delay = 0,
-                    Duration = medConfig.Grizzly?.Duration,
-                    FadeOut = 0,
-                    Cost = 50,
-                    HealthPenaltyMin = 80,
-                    HealthPenaltyMax = 100
-                };
+                MedkitHelper.ApplyDestroyedPartFix(
+                    grizzlyItem,
+                    medConfig.Grizzly.Duration,
+                    50,
+                    80,
+                    100);
             }
-            if (medConfig.Grizzly!.HealOverTime == true)
+
+            if (medConfig.Grizzly.HealOverTime == true)
             {
-                this.PushBuff("GrizzlyBuff");
-                grizzlyItem.Properties!.StimulatorBuffs = "GrizzlyBuff";
+                BuffHelper.ApplyBuff(grizzlyItem, "GrizzlyBuff", databaseService, modHelper);
             }
         }
 
         // ~~ PILLS ~~
-        if (medConfig.Analgin!.Enable == true && items.GetValueOrDefault(ItemTpl.DRUGS_ANALGIN_PAINKILLERS) is TemplateItem analginItem)
+        if (medConfig.Analgin!.Enable == true &&
+            items.GetValueOrDefault(ItemTpl.DRUGS_ANALGIN_PAINKILLERS) is TemplateItem analginItem)
         {
             logger.Info("Updating Analgin Pill properties...");
-            analginItem.Properties!.MaxHpResource = medConfig.Analgin!.hpResource;
-            analginItem.Properties!.MedUseTime = 1;
-            if (medConfig.Analgin!.AddEnergyIncrease == true)
+            PillHelper.ApplyBasePillSettings(analginItem, medConfig.Analgin);
+
+            if (medConfig.Analgin.AddEnergyIncrease == true)
             {
-                analginItem.Properties!.EffectsHealth![HealthFactor.Energy] = new EffectsHealthProperties
-                {
-                    Value = 15
-                };
+                CommonEffectsHelper.ApplyEnergyEffect(analginItem, 15);
             }
-            analginItem.Properties!.EffectsHealth![HealthFactor.Hydration] = new EffectsHealthProperties
+
+            CommonEffectsHelper.ApplyHydrationPenalty(analginItem, -2);
+
+            if (medConfig.Analgin.AddRadExposureFix == true)
             {
-                Value = -2
-            };
-            if (medConfig.Analgin!.AddRadExposureFix == true)
-            {
-                analginItem.Properties!.EffectsDamage![DamageEffectType.RadExposure] = new EffectsDamageProperties
-                {
-                    Cost = 30,
-                    Delay = 0,
-                    Duration = 0,
-                    FadeOut = 0,
-                    HealthPenaltyMin = 100,
-                    HealthPenaltyMax = 100
-                };
+                CommonEffectsHelper.ApplyRadExposureFix(analginItem);
             }
         }
-        if (medConfig.Augmentin!.Enable == true && items.GetValueOrDefault(ItemTpl.DRUGS_AUGMENTIN_ANTIBIOTIC_PILLS) is TemplateItem augmentinItem)
+
+        if (medConfig.Augmentin!.Enable == true &&
+            items.GetValueOrDefault(ItemTpl.DRUGS_AUGMENTIN_ANTIBIOTIC_PILLS) is TemplateItem augmentinItem)
         {
             logger.Info("Updating Augmentin Pill properties...");
-            augmentinItem.Properties!.MaxHpResource = medConfig.Augmentin!.hpResource;
-            augmentinItem.Properties!.MedUseTime = 1;
-            augmentinItem.Properties!.EffectsHealth![HealthFactor.Energy] = new EffectsHealthProperties
+            PillHelper.ApplyBasePillSettings(augmentinItem, medConfig.Augmentin);
+            CommonEffectsHelper.ApplyEnergyEffect(augmentinItem, 15);
+            CommonEffectsHelper.ApplyHydrationPenalty(augmentinItem, -2);
+
+            if (medConfig.Augmentin.AddRadExposureFix == true)
             {
-                Value = 15
-            };
-            augmentinItem.Properties!.EffectsHealth![HealthFactor.Hydration] = new EffectsHealthProperties
-            {
-                Value = -2
-            };
-            if (medConfig.Augmentin!.AddRadExposureFix == true)
-            {
-                augmentinItem.Properties!.EffectsDamage![DamageEffectType.RadExposure] = new EffectsDamageProperties
-                {
-                    Cost = 30,
-                    Delay = 0,
-                    Duration = 0,
-                    FadeOut = 0,
-                    HealthPenaltyMin = 100,
-                    HealthPenaltyMax = 100
-                };
+                CommonEffectsHelper.ApplyRadExposureFix(augmentinItem);
             }
         }
-        if (medConfig.Ibuprofen!.Enable == true && items.GetValueOrDefault(ItemTpl.DRUGS_IBUPROFEN_PAINKILLERS) is TemplateItem ibuprofenItem)
+
+        if (medConfig.Ibuprofen!.Enable == true &&
+            items.GetValueOrDefault(ItemTpl.DRUGS_IBUPROFEN_PAINKILLERS) is TemplateItem ibuprofenItem)
         {
             logger.Info("Updating Ibuprofen Pill properties...");
-            ibuprofenItem.Properties!.MaxHpResource = medConfig.Ibuprofen!.hpResource;
-            ibuprofenItem.Properties!.MedUseTime = 1;
-            ibuprofenItem.Properties!.EffectsHealth![HealthFactor.Energy] = new EffectsHealthProperties
+            PillHelper.ApplyBasePillSettings(ibuprofenItem, medConfig.Ibuprofen);
+            CommonEffectsHelper.ApplyEnergyEffect(ibuprofenItem, 15);
+            CommonEffectsHelper.ApplyHydrationPenalty(ibuprofenItem, -2);
+
+            if (medConfig.Ibuprofen.AddRadExposureFix == true)
             {
-                Value = 15
-            };
-            ibuprofenItem.Properties!.EffectsHealth![HealthFactor.Hydration] = new EffectsHealthProperties
-            {
-                Value = -2
-            };
-            if (medConfig.Ibuprofen!.AddRadExposureFix == true)
-            {
-                ibuprofenItem.Properties!.EffectsDamage![DamageEffectType.RadExposure] = new EffectsDamageProperties
-                {
-                    Cost = 30,
-                    Delay = 0,
-                    Duration = 0,
-                    FadeOut = 0,
-                    HealthPenaltyMin = 100,
-                    HealthPenaltyMax = 100
-                };
+                CommonEffectsHelper.ApplyRadExposureFix(ibuprofenItem);
             }
         }
 
         // ~~ BANDAGES ~~
-        if (medConfig.Aseptic!.Enable == true && items.GetValueOrDefault(ItemTpl.MEDICAL_ASEPTIC_BANDAGE) is TemplateItem asepticItem)
+        if (medConfig.Aseptic!.Enable == true &&
+            items.GetValueOrDefault(ItemTpl.MEDICAL_ASEPTIC_BANDAGE) is TemplateItem asepticItem)
         {
             logger.Info("Updating Aseptic Bandage properties...");
-            asepticItem.Properties!.MaxHpResource = medConfig.Aseptic!.hpResource;
-            asepticItem.Properties!.MedUseTime = 1;
-            if (medConfig.Aseptic!.AddStopHeavyBleeding == true)
+            BandageHelper.ApplyBaseBandageSettings(asepticItem, medConfig.Aseptic);
+
+            if (medConfig.Aseptic.AddStopHeavyBleeding == true)
             {
-                asepticItem.Properties!.EffectsDamage![DamageEffectType.HeavyBleeding] = new EffectsDamageProperties
-                {
-                    Delay = 0,
-                    Duration = 60,
-                    FadeOut = 0,
-                    Cost = 30,
-                    HealthPenaltyMin = 100,
-                    HealthPenaltyMax = 100
-                };
+                BandageHelper.ApplyHeavyBleedFix(asepticItem);
             }
         }
-        if (medConfig.Army!.Enable == true && items.GetValueOrDefault(ItemTpl.MEDICAL_ARMY_BANDAGE) is TemplateItem armyItem)
+
+        if (medConfig.Army!.Enable == true &&
+            items.GetValueOrDefault(ItemTpl.MEDICAL_ARMY_BANDAGE) is TemplateItem armyItem)
         {
             logger.Info("Updating Army Bandage properties...");
-            armyItem.Properties!.MaxHpResource = medConfig.Army!.hpResource;
-            armyItem.Properties!.MedUseTime = 1;
-            if (medConfig.Army!.AddStopHeavyBleeding == true)
+            BandageHelper.ApplyBaseBandageSettings(armyItem, medConfig.Army);
+
+            if (medConfig.Army.AddStopHeavyBleeding == true)
             {
-                armyItem.Properties!.EffectsDamage![DamageEffectType.HeavyBleeding] = new EffectsDamageProperties
-                {
-                    Delay = 0,
-                    Duration = 60,
-                    FadeOut = 0,
-                    Cost = 30,
-                    HealthPenaltyMin = 100,
-                    HealthPenaltyMax = 100
-                };
+                BandageHelper.ApplyHeavyBleedFix(armyItem);
             }
         }
 
         // ~~ SPLINTS ~~
-        if (medConfig.Splint!.Enable == true && items.GetValueOrDefault(ItemTpl.MEDICAL_IMMOBILIZING_SPLINT) is TemplateItem splintItem)
+        if (medConfig.Splint!.Enable == true &&
+            items.GetValueOrDefault(ItemTpl.MEDICAL_IMMOBILIZING_SPLINT) is TemplateItem splintItem)
         {
             logger.Info("Updating Splint properties...");
-            splintItem.Properties!.MaxHpResource = medConfig.Splint!.hpResource;
-            splintItem.Properties!.MedUseTime = 1;
+            SplintHelper.ApplyBaseSplintSettings(splintItem, medConfig.Splint);
         }
-        if (medConfig.AluminumSplint!.Enable == true && items.GetValueOrDefault(ItemTpl.MEDICAL_ALUMINUM_SPLINT) is TemplateItem aluminumSplintItem)
+
+        if (medConfig.AluminumSplint!.Enable == true &&
+            items.GetValueOrDefault(ItemTpl.MEDICAL_ALUMINUM_SPLINT) is TemplateItem aluminumSplintItem)
         {
             logger.Info("Updating Aluminum Splint properties...");
-            aluminumSplintItem.Properties!.MaxHpResource = medConfig.AluminumSplint!.hpResource;
-            aluminumSplintItem.Properties!.MedUseTime = 1;
+            SplintHelper.ApplyBaseSplintSettings(aluminumSplintItem, medConfig.AluminumSplint);
         }
 
         // ~~ TOPICALS ~~
-        if (medConfig.Vaseline!.Enable == true && items.GetValueOrDefault(ItemTpl.DRUGS_VASELINE_BALM) is TemplateItem vaselineItem)
+        if (medConfig.Vaseline!.Enable == true &&
+            items.GetValueOrDefault(ItemTpl.DRUGS_VASELINE_BALM) is TemplateItem vaselineItem)
         {
             logger.Info("Updating Vaseline properties...");
-            vaselineItem.Properties!.MaxHpResource = medConfig.Vaseline!.hpResource;
-            vaselineItem.Properties!.MedUseTime = 1;
-            vaselineItem.Properties!.EffectsDamage![DamageEffectType.Pain] = new EffectsDamageProperties
+            TopicalHelper.ApplyBaseTopicalSettings(vaselineItem, medConfig.Vaseline);
+            CommonEffectsHelper.ApplyPainSuppression(vaselineItem, 600);
+            CommonEffectsHelper.ApplyEnergyEffect(vaselineItem, -2);
+            CommonEffectsHelper.ApplyHydrationPenalty(vaselineItem, -2);
+
+            if (medConfig.Vaseline.AddRadExposureFix == true)
             {
-                Delay = 0,
-                Duration = 600,
-                FadeOut = 0
-            };
-            vaselineItem.Properties!.EffectsHealth![HealthFactor.Energy] = new EffectsHealthProperties
-            {
-                Value = -2
-            };
-            vaselineItem.Properties!.EffectsHealth![HealthFactor.Hydration] = new EffectsHealthProperties
-            {
-                Value = -2
-            };
-            if (medConfig.Vaseline!.AddRadExposureFix == true)
-            {
-                vaselineItem.Properties!.EffectsDamage![DamageEffectType.RadExposure] = new EffectsDamageProperties
-                {
-                    Cost = 30,
-                    Delay = 0,
-                    Duration = 0,
-                    FadeOut = 0,
-                    HealthPenaltyMin = 100,
-                    HealthPenaltyMax = 100
-                };
+                CommonEffectsHelper.ApplyRadExposureFix(vaselineItem);
             }
         }
-        if (medConfig.GoldenStarBalm!.Enable == true && items.GetValueOrDefault(ItemTpl.DRUGS_GOLDEN_STAR_BALM) is TemplateItem goldenStarBalmItem)
+
+        if (medConfig.GoldenStarBalm!.Enable == true &&
+            items.GetValueOrDefault(ItemTpl.DRUGS_GOLDEN_STAR_BALM) is TemplateItem goldenStarBalmItem)
         {
             logger.Info("Updating Golden Star Balm properties...");
-            goldenStarBalmItem.Properties!.MaxHpResource = medConfig.GoldenStarBalm!.hpResource;
-            goldenStarBalmItem.Properties!.MedUseTime = 1;
-            goldenStarBalmItem.Properties!.EffectsDamage![DamageEffectType.Pain] = new EffectsDamageProperties
+            TopicalHelper.ApplyBaseTopicalSettings(goldenStarBalmItem, medConfig.GoldenStarBalm);
+            CommonEffectsHelper.ApplyPainSuppression(goldenStarBalmItem, 600);
+            CommonEffectsHelper.ApplyEnergyEffect(goldenStarBalmItem, -2);
+            CommonEffectsHelper.ApplyHydrationPenalty(goldenStarBalmItem, -2);
+
+            if (medConfig.GoldenStarBalm.AddRadExposureFix == true)
             {
-                Delay = 0,
-                Duration = 600,
-                FadeOut = 0
-            };
-            goldenStarBalmItem.Properties!.EffectsHealth![HealthFactor.Energy] = new EffectsHealthProperties
-            {
-                Value = -2
-            };
-            goldenStarBalmItem.Properties!.EffectsHealth![HealthFactor.Hydration] = new EffectsHealthProperties
-            {
-                Value = -2
-            };
-            if (medConfig.GoldenStarBalm!.AddRadExposureFix == true)
-            {
-                goldenStarBalmItem.Properties!.EffectsDamage![DamageEffectType.RadExposure] = new EffectsDamageProperties
-                {
-                    Cost = 30,
-                    Delay = 0,
-                    Duration = 0,
-                    FadeOut = 0,
-                    HealthPenaltyMin = 100,
-                    HealthPenaltyMax = 100
-                };
+                CommonEffectsHelper.ApplyRadExposureFix(goldenStarBalmItem);
             }
         }
 
         // ~~ SURGICAL KITS ~~
-        if (medConfig.CMSSurgicalKit!.Enable == true && items.GetValueOrDefault(ItemTpl.MEDICAL_CMS_SURGICAL_KIT) is TemplateItem cmsSurgicalKitItem)
+        if (medConfig.CMSSurgicalKit!.Enable == true &&
+            items.GetValueOrDefault(ItemTpl.MEDICAL_CMS_SURGICAL_KIT) is TemplateItem cmsSurgicalKitItem)
         {
             logger.Info("Updating CMS Surgical Kit properties...");
-            cmsSurgicalKitItem.Properties!.MaxHpResource = medConfig.CMSSurgicalKit!.hpResource;
-            cmsSurgicalKitItem.Properties!.MedUseTime = 1;
-            if (medConfig.CMSSurgicalKit!.AddStopLightBleeding == true)
+            SurgicalHelper.ApplyBaseSurgicalSettings(cmsSurgicalKitItem, medConfig.CMSSurgicalKit);
+
+            if (medConfig.CMSSurgicalKit.AddStopLightBleeding == true)
             {
-                cmsSurgicalKitItem.Properties!.EffectsDamage![DamageEffectType.LightBleeding] = new EffectsDamageProperties
-                {
-                    Delay = 0,
-                    Duration = 60,
-                    FadeOut = 0,
-                    Cost = 30,
-                    HealthPenaltyMin = 100,
-                    HealthPenaltyMax = 100
-                };
+                SurgicalHelper.ApplyLightBleedFix(
+                    cmsSurgicalKitItem,
+                    60,
+                    30,
+                    100,
+                    100);
             }
-            if (medConfig.CMSSurgicalKit!.AddStopHeavyBleeding == true)
+
+            if (medConfig.CMSSurgicalKit.AddStopHeavyBleeding == true)
             {
-                cmsSurgicalKitItem.Properties!.EffectsDamage![DamageEffectType.HeavyBleeding] = new EffectsDamageProperties
-                {
-                    Delay = 0,
-                    Duration = 60,
-                    FadeOut = 0,
-                    Cost = 30,
-                    HealthPenaltyMin = 100,
-                    HealthPenaltyMax = 100
-                };
+                SurgicalHelper.ApplyHeavyBleedFix(
+                    cmsSurgicalKitItem,
+                    60,
+                    30,
+                    100,
+                    100);
             }
-            if (medConfig.CMSSurgicalKit!.AddFixFracture == true)
+
+            if (medConfig.CMSSurgicalKit.AddFixFracture == true)
             {
-                cmsSurgicalKitItem.Properties!.EffectsDamage![DamageEffectType.Fracture] = new EffectsDamageProperties
-                {
-                    Delay = 0,
-                    Duration = 60,
-                    FadeOut = 0,
-                    Cost = 50,
-                    HealthPenaltyMin = 70,
-                    HealthPenaltyMax = 90
-                };
+                SurgicalHelper.ApplyFractureFix(
+                    cmsSurgicalKitItem,
+                    60,
+                    50,
+                    70,
+                    90);
             }
         }
-        if (medConfig.SanitarSurgicalKit!.Enable == true && items.GetValueOrDefault(ItemTpl.MEDICAL_SANITAR_KIT) is TemplateItem sanitarSurgicalKitItem)
+
+        if (medConfig.SanitarSurgicalKit!.Enable == true &&
+            items.GetValueOrDefault(ItemTpl.MEDICAL_SANITAR_KIT) is TemplateItem sanitarSurgicalKitItem)
         {
             logger.Info("Updating Sanitar Surgical Kit properties...");
-            sanitarSurgicalKitItem.Properties!.MaxHpResource = medConfig.SanitarSurgicalKit!.hpResource;
-            sanitarSurgicalKitItem.Properties!.MedUseTime = 1;
-            helper.ResizeItem(sanitarSurgicalKitItem, itemConfig, "2x1");
-            if (medConfig.SanitarSurgicalKit!.AddStopLightBleeding == true)
+            SurgicalHelper.ApplyBaseSurgicalSettings(sanitarSurgicalKitItem, medConfig.SanitarSurgicalKit);
+            ItemResizeHelper.ResizeItem(sanitarSurgicalKitItem, itemConfig, "2x1");
+
+            if (medConfig.SanitarSurgicalKit.AddStopLightBleeding == true)
             {
-                sanitarSurgicalKitItem.Properties!.EffectsDamage![DamageEffectType.LightBleeding] = new EffectsDamageProperties
-                {
-                    Delay = 0,
-                    Duration = 60,
-                    FadeOut = 0,
-                    Cost = 30,
-                    HealthPenaltyMin = 50,
-                    HealthPenaltyMax = 70
-                };
+                SurgicalHelper.ApplyLightBleedFix(
+                    sanitarSurgicalKitItem,
+                    60,
+                    30,
+                    50,
+                    70);
             }
-            if (medConfig.SanitarSurgicalKit!.AddStopHeavyBleeding == true)
+
+            if (medConfig.SanitarSurgicalKit.AddStopHeavyBleeding == true)
             {
-                sanitarSurgicalKitItem.Properties!.EffectsDamage![DamageEffectType.HeavyBleeding] = new EffectsDamageProperties
-                {
-                    Delay = 0,
-                    Duration = 60,
-                    FadeOut = 0,
-                    Cost = 30,
-                    HealthPenaltyMin = 50,
-                    HealthPenaltyMax = 70
-                };
+                SurgicalHelper.ApplyHeavyBleedFix(
+                    sanitarSurgicalKitItem,
+                    60,
+                    30,
+                    50,
+                    70);
             }
-            if (medConfig.SanitarSurgicalKit!.AddFixFracture == true)
+
+            if (medConfig.SanitarSurgicalKit.AddFixFracture == true)
             {
-                sanitarSurgicalKitItem.Properties!.EffectsDamage![DamageEffectType.Fracture] = new EffectsDamageProperties
-                {
-                    Delay = 0,
-                    Duration = 60,
-                    FadeOut = 0,
-                    Cost = 100,
-                    HealthPenaltyMin = 10,
-                    HealthPenaltyMax = 60
-                };
+                SurgicalHelper.ApplyFractureFix(
+                    sanitarSurgicalKitItem,
+                    60,
+                    100,
+                    10,
+                    60);
             }
         }
-        if (medConfig.Surv12FieldSurgicalKit!.Enable == true && items.GetValueOrDefault(ItemTpl.MEDICAL_SURV12_FIELD_SURGICAL_KIT) is TemplateItem surv12FieldSurgicalKitItem)
+
+        if (medConfig.Surv12FieldSurgicalKit!.Enable == true &&
+            items.GetValueOrDefault(ItemTpl.MEDICAL_SURV12_FIELD_SURGICAL_KIT) is TemplateItem surv12Item)
         {
             logger.Info("Updating Surv-12 Field Surgical Kit properties...");
-            surv12FieldSurgicalKitItem.Properties!.MaxHpResource = medConfig.Surv12FieldSurgicalKit!.hpResource;
-            surv12FieldSurgicalKitItem.Properties!.MedUseTime = 1;
-            if (medConfig.Surv12FieldSurgicalKit!.AddStopLightBleeding == true)
+            SurgicalHelper.ApplyBaseSurgicalSettings(surv12Item, medConfig.Surv12FieldSurgicalKit);
+
+            if (medConfig.Surv12FieldSurgicalKit.AddStopLightBleeding == true)
             {
-                surv12FieldSurgicalKitItem.Properties!.EffectsDamage![DamageEffectType.LightBleeding] = new EffectsDamageProperties
-                {
-                    Delay = 0,
-                    Duration = 60,
-                    FadeOut = 0,
-                    Cost = 30,
-                    HealthPenaltyMin = 100,
-                    HealthPenaltyMax = 100
-                };
+                SurgicalHelper.ApplyLightBleedFix(
+                    surv12Item,
+                    60,
+                    30,
+                    100,
+                    100);
             }
-            if (medConfig.Surv12FieldSurgicalKit!.AddStopHeavyBleeding == true)
+
+            if (medConfig.Surv12FieldSurgicalKit.AddStopHeavyBleeding == true)
             {
-                surv12FieldSurgicalKitItem.Properties!.EffectsDamage![DamageEffectType.HeavyBleeding] = new EffectsDamageProperties
-                {
-                    Delay = 0,
-                    Duration = 60,
-                    FadeOut = 0,
-                    Cost = 30,
-                    HealthPenaltyMin = 100,
-                    HealthPenaltyMax = 100
-                };
+                SurgicalHelper.ApplyHeavyBleedFix(
+                    surv12Item,
+                    60,
+                    30,
+                    100,
+                    100);
             }
-            surv12FieldSurgicalKitItem.Properties!.EffectsDamage![DamageEffectType.Fracture] = new EffectsDamageProperties
+
+            if (medConfig.Surv12FieldSurgicalKit.AddFixFracture == true)
             {
-                Delay = 0,
-                Duration = 60,
-                FadeOut = 0,
-                Cost = 50,
-                HealthPenaltyMin = 90,
-                HealthPenaltyMax = 100
-            };
+                SurgicalHelper.ApplyFractureFix(
+                    surv12Item,
+                    60,
+                    50,
+                    70,
+                    90);
+            }
         }
 
         // ~~ TOURNIQUETS ~~
-        if (medConfig.Esmarch!.Enable == true && items.GetValueOrDefault(ItemTpl.MEDICAL_ESMARCH_TOURNIQUET) is TemplateItem esmarchItem)
+        if (medConfig.Esmarch!.Enable == true &&
+            items.GetValueOrDefault(ItemTpl.MEDICAL_ESMARCH_TOURNIQUET) is TemplateItem esmarchItem)
         {
             logger.Info("Updating Esmarch Tourniquet properties...");
-            esmarchItem.Properties!.MaxHpResource = medConfig.Esmarch!.hpResource;
-            esmarchItem.Properties!.MedUseTime = 1;
+            esmarchItem.Properties!.MaxHpResource = medConfig.Esmarch.hpResource;
+            esmarchItem.Properties.MedUseTime = 1;
         }
-        if (medConfig.CalokB!.Enable == true && items.GetValueOrDefault(ItemTpl.MEDICAL_CALOKB_HEMOSTATIC_APPLICATOR) is TemplateItem calokBItem)
+
+        if (medConfig.CalokB!.Enable == true &&
+            items.GetValueOrDefault(ItemTpl.MEDICAL_CALOKB_HEMOSTATIC_APPLICATOR) is TemplateItem calokBItem)
         {
             logger.Info("Updating Calok-B Tourniquet properties...");
-            calokBItem.Properties!.MaxHpResource = medConfig.CalokB!.hpResource;
-            calokBItem.Properties!.MedUseTime = 1;
+            calokBItem.Properties!.MaxHpResource = medConfig.CalokB.hpResource;
+            calokBItem.Properties.MedUseTime = 1;
         }
-        if (medConfig.Cat!.Enable == true && items.GetValueOrDefault(ItemTpl.MEDICAL_CAT_HEMOSTATIC_TOURNIQUET) is TemplateItem catItem)
+
+        if (medConfig.Cat!.Enable == true &&
+            items.GetValueOrDefault(ItemTpl.MEDICAL_CAT_HEMOSTATIC_TOURNIQUET) is TemplateItem catItem)
         {
             logger.Info("Updating CAT Tourniquet properties...");
             catItem.Properties!.MaxHpResource = medConfig.Cat.hpResource;
-            catItem.Properties!.MedUseTime = 1;
+            catItem.Properties.MedUseTime = 1;
         }
 
         // ~~ INJECTORS ~~
         if (medConfig.AllInjectors!.Enable == true)
         {
-            if (items.GetValueOrDefault(ItemTpl.DRUGS_MORPHINE_INJECTOR) is TemplateItem morphineItem)
+            logger.Info("Applying AllInjectors settings to all stimulators...");
+
+            const string stimParent = "5448f3a64bdc2d60728b456a"; // Stimulator parent
+            const string morphineTpl = "544fb3f34bdc2d03748b456a"; // Morphine (under Drugs)
+
+            // Detect all stimulators by parent category
+            var allInjectors = items
+                .Where(kvp =>
+                    kvp.Value is TemplateItem item &&
+                    item.Parent == stimParent)
+                .Select(kvp => kvp.Value as TemplateItem)
+                .Where(t => t != null)
+                .ToList();
+
+            // Explicitly add Morphine (the only stim under Drugs)
+            if (items.GetValueOrDefault(morphineTpl) is TemplateItem morphineItem)
             {
-                morphineItem.Properties!.MaxHpResource = medConfig.AllInjectors.Uses;
-                morphineItem.Properties!.EffectsDamage![DamageEffectType.Pain] = new EffectsDamageProperties
+                allInjectors.Add(morphineItem);
+            }
+
+            logger.Info($"Detected {allInjectors.Count} stimulators (including Morphine).");
+
+            foreach (var stim in allInjectors)
+            {
+                stim!.Properties!.MaxHpResource = medConfig.AllInjectors.Uses;
+            }
+
+            if (items.GetValueOrDefault(ItemTpl.DRUGS_MORPHINE_INJECTOR) is TemplateItem morphineItem2)
+            {
+                morphineItem2.Properties.EffectsDamage![DamageEffectType.Pain] = new EffectsDamageProperties
                 {
                     Delay = 0,
                     Duration = medConfig.Morphine!.Duration,
                     FadeOut = 0
                 };
-                morphineItem.Properties!.EffectsHealth![HealthFactor.Energy] = new EffectsHealthProperties
+                morphineItem2.Properties.EffectsHealth![HealthFactor.Energy] = new EffectsHealthProperties
                 {
                     Value = -2
                 };
-                morphineItem.Properties!.EffectsHealth![HealthFactor.Hydration] = new EffectsHealthProperties
+                morphineItem2.Properties.EffectsHealth![HealthFactor.Hydration] = new EffectsHealthProperties
                 {
                     Value = -2
                 };
             }
+
             if (items.GetValueOrDefault(ItemTpl.STIM_SJ1_TGLABS_COMBAT_STIMULANT_INJECTOR) is TemplateItem sj1Item)
             {
-                sj1Item.Properties!.MaxHpResource = medConfig.AllInjectors.Uses;
             }
+
             if (items.GetValueOrDefault(ItemTpl.STIM_ETGCHANGE_REGENERATIVE_STIMULANT_INJECTOR) is TemplateItem etgChanceItem)
             {
-                etgChanceItem.Properties!.MaxHpResource = medConfig.AllInjectors.Uses;
-                etgChanceItem.Properties!.EffectsDamage![DamageEffectType.Pain] = new EffectsDamageProperties
+                etgChanceItem.Properties.EffectsDamage![DamageEffectType.Pain] = new EffectsDamageProperties
                 {
                     Delay = 0,
                     Duration = medConfig.eTGchange!.Duration,
                     FadeOut = 0
                 };
             }
+
             if (items.GetValueOrDefault(ItemTpl.STIM_SJ6_TGLABS_COMBAT_STIMULANT_INJECTOR) is TemplateItem sj6Item)
             {
-                sj6Item.Properties!.MaxHpResource = medConfig.AllInjectors.Uses;
             }
+
             if (items.GetValueOrDefault(ItemTpl.STIM_SJ9_TGLABS_COMBAT_STIMULANT_INJECTOR) is TemplateItem sj9Item)
             {
-                sj9Item.Properties!.MaxHpResource = medConfig.AllInjectors.Uses;
             }
+
             if (items.GetValueOrDefault(ItemTpl.STIM_PROPITAL_REGENERATIVE_STIMULANT_INJECTOR) is TemplateItem propitalItem)
             {
-                propitalItem.Properties!.MaxHpResource = medConfig.AllInjectors.Uses;
-                propitalItem.Properties!.EffectsDamage![DamageEffectType.Pain] = new EffectsDamageProperties
+                propitalItem.Properties.EffectsDamage![DamageEffectType.Pain] = new EffectsDamageProperties
                 {
                     Delay = 0,
                     Duration = medConfig.Propital!.Duration,
                     FadeOut = 0
                 };
             }
+
             if (items.GetValueOrDefault(ItemTpl.STIM_ZAGUSTIN_HEMOSTATIC_DRUG_INJECTOR) is TemplateItem zagustinItem)
             {
-                zagustinItem.Properties!.MaxHpResource = medConfig.AllInjectors.Uses;
-                zagustinItem.Properties!.EffectsDamage![DamageEffectType.Pain] = new EffectsDamageProperties
+                zagustinItem.Properties.EffectsDamage![DamageEffectType.Pain] = new EffectsDamageProperties
                 {
                     Delay = 0,
                     Duration = medConfig.Zagustin!.Duration,
                     FadeOut = 0
                 };
             }
+
             if (items.GetValueOrDefault(ItemTpl.STIM_ADRENALINE_INJECTOR) is TemplateItem adrenalineItem)
             {
-                adrenalineItem.Properties!.MaxHpResource = medConfig.AllInjectors.Uses;
-                adrenalineItem.Properties!.EffectsDamage![DamageEffectType.Pain] = new EffectsDamageProperties
+                adrenalineItem.Properties.EffectsDamage![DamageEffectType.Pain] = new EffectsDamageProperties
                 {
                     Delay = 0,
                     Duration = medConfig.Adrenaline!.Duration,
                     FadeOut = 0
                 };
             }
+
             if (items.GetValueOrDefault(ItemTpl.STIM_MELDONIN_INJECTOR) is TemplateItem meldoninItem)
             {
-                meldoninItem.Properties!.MaxHpResource = medConfig.AllInjectors.Uses;
             }
+
             if (items.GetValueOrDefault(ItemTpl.STIM_AHF1M_STIMULANT_INJECTOR) is TemplateItem ahf1mItem)
             {
-                ahf1mItem.Properties!.MaxHpResource = medConfig.AllInjectors.Uses;
             }
+
             if (items.GetValueOrDefault(ItemTpl.STIM_3BTG_STIMULANT_INJECTOR) is TemplateItem btgItem)
             {
-                btgItem.Properties!.MaxHpResource = medConfig.AllInjectors.Uses;
             }
+
             if (items.GetValueOrDefault(ItemTpl.STIM_L1_NOREPINEPHRINE_INJECTOR) is TemplateItem norepinephrineItem)
             {
-                norepinephrineItem.Properties!.MaxHpResource = medConfig.AllInjectors.Uses;
-                norepinephrineItem.Properties!.EffectsDamage![DamageEffectType.Pain] = new EffectsDamageProperties
+                norepinephrineItem.Properties.EffectsDamage![DamageEffectType.Pain] = new EffectsDamageProperties
                 {
                     Delay = 0,
                     Duration = medConfig.Norepinephrine!.Duration,
                     FadeOut = 0
                 };
             }
+
             if (items.GetValueOrDefault(ItemTpl.STIM_P22_PRODUCT_22_STIMULANT_INJECTOR) is TemplateItem p22Item)
             {
-                p22Item.Properties!.MaxHpResource = medConfig.AllInjectors.Uses;
             }
+
             if (items.GetValueOrDefault(ItemTpl.STIM_OBDOLBOS_COCKTAIL_INJECTOR) is TemplateItem obdolbosItem)
             {
-                obdolbosItem.Properties!.MaxHpResource = medConfig.AllInjectors.Uses;
             }
+
             if (items.GetValueOrDefault(ItemTpl.STIM_MULE_STIMULANT_INJECTOR) is TemplateItem muleItem)
             {
-                muleItem.Properties!.MaxHpResource = medConfig.AllInjectors.Uses;
             }
+
             if (items.GetValueOrDefault(ItemTpl.STIM_XTG12_ANTIDOTE_INJECTOR) is TemplateItem xtg12Item)
             {
-                xtg12Item.Properties!.MaxHpResource = medConfig.AllInjectors.Uses;
             }
+
             if (items.GetValueOrDefault(ItemTpl.STIM_OBDOLBOS_2_COCKTAIL_INJECTOR) is TemplateItem obdolbos2Item)
             {
-                obdolbos2Item.Properties!.MaxHpResource = medConfig.AllInjectors.Uses;
             }
+
             if (items.GetValueOrDefault(ItemTpl.STIM_SJ12_TGLABS_COMBAT_STIMULANT_INJECTOR) is TemplateItem sj12Item)
             {
-                sj12Item.Properties!.MaxHpResource = medConfig.AllInjectors.Uses;
             }
+
             if (items.GetValueOrDefault(ItemTpl.STIM_PERFOTORAN_BLUE_BLOOD_STIMULANT_INJECTOR) is TemplateItem perfotoranItem)
             {
-                perfotoranItem.Properties!.MaxHpResource = medConfig.AllInjectors.Uses;
-                perfotoranItem.Properties!.EffectsDamage![DamageEffectType.Pain] = new EffectsDamageProperties
+                perfotoranItem.Properties.EffectsDamage![DamageEffectType.Pain] = new EffectsDamageProperties
                 {
                     Delay = 0,
                     Duration = medConfig.Perfotoran!.Duration,
                     FadeOut = 0
                 };
             }
+
             if (items.GetValueOrDefault(ItemTpl.STIM_TRIMADOL_STIMULANT_INJECTOR) is TemplateItem trimadolItem)
             {
-                trimadolItem.Properties!.MaxHpResource = medConfig.AllInjectors.Uses;
-                trimadolItem.Properties!.EffectsDamage![DamageEffectType.Pain] = new EffectsDamageProperties
+                trimadolItem.Properties.EffectsDamage![DamageEffectType.Pain] = new EffectsDamageProperties
                 {
                     Delay = 0,
                     Duration = medConfig.Trimadol!.Duration,
                     FadeOut = 0
                 };
             }
+
             if (items.GetValueOrDefault(ItemTpl.STIM_PNB_PRODUCT_16_STIMULANT_INJECTOR) is TemplateItem pnbItem)
             {
-                pnbItem.Properties!.MaxHpResource = medConfig.AllInjectors.Uses;
-                pnbItem.Properties!.EffectsDamage![DamageEffectType.Pain] = new EffectsDamageProperties
+                pnbItem.Properties.EffectsDamage![DamageEffectType.Pain] = new EffectsDamageProperties
                 {
                     Delay = 0,
                     Duration = medConfig.Pnb!.Duration,
                     FadeOut = 0
                 };
             }
+
             if (items.GetValueOrDefault(ItemTpl.STIM_2A2BTG_STIMULANT_INJECTOR) is TemplateItem a2btgItem)
             {
-                a2btgItem.Properties!.MaxHpResource = medConfig.AllInjectors.Uses;
             }
-            /*
-             * Work in Progress. Code is not valid at the moment.
-            if (medConfig.ModInjectors!.Enable == true)
-            {
-                // Set all mod injectors' uses.
-                foreach (string ModInjectItem in moddedInjectors)
-                {
-                    if (Item.Id?[ModInjectItem]) is TemplateItem modInjector)
-                    {
-                        modInjector.Properties!.MaxHpResource = medConfig.AllInjectors.Uses;
-                    }
-                }
-            }
-            */
         }
 
-        logger.Success("Finished Editing Database!");
         return Task.CompletedTask;
-    }
-
-    private void PushBuff(string buffName)
-    {
-        var modPath = modHelper.GetAbsolutePathToModFolder(Assembly.GetExecutingAssembly());
-        var buffFilePath = Path.Combine(modPath, "BuffGlobals.json");
-        var buffJson = File.ReadAllText(buffFilePath);
-        var buffNode = (JsonNode.Parse(buffJson)?["buffs"]?[buffName]) ??
-            throw new InvalidOperationException($"Buff '{buffName}' not found in BuffGlobals.json");
-        var globals = databaseService.GetGlobals();
-        var stimulator = globals?.Configuration?.Health?.Effects?.Stimulator;
-        var buffs = stimulator?.Buffs;
-
-        if (buffs != null && !buffs.ContainsKey(buffName))
-        {
-            var buffData = JsonSerializer.Deserialize<List<Buff>>(buffNode.ToJsonString());
-            buffs.Add(buffName, buffData!);
-        }
-    }
-}
-
-public static class ItemHelperExtensions
-{
-    public static void ResizeItem(this ItemHelper helper, TemplateItem item, ItemConfig itemConfig, string newSize)
-    {
-        if (item?.Properties == null)
-            return;
-
-        var sizeParts = newSize.Split('x');
-        if (sizeParts.Length == 2 &&
-            int.TryParse(sizeParts[0], out int width) &&
-            int.TryParse(sizeParts[1], out int height))
-        {
-            var propertiesType = item.Properties.GetType();
-            var widthProp = propertiesType.GetProperty("Width");
-            var heightProp = propertiesType.GetProperty("Height");
-            if (widthProp != null && heightProp != null)
-            {
-                widthProp.SetValue(item.Properties, width);
-                heightProp.SetValue(item.Properties, height);
-            }
-        }
     }
 }
 
@@ -972,8 +832,6 @@ public class ModConfig
     public ModTrimadol? Trimadol { get; set; }
     public ModPnb? Pnb { get; set; }
     public Moda2bTG? a2bTG { get; set; }
-    public ModEbudal? Ebudal { get; set; }
-    public ModModInjectors? ModInjectors { get; set; }
 }
 
 public class ModAi2
@@ -1162,6 +1020,7 @@ public class ModSurv12FieldSurgicalKit
     public int hpResource { get; set; }
     public bool AddStopLightBleeding { get; set; }
     public bool AddStopHeavyBleeding { get; set; }
+    public bool AddFixFracture { get; set; }
 }
 
 public class ModEsmarch
@@ -1288,15 +1147,4 @@ public class ModPnb
 
 public class Moda2bTG
 {
-}
-
-public class ModEbudal
-{
-    public int Duration { get; set; }
-}
-
-public class ModModInjectors
-{
-    public bool Enable { get; set; }
-    public int Uses { get; set; }
 }

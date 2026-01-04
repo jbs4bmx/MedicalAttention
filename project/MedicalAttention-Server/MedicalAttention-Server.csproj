@@ -6,8 +6,8 @@
     <Nullable>enable</Nullable>
     <Title>MedicalAttention-Server</Title>
     <Authors>jbs4bmx</Authors>
-    <Version>4.0.2</Version>
-    <Copyright>Copyright © jbs4bmx 2025</Copyright>
+    <Version>4.0.3</Version>
+    <Copyright>Copyright © jbs4bmx 2018-2026</Copyright>
     <Platforms>AnyCPU;x64</Platforms>
     <LangVersion>preview</LangVersion>
   </PropertyGroup>

@@ -162,7 +162,8 @@
         "Enable": true,
         "hpResource": 12,
         "AddStopLightBleeding": true,
-        "AddStopHeavyBleeding": true
+        "AddStopHeavyBleeding": true,
+        "AddFixFracture": true
     },
 
     // __Tourniquets_____________________________________________________________________
@@ -266,11 +267,5 @@
     },
     "a2bTG": {
         // 2A2-(b-TG)
-    },
-    "ModInjectors": {
-        // All custom injectors from mods.
-        // This setting is a WIP. It has not yet been tested.
-        "Enable": false,
-        "Uses": 4
     }
 }

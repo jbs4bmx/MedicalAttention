@@ -7,7 +7,7 @@ using static MedicalAttention_Client.Utilities.VersionChecker;
 
 namespace MedicalAttention_Client
 {
-    [BepInPlugin("com.jbs4bmx.MedicalAttention", "MedicalAttention", "4.0.2")]
+    [BepInPlugin("com.jbs4bmx.MedicalAttention", "MedicalAttention", "4.0.3")]
     [BepInDependency("com.SPT.core", "4.0.0")]
     public class MedsPlugin : BaseUnityPlugin
     {
@@ -37,7 +37,6 @@ namespace MedicalAttention_Client
                         Order = 2,
                     }
                 )
-
             );
 
             sprintWithMeds = Config.Bind<bool>(
