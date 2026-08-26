@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <Title>MedicalAttention-Server</Title>
     <Authors>jbs4bmx</Authors>
-    <Version>4.0.3</Version>
+    <Version>4.1.3</Version>
     <Copyright>Copyright © jbs4bmx 2018-2026</Copyright>
     <Platforms>AnyCPU;x64</Platforms>
     <LangVersion>preview</LangVersion>
@@ -14,16 +14,22 @@
 
   <ItemGroup>
     <Reference Include="SemanticVersioning">
-      <HintPath>D:\SPT\SPT\SemanticVersioning.dll</HintPath>
+      <HintPath>T:\SPT\SPT_Runtime\SemanticVersioning.dll</HintPath>
     </Reference>
     <Reference Include="SPTarkov.Common">
-      <HintPath>D:\SPT\SPT\SPTarkov.Common.dll</HintPath>
+      <HintPath>T:\SPT\SPT_Runtime\SPTarkov.Common.dll</HintPath>
     </Reference>
     <Reference Include="SPTarkov.DI">
-      <HintPath>D:\SPT\SPT\SPTarkov.DI.dll</HintPath>
+      <HintPath>T:\SPT\SPT_Runtime\SPTarkov.DI.dll</HintPath>
+    </Reference>
+    <Reference Include="SPTarkov.Server.Assets">
+      <HintPath>T:\SPT\SPT_Runtime\SPTarkov.Server.Assets.dll</HintPath>
     </Reference>
     <Reference Include="SPTarkov.Server.Core">
-      <HintPath>D:\SPT\SPT\SPTarkov.Server.Core.dll</HintPath>
+      <HintPath>T:\SPT\SPT_Runtime\SPTarkov.Server.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Hashing">
+      <HintPath>T:\SPT\SPT_Runtime\System.IO.Hashing.dll</HintPath>
     </Reference>
   </ItemGroup>
 

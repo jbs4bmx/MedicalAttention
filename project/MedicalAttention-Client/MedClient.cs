@@ -7,11 +7,11 @@ using static MedicalAttention_Client.Utilities.VersionChecker;
 
 namespace MedicalAttention_Client
 {
-    [BepInPlugin("com.jbs4bmx.MedicalAttention", "MedicalAttention", "4.0.3")]
-    [BepInDependency("com.SPT.core", "4.0.0")]
+    [BepInPlugin("com.jbs4bmx.MedicalAttention", "MedicalAttention", "4.1.3")]
+    [BepInDependency("com.SPT.core", "4.1.3")]
     public class MedsPlugin : BaseUnityPlugin
     {
-        public const int TarkovVersion = 40087;
+        public const int TarkovVersion = 40743;
         public static ConfigEntry<bool> dontStopForSurgery;
         public static ConfigEntry<bool> sprintWithMeds;
 

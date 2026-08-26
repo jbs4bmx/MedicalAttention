@@ -1,11 +1,9 @@
-﻿using SPTarkov.Server.Core.Helpers;
-using SPTarkov.Server.Core.Models.Eft.Common;
+﻿using SPTarkov.Server.Core.Helpers.Server;
 using SPTarkov.Server.Core.Models.Eft.Common.Tables;
-using SPTarkov.Server.Core.Services;
+using SPTarkov.Server.Core.Models.Spt.Tables;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Nodes;
-using Path = System.IO.Path;
 
 namespace MedicalAttentionServer.Helpers;
 
@@ -14,27 +12,20 @@ public static class BuffHelper
     /// <summary>
     /// Registers a buff with the server and assigns it to the item.
     /// </summary>
-    public static void ApplyBuff(
-        TemplateItem item,
-        string buffId,
-        DatabaseService databaseService,
-        ModHelper modHelper)
+    public static void ApplyBuff(TemplateItem item, string buffId, TemplateTable templateTable, GlobalTable globalTable)
     {
-        PushBuff(buffId, databaseService, modHelper);
+        PushBuff(buffId, templateTable, globalTable);
         item.Properties!.StimulatorBuffs = buffId;
     }
 
     /// <summary>
     /// Loads buff data from BuffGlobals.json and registers it into the SPT globals table.
     /// </summary>
-    private static void PushBuff(
-        string buffName,
-        DatabaseService databaseService,
-        ModHelper modHelper)
+    private static void PushBuff(string buffName, TemplateTable templateTable, GlobalTable globalTable)
     {
         // Locate BuffGlobals.json inside the mod folder
-        var modPath = modHelper.GetAbsolutePathToModFolder(Assembly.GetExecutingAssembly());
-        var buffFilePath = Path.Combine(modPath, "BuffGlobals.json");
+        var modPath = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
+        var buffFilePath = System.IO.Path.Combine(modPath, "BuffGlobals.json");
 
         // Load and parse the JSON
         var buffJson = File.ReadAllText(buffFilePath);
@@ -43,8 +34,7 @@ public static class BuffHelper
             ?? throw new InvalidOperationException($"Buff '{buffName}' not found in BuffGlobals.json");
 
         // Access SPT globals → Health → Effects → Stimulator → Buffs
-        var globals = databaseService.GetGlobals();
-        var stimulator = globals?.Configuration?.Health?.Effects?.Stimulator;
+        var stimulator = globalTable?.Configuration?.Health?.Effects?.Stimulator;
         var buffs = stimulator?.Buffs;
 
         // Register buff only if not already present

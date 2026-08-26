@@ -1,55 +1,72 @@
 ﻿using MedicalAttentionServer.Helpers;
-using SPTarkov.Common.Extensions;
+using SPTarkov.Common.Logger;
 using SPTarkov.DI.Annotations;
 using SPTarkov.Server.Core.DI;
-using SPTarkov.Server.Core.Helpers;
-using SPTarkov.Server.Core.Models.Eft.Common;
+using SPTarkov.Server.Core.Helpers.Server;
 using SPTarkov.Server.Core.Models.Eft.Common.Tables;
 using SPTarkov.Server.Core.Models.Enums;
 using SPTarkov.Server.Core.Models.Spt.Config;
 using SPTarkov.Server.Core.Models.Spt.Mod;
-using SPTarkov.Server.Core.Models.Utils;
-using SPTarkov.Server.Core.Servers;
-using SPTarkov.Server.Core.Services;
+using SPTarkov.Server.Core.Models.Spt.Tables;
 using System.Reflection;
-using Path = System.IO.Path;
+using System.Text.Json;
 
 namespace MedicalAttentionServer;
 
-public record ModMetadata : AbstractModMetadata
+public record ModMetadata : IModMetadata
 {
-    public override string ModGuid { get; init; } = "com.jbs4bmx.medicalattention";
-    public override string Name { get; init; } = "MedicalAttention";
-    public override string Author { get; init; } = "jbs4bmx";
-    public override List<string>? Contributors { get; init; }
-    public override SemanticVersioning.Version Version { get; init; } = new("4.0.3");
-    public override SemanticVersioning.Range SptVersion { get; init; } = new("~4.0.0");
-    public override List<string>? Incompatibilities { get; init; }
-    public override Dictionary<string, SemanticVersioning.Range>? ModDependencies { get; init; }
-    public override string? Url { get; init; }
-    public override bool? IsBundleMod { get; init; }
-    public override string License { get; init; } = "MIT";
+    public string ModGuid { get; init; } = "com.jbs4bmx.medicalattention";
+    public string Name { get; init; } = "MedicalAttention";
+    public string Author { get; init; } = "jbs4bmx";
+    public List<string>? Contributors { get; init; } = null;
+    public SemanticVersioning.Version Version { get; init; } = new("4.1.3");
+    public SemanticVersioning.Range SptVersion { get; init; } = new("~4.1.3");
+    public List<string>? Incompatibilities { get; init; } = null;
+    public Dictionary<string, SemanticVersioning.Range>? ModDependencies { get; init; } = null;
+    public string? Url { get; init; } = null;
+    public string License { get; init; } = "MIT";
+    public bool HasPrepatcher { get; init; } = false;
 }
 
-[Injectable(TypePriority = OnLoadOrder.PostDBModLoader + 1)]
-public class MedServer(
-    ISptLogger<MedServer> logger,
-    DatabaseService databaseService,
-    ConfigServer configServer,
-    ItemHelper itemHelper,
-    ModHelper modHelper) : IOnLoad
+[Injectable(TypePriority = OnLoadOrder.PostLoad + 1)]
+public class MedServer(SptLogger<MedServer> logger, TemplateTable templateTable, GlobalTable globalTable, ItemConfig itemConfig) : IOnLoad
 {
-    public Task OnLoad()
+    public Task OnLoadAsync(CancellationToken cancellationToken)
     {
-        var pathToMod = modHelper.GetAbsolutePathToModFolder(Assembly.GetExecutingAssembly());
-        var medConfig = modHelper.GetJsonDataFromFile<ModConfig>(pathToMod, "config.jsonc");
-        var helper = itemHelper;
-        var itemConfig = configServer.GetConfig<ItemConfig>();
-        var tables = databaseService.GetTables();
-        var items = databaseService.GetItems();
+        // Load mod config (supports .jsonc comments)
+        var pathToMod = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
+        var config = System.IO.Path.Combine(pathToMod, "config.jsonc");
 
-        List<string> locationsMin = new()
+        ModConfig? medConfig = null;
+        if (File.Exists(config))
         {
+            try
+            {
+                // Parse with comment handling and deserialize
+                var raw = File.ReadAllText(config);
+                raw = System.Text.RegularExpressions.Regex.Replace(raw, @"/\*.*?\*/", string.Empty, System.Text.RegularExpressions.RegexOptions.Singleline);
+                raw = System.Text.RegularExpressions.Regex.Replace(raw, @"//.*?$", string.Empty, System.Text.RegularExpressions.RegexOptions.Multiline);
+                var opts = new JsonSerializerOptions { AllowTrailingCommas = true };
+                medConfig = JsonSerializer.Deserialize<ModConfig>(raw, opts);
+            }
+            catch (Exception ex)
+            {
+                logger.Warning($"[MA] Failed to parse config.jsonc: {ex.Message}");
+            }
+        }
+
+        if (medConfig == null)
+        {
+            logger.Warning("[MA] No config found or failed to parse 'config.jsonc'. Aborting SpecialSlots OnLoad.");
+            return Task.CompletedTask;
+        }
+
+        //var helper = itemHelper;
+        //var itemConfig = configServer.GetConfig<ItemConfig>();
+        var items = templateTable.Items;
+
+        List<string> locationsMin =
+        [
             "bigmap",
             "develop",
             "factory4_day",
@@ -61,10 +78,10 @@ public class MedServer(
             "shoreline",
             "tarkovstreets",
             "woods"
-        };
+        ];
 
-        List<string> locationsMax = new()
-        {
+        List<string> locationsMax =
+        [
             "bigmap",
             "develop",
             "factory4_day",
@@ -83,10 +100,10 @@ public class MedServer(
             "terminal",
             "town",
             "woods"
-        };
+        ];
 
-        List<string> injectorList = new()
-        {
+        List<string> injectorList =
+        [
             "544fb3f34bdc2d03748b456a", // Morphine
             "5c0e530286f7747fa1419862", // Propital
             "5c0e531286f7747fa54205c2", // SJ1_TGLabs
@@ -109,18 +126,18 @@ public class MedServer(
             "637b620db7afa97bfc3d7009", // Trimadol
             "637b6251104668754b72f8f9", // Perfotoran
             "66507eabf5ddb0818b085b68"  // 2A2-(b-TG)
-        };
+        ];
 
-        List<string> parentList = new()
-        {
+        List<string> parentList =
+        [
             "5448f3a14bdc2d27728b4569", // Drugs
             "5448f3a64bdc2d60728b456a"  // Stimulator
-        };
+        ];
 
-        List<string> moddedInjectors = new()
-        {
+        List<string> moddedInjectors =
+        [
             "69141913b89af444ac438110"
-        };
+        ];
 
         // ~~ MEDKITS ~~
         if (medConfig.Ai2!.Enable == true &&
@@ -153,7 +170,7 @@ public class MedServer(
 
             if (medConfig.Ai2.HealOverTime == true)
             {
-                BuffHelper.ApplyBuff(aiItem, "Ai2Buff", databaseService, modHelper);
+                BuffHelper.ApplyBuff(aiItem, "Ai2Buff", templateTable, globalTable);
             }
         }
 
@@ -176,7 +193,7 @@ public class MedServer(
 
             if (medConfig.Car.HealOverTime == true)
             {
-                BuffHelper.ApplyBuff(carItem, "CarBuff", databaseService, modHelper);
+                BuffHelper.ApplyBuff(carItem, "CarBuff", templateTable, globalTable);
             }
         }
 
@@ -208,7 +225,7 @@ public class MedServer(
 
             if (medConfig.Salewa.HealOverTime == true)
             {
-                BuffHelper.ApplyBuff(salewaItem, "SalewaBuff", databaseService, modHelper);
+                BuffHelper.ApplyBuff(salewaItem, "SalewaBuff", templateTable, globalTable);
             }
         }
 
@@ -240,7 +257,7 @@ public class MedServer(
 
             if (medConfig.Ifak.HealOverTime == true)
             {
-                BuffHelper.ApplyBuff(ifakItem, "IfakBuff", databaseService, modHelper);
+                BuffHelper.ApplyBuff(ifakItem, "IfakBuff", templateTable, globalTable);
             }
         }
 
@@ -285,7 +302,7 @@ public class MedServer(
 
             if (medConfig.Sanitar.HealOverTime == true)
             {
-                BuffHelper.ApplyBuff(sanitarItem, "SanitarBuff", databaseService, modHelper);
+                BuffHelper.ApplyBuff(sanitarItem, "SanitarBuff", templateTable, globalTable);
             }
         }
 
@@ -317,7 +334,7 @@ public class MedServer(
 
             if (medConfig.Afak.HealOverTime == true)
             {
-                BuffHelper.ApplyBuff(afakItem, "AfakBuff", databaseService, modHelper);
+                BuffHelper.ApplyBuff(afakItem, "AfakBuff", templateTable, globalTable);
             }
         }
 
@@ -339,7 +356,7 @@ public class MedServer(
 
             if (medConfig.Grizzly.HealOverTime == true)
             {
-                BuffHelper.ApplyBuff(grizzlyItem, "GrizzlyBuff", databaseService, modHelper);
+                BuffHelper.ApplyBuff(grizzlyItem, "GrizzlyBuff", templateTable, globalTable);
             }
         }
 
@@ -632,7 +649,7 @@ public class MedServer(
 
             if (items.GetValueOrDefault(ItemTpl.DRUGS_MORPHINE_INJECTOR) is TemplateItem morphineItem2)
             {
-                morphineItem2.Properties.EffectsDamage![DamageEffectType.Pain] = new EffectsDamageProperties
+                morphineItem2.Properties!.EffectsDamage![DamageEffectType.Pain] = new EffectsDamageProperties
                 {
                     Delay = 0,
                     Duration = medConfig.Morphine!.Duration,
@@ -654,7 +671,7 @@ public class MedServer(
 
             if (items.GetValueOrDefault(ItemTpl.STIM_ETGCHANGE_REGENERATIVE_STIMULANT_INJECTOR) is TemplateItem etgChanceItem)
             {
-                etgChanceItem.Properties.EffectsDamage![DamageEffectType.Pain] = new EffectsDamageProperties
+                etgChanceItem.Properties!.EffectsDamage![DamageEffectType.Pain] = new EffectsDamageProperties
                 {
                     Delay = 0,
                     Duration = medConfig.eTGchange!.Duration,
@@ -672,7 +689,7 @@ public class MedServer(
 
             if (items.GetValueOrDefault(ItemTpl.STIM_PROPITAL_REGENERATIVE_STIMULANT_INJECTOR) is TemplateItem propitalItem)
             {
-                propitalItem.Properties.EffectsDamage![DamageEffectType.Pain] = new EffectsDamageProperties
+                propitalItem.Properties!.EffectsDamage![DamageEffectType.Pain] = new EffectsDamageProperties
                 {
                     Delay = 0,
                     Duration = medConfig.Propital!.Duration,
@@ -682,7 +699,7 @@ public class MedServer(
 
             if (items.GetValueOrDefault(ItemTpl.STIM_ZAGUSTIN_HEMOSTATIC_DRUG_INJECTOR) is TemplateItem zagustinItem)
             {
-                zagustinItem.Properties.EffectsDamage![DamageEffectType.Pain] = new EffectsDamageProperties
+                zagustinItem.Properties!.EffectsDamage![DamageEffectType.Pain] = new EffectsDamageProperties
                 {
                     Delay = 0,
                     Duration = medConfig.Zagustin!.Duration,
@@ -692,7 +709,7 @@ public class MedServer(
 
             if (items.GetValueOrDefault(ItemTpl.STIM_ADRENALINE_INJECTOR) is TemplateItem adrenalineItem)
             {
-                adrenalineItem.Properties.EffectsDamage![DamageEffectType.Pain] = new EffectsDamageProperties
+                adrenalineItem.Properties!.EffectsDamage![DamageEffectType.Pain] = new EffectsDamageProperties
                 {
                     Delay = 0,
                     Duration = medConfig.Adrenaline!.Duration,
@@ -714,7 +731,7 @@ public class MedServer(
 
             if (items.GetValueOrDefault(ItemTpl.STIM_L1_NOREPINEPHRINE_INJECTOR) is TemplateItem norepinephrineItem)
             {
-                norepinephrineItem.Properties.EffectsDamage![DamageEffectType.Pain] = new EffectsDamageProperties
+                norepinephrineItem.Properties!.EffectsDamage![DamageEffectType.Pain] = new EffectsDamageProperties
                 {
                     Delay = 0,
                     Duration = medConfig.Norepinephrine!.Duration,
@@ -748,7 +765,7 @@ public class MedServer(
 
             if (items.GetValueOrDefault(ItemTpl.STIM_PERFOTORAN_BLUE_BLOOD_STIMULANT_INJECTOR) is TemplateItem perfotoranItem)
             {
-                perfotoranItem.Properties.EffectsDamage![DamageEffectType.Pain] = new EffectsDamageProperties
+                perfotoranItem.Properties!.EffectsDamage![DamageEffectType.Pain] = new EffectsDamageProperties
                 {
                     Delay = 0,
                     Duration = medConfig.Perfotoran!.Duration,
@@ -758,7 +775,7 @@ public class MedServer(
 
             if (items.GetValueOrDefault(ItemTpl.STIM_TRIMADOL_STIMULANT_INJECTOR) is TemplateItem trimadolItem)
             {
-                trimadolItem.Properties.EffectsDamage![DamageEffectType.Pain] = new EffectsDamageProperties
+                trimadolItem.Properties!.EffectsDamage![DamageEffectType.Pain] = new EffectsDamageProperties
                 {
                     Delay = 0,
                     Duration = medConfig.Trimadol!.Duration,
@@ -768,7 +785,7 @@ public class MedServer(
 
             if (items.GetValueOrDefault(ItemTpl.STIM_PNB_PRODUCT_16_STIMULANT_INJECTOR) is TemplateItem pnbItem)
             {
-                pnbItem.Properties.EffectsDamage![DamageEffectType.Pain] = new EffectsDamageProperties
+                pnbItem.Properties!.EffectsDamage![DamageEffectType.Pain] = new EffectsDamageProperties
                 {
                     Delay = 0,
                     Duration = medConfig.Pnb!.Duration,

@@ -1,5 +1,15 @@
 # 🔄 MEDICAL ATTENTION FULL CHANGE LOG 🔄
 
+## 🚧 24 August, 2026 - 4.1.3 (For SPT 4.1.3)
+Overview</br>
+Version update. Just updating to support SPTushonka's latest release.
+
+Update - Version support for SPT 4.1.3 and EFT 0.16.9.0.40743
+Fix - Found and squashed a couple of bugs.
+
+---
+---
+
 ## 🚧 03 January, 2026 - 4.0.3 (For SPT 4.0.0+)
 This release includes a major internal refactor of MedicalAttention, focused on stability, consistency, and long‑term maintainability. Several long‑standing issues reported by users have been resolved as a result of this rewrite.
   - Major Improvements
